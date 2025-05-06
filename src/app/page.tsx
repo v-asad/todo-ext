@@ -70,7 +70,8 @@ export default function Home() {
               className="w-full flex justify-between items-center rounded px-[30px] py-[8px] bg-white cursor-pointer"
               onClick={() => handleTaskClick(item)}
             >
-              <div className="flex gap-[10px] justify-center items-start bg-[white]">
+              <div className="flex gap-[10px] justify-start items-start bg-[white]">
+                <div>
                 <input
                   type="checkbox"
                   checked={item.status === 'completed'}
@@ -79,8 +80,10 @@ export default function Home() {
                     
                     tasksUpdated(index);
                   }}
+                 
                 />
-                <div>
+                 </div>
+                <div >
                   <p className={item.status === 'completed' ? 'line-through text-gray-500' : ''}>
                     {item.description}
                   </p>
