@@ -31,7 +31,7 @@ const Sidebar = () => {
         </ul>
       </div>
       <div>
-        <button className="flex items-center gap-2 w-full px-3 py-2 mb-12 bg-[#2B2B2B] rounded">
+        <button className="flex items-center justify-center gap-2 w-full px-3 py-2 mb-12 bg-[#2B2B2B] rounded">
           + New list
         </button>
       </div>
