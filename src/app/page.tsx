@@ -1,9 +1,16 @@
 'use client';
 
 import { useState, ChangeEvent } from 'react';
-import Image from 'next/image';
+
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import toast, { Toaster } from 'react-hot-toast';
+import { FaHome } from 'react-icons/fa';
+import { IoIosAddCircleOutline } from 'react-icons/io';
+import { CgCalendar } from 'react-icons/cg';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import Drawer from './components/modals/drawer';
+
 
 type Task = {
   description: string;
@@ -23,14 +30,14 @@ export default function Home() {
 
   const handleAddTask = () => {
     if (task.trim() === '') {
-      alert('Please add the text.');
+      toast.error('Please add the text.');
       return;
     }
     if (taskDate === '') {
-      alert('Please select the date');
+      toast.error('Please select the date.');
       return;
     }
-
+   
     const newTask: Task = {
       description: task,
       status: 'notCompleted',
@@ -63,41 +70,40 @@ export default function Home() {
     setSelectedTask(task);
     setIsSidebarOpen(true);
   };
+  const sortedTasks =tasks
+  .sort((a, b) => {
+    if (a.status === 'completed' && b.status !== 'completed') return 1;
+    if (a.status !== 'completed' && b.status === 'completed') return -1;
+    return 0;
+  })
 
   return (
     <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">
       <div className="flex gap-2 items-center">
-        <Image
-          onClick={handleAddTask}
-          width={30}
-          height={30}
-          alt="home"
-          src="/assets/home-1-svgrepo-com.svg"
-        />
+        <button onClick={handleAddTask}>
+        <FaHome className='w-[30px] h-[30px]' color='white' />
+        </button>
         <h1 className="text-2xl text-white">Tasks</h1>
       </div>
 
       
       <div className="flex flex-col gap-2 mt-10">
-        {tasks
-          .sort((a, b) => {
-            if (a.status === 'completed' && b.status !== 'completed') return 1;
-            if (a.status !== 'completed' && b.status === 'completed') return -1;
-            return 0;
-          })
-          .map((item, index) => (
+        {
+          sortedTasks.map((item, index) => (
             <div
               key={index}
               className="w-full flex justify-between items-center rounded px-6 py-2 bg-white cursor-pointer"
               onClick={() => handleTaskClick(item)}
             >
               <div className="flex gap-3 items-start">
+                <div>
                 <input
                   type="checkbox"
                   checked={item.status === 'completed'}
                   onClick={(e) => e.stopPropagation()}
                   onChange={() => tasksUpdated(index)}
                 />
+                </div>
                 <div>
                   <p className={item.status === 'completed' ? 'line-through text-gray-500' : ''}>
                     {item.description}
@@ -105,33 +111,25 @@ export default function Home() {
                   <p className="text-xs text-gray-400">{item.date}</p>
                 </div>
               </div>
-              <Image
-                src="/assets/bin.png"
-                width={20}
-                height={20}
-                alt="Delete"
-                onClick={(e) => {
+              <button  onClick={(e) => {
                   e.stopPropagation();
                   deleteTask(index);
-                }}
-                className="cursor-pointer"
-              />
+                }}>
+               <RiDeleteBin6Line className='w-[20px] h-[20px]' />
+
+              </button>
             </div>
           ))}
       </div>
 
       
       <div className="w-full flex justify-center items-end py-20">
+      <Toaster position="top-center" />
         <div className="w-full flex justify-between items-center max-w-[1270px] bg-white p-3 rounded absolute bottom-14">
           <div className='w-full flex gap-3 justify-start items-center'>
-          <Image
-            onClick={handleAddTask}
-            alt="add"
-            width={20}
-            height={20}
-            src="/assets/addbtn.svg"
-            className="cursor-pointer"
-          />
+            <button onClick={handleAddTask}>
+            <IoIosAddCircleOutline className='w-[20px] h-[20px]' />
+          </button>
           <input
             value={task}
             onChange={handleChange}
@@ -141,14 +139,9 @@ export default function Home() {
           </div>
 
          <div className='w-full flex justify-end items-center'>
-          <Image
-            src="/assets/calendaricon.svg"
-            width={20}
-            height={20}
-            alt="calendar"
-            onClick={() => setShowDateMenu(!showDateMenu)}
-            className="cursor-pointer "
-          />
+          <button  onClick={() => setShowDateMenu(!showDateMenu)}>
+          <CgCalendar className='w-[25px] h-[25px]' />
+          </button>
           </div>
           {showDateMenu && (
             <select
@@ -212,32 +205,12 @@ export default function Home() {
       )}
 
       
-      <div
-        className={`fixed top-0 right-0 h-full w-[300px] bg-white shadow-lg p-6 transition-transform ${
-          isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
-        <button
-          onClick={() => setIsSidebarOpen(false)}
-          className="mb-4 text-red-500 cursor-pointer"
-        >
-          Close
-        </button>
-        {selectedTask && (
-          <>
-            <p className="mt-4 font-bold">{selectedTask.description}</p>
-            <p className="text-sm text-gray-500 mt-2">Status: {selectedTask.status}</p>
-            <p className="text-sm text-gray-500 mt-2">Date: {selectedTask.date}</p>
-          </>
-        )}
-      </div>
+<Drawer
+  isOpen={isSidebarOpen}
+  onClose={() => setIsSidebarOpen(false)}
+  selectedTask={selectedTask}
+/>
 
-      {isSidebarOpen && (
-        <div
-          onClick={() => setIsSidebarOpen(false)}
-          className="fixed inset-0 bg-opacity-40 z-40"
-        />
-      )}
     </div>
   );
 }
