@@ -3,7 +3,6 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
-
 type DateSelectorProps = {
   onDateSelect: (date: string) => void;
   onClose: () => void;
