@@ -21,15 +21,15 @@ export default function DateSelector({
 
     if (option === "today") {
       onDateSelect(format(today));
-      onClose?.();
+      onClose();
     } else if (option === "tomorrow") {
       today.setDate(today.getDate() + 1);
       onDateSelect(format(today));
-      onClose?.();
+      onClose();
     } else if (option === "nextWeek") {
       today.setDate(today.getDate() + 7);
       onDateSelect(format(today));
-      onClose?.();
+      onClose();
     } else if (option === "custom") {
       setIsCalendarModalOpen(true);
     }
@@ -39,7 +39,7 @@ export default function DateSelector({
       setSelectedDate(date);
       onDateSelect(date.toISOString().split("T")[0]);
       setIsCalendarModalOpen(false);
-      onClose?.();
+      onClose();
     }
   };
 

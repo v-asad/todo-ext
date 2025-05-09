@@ -11,7 +11,7 @@ type Task = {
 interface DrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  selectedTask: Task | null;
+  selectedTask: Task | undefined;
 }
 
 const Drawer = ({ isOpen, onClose, selectedTask }: DrawerProps) => {

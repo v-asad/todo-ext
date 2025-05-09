@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { FaHome } from "react-icons/fa";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { CgCalendar } from "react-icons/cg";
-import Drawer from "./components/modals/drawer";
 import DateSelector from "./components/DateSelector";
+import Drawer from "./components/modals/drawer";
 import TaskLists from "./components/TaskLists";
 
 type Task = {
@@ -20,8 +20,13 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [showDateMenu, setShowDateMenu] = useState(false);
+  const [sortedTasks, setSortedTasks] = useState<Task[]>([]); 
+
+  
+
+ 
 
   const handleAddTask = () => {
     if (task.trim() === "") {
@@ -34,7 +39,7 @@ export default function Home() {
       status: false,
       date: taskDate,
     };
-    setTasks([newTask, ...tasks]);
+    setTasks(prev => [newTask, ...prev]);
     setTask("");
     setTaskDate("");
   };
@@ -60,11 +65,16 @@ export default function Home() {
     setSelectedTask(task);
     setIsSidebarOpen(true);
   };
-  const sortedTasks = [...tasks].sort((a, b) => {
-    if (a.status && !b.status) return 1;
-    if (!a.status && b.status) return -1;
-    return 0;
-  });
+  useEffect(() => {
+    
+    const sorted = [...tasks].sort((a, b) => {
+      if (a.status && !b.status) return 1;
+      if (!a.status && b.status) return -1;
+      return 0;
+    });
+    setSortedTasks(sorted);
+  }, [tasks]); 
+  
 
   return (
     <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">
@@ -80,6 +90,8 @@ export default function Home() {
         onTaskStatusChange={tasksUpdated}
         onTaskDelete={deleteTask}
       />
+      
+      
 
       <div className="w-full flex justify-center items-end py-20">
         <Toaster position="top-center" />
@@ -92,7 +104,7 @@ export default function Home() {
               value={task}
               onChange={handleChange}
               placeholder="Add a task"
-              className="w-full  rounded outline-none"
+              className="w-full rounded outline-none"
             />
           </div>
 
@@ -121,3 +133,4 @@ export default function Home() {
     </div>
   );
 }
+

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import DatePicker from "react-datepicker";
 
@@ -12,7 +13,7 @@ const CalendarModal = ({
   onSelectDate,
   onClose,
 }: CalendarModalProps) => {
-  const HandleDateChange = (date: Date | null) => {
+  const handleDateChange = (date: Date | null) => {
     if (date) {
       onSelectDate(date);
       onClose();
@@ -24,7 +25,7 @@ const CalendarModal = ({
         <h2 className="text-lg font-semibold mb-4">Select a date</h2>
         <DatePicker
           selected={selectedDate}
-          onChange={HandleDateChange}
+          onChange={handleDateChange}
           inline
         />
         <button onClick={onClose} className="mt-4 text-red-500">
