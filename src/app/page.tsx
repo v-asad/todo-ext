@@ -22,11 +22,7 @@ export default function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [showDateMenu, setShowDateMenu] = useState(false);
-  const [sortedTasks, setSortedTasks] = useState<Task[]>([]); 
-
-  
-
- 
+  const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
 
   const handleAddTask = () => {
     if (task.trim() === "") {
@@ -39,7 +35,7 @@ export default function Home() {
       status: false,
       date: taskDate,
     };
-    setTasks(prev => [newTask, ...prev]);
+    setTasks((prev) => [newTask, ...prev]);
     setTask("");
     setTaskDate("");
   };
@@ -66,15 +62,13 @@ export default function Home() {
     setIsSidebarOpen(true);
   };
   useEffect(() => {
-    
     const sorted = [...tasks].sort((a, b) => {
       if (a.status && !b.status) return 1;
       if (!a.status && b.status) return -1;
       return 0;
     });
     setSortedTasks(sorted);
-  }, [tasks]); 
-  
+  }, [tasks]);
 
   return (
     <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">
@@ -90,8 +84,6 @@ export default function Home() {
         onTaskStatusChange={tasksUpdated}
         onTaskDelete={deleteTask}
       />
-      
-      
 
       <div className="w-full flex justify-center items-end py-20">
         <Toaster position="top-center" />
@@ -133,4 +125,3 @@ export default function Home() {
     </div>
   );
 }
-
