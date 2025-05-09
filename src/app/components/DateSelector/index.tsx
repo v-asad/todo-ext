@@ -1,4 +1,3 @@
-// components/DateSelector.tsx
 'use client';
 
 import { useState } from 'react';
@@ -33,6 +32,15 @@ export default function DateSelector({ onDateSelect, onClose }: DateSelectorProp
       setIsCalendarModalOpen(true);
     }
   };
+  const handleCustomDateSelect = (date: Date |null) => {
+    if (date) {
+      setSelectedDate(date);
+      onDateSelect(date.toISOString().split('T')[0]);
+      setIsCalendarModalOpen(false);
+      onClose?.();
+    }
+  };
+
 
   return (
     <>
@@ -49,19 +57,13 @@ export default function DateSelector({ onDateSelect, onClose }: DateSelectorProp
       </select>
 
       {isCalendarModalOpen && (
-        <div className="fixed inset-0 flex justify-end items-center bg-black bg-opacity-30 z-50 px-10">
+        <div className="fixed inset-0 flex justify-end items-center bg-transparent bg-opacity-30 z-50 px-10">
           <div className="bg-white p-6 rounded shadow-md z-50">
             <h2 className="text-lg font-semibold mb-4">Select a date</h2>
             <DatePicker
               selected={selectedDate}
-              onChange={(date: Date | null) => {
-                if (date) {
-                  setSelectedDate(date);
-                  onDateSelect(date.toISOString().split('T')[0]);
-                  setIsCalendarModalOpen(false);
-                  onClose?.();
-                }
-              }}
+              onChange={ handleCustomDateSelect
+              }
               inline
             />
             <button

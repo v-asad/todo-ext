@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, ChangeEvent } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
 import toast, { Toaster } from 'react-hot-toast';
 import { FaHome } from 'react-icons/fa';
 import { IoIosAddCircleOutline } from 'react-icons/io';
@@ -66,12 +65,13 @@ export default function Home() {
     setSelectedTask(task);
     setIsSidebarOpen(true);
   };
-  const sortedTasks =tasks
+  const sortedTasks =[...tasks]
   .sort((a, b) => {
     if (a.status  && !b.status ) return 1;
     if (!a.status  && b.status ) return -1;
     return 0;
   })
+  
 
   return (
     <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">

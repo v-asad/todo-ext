@@ -37,7 +37,7 @@ const Drawer: React.FC<DrawerProps> = ({ isOpen, onClose, selectedTask }) => {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0bg-opacity-40 z-40"
+          className="fixed inset-0 bg-opacity-40 z-40"
         />
       )}
       
