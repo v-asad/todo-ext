@@ -1,103 +1,127 @@
-import Image from "next/image";
+"use client";
+
+import { useState, ChangeEvent, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { FaHome } from "react-icons/fa";
+import { IoIosAddCircleOutline } from "react-icons/io";
+import { CgCalendar } from "react-icons/cg";
+import DateSelector from "./components/DateSelector";
+import Drawer from "./components/modals/drawer";
+import TaskLists from "./components/TaskLists";
+
+type Task = {
+  description: string;
+  status: boolean;
+  date: string;
+};
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [taskDate, setTaskDate] = useState("");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
+  const [showDateMenu, setShowDateMenu] = useState(false);
+  const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  const handleAddTask = () => {
+    if (task.trim() === "") {
+      toast.error("Please add the text.");
+      return;
+    }
+
+    const newTask: Task = {
+      description: task,
+      status: false,
+      date: taskDate,
+    };
+    setTasks((prev) => [newTask, ...prev]);
+    setTask("");
+    setTaskDate("");
+  };
+
+  const tasksUpdated = (index: number) => {
+    const updated = [...tasks];
+    updated[index].status = !updated[index].status;
+    setTasks(updated);
+  };
+
+  const deleteTask = (index: number) => {
+    if (tasks[index].status) {
+      const updated = tasks.filter((_, i) => i !== index);
+      setTasks(updated);
+    }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setTask(e.target.value);
+  };
+
+  const handleTaskClick = (task: Task) => {
+    setSelectedTask(task);
+    setIsSidebarOpen(true);
+  };
+  useEffect(() => {
+    const sorted = [...tasks].sort((a, b) => {
+      if (a.status && !b.status) return 1;
+      if (!a.status && b.status) return -1;
+      return 0;
+    });
+    setSortedTasks(sorted);
+  }, [tasks]);
+
+  return (
+    <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">
+      <div className="flex gap-2 items-center">
+        <button onClick={handleAddTask}>
+          <FaHome className="w-[30px] h-[30px]" color="white" />
+        </button>
+        <h1 className="text-2xl text-white">Tasks</h1>
+      </div>
+      <TaskLists
+        tasks={sortedTasks}
+        onTaskClick={handleTaskClick}
+        onTaskStatusChange={tasksUpdated}
+        onTaskDelete={deleteTask}
+      />
+
+      <div className="w-full flex justify-center items-end py-20">
+        <Toaster position="top-center" />
+        <div className="w-full flex justify-between items-center max-w-[1270px] bg-white p-3 rounded absolute bottom-14">
+          <div className="w-full flex gap-3 justify-start items-center">
+            <button onClick={handleAddTask}>
+              <IoIosAddCircleOutline className="w-[20px] h-[20px]" />
+            </button>
+            <input
+              value={task}
+              onChange={handleChange}
+              placeholder="Add a task"
+              className="w-full rounded outline-none"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+
+          <div className="w-full flex justify-end items-center">
+            <button onClick={() => setShowDateMenu(!showDateMenu)}>
+              <CgCalendar className="w-[25px] h-[25px]" />
+            </button>
+          </div>
+          {showDateMenu && (
+            <DateSelector
+              onDateSelect={(date) => {
+                setTaskDate(date);
+                setShowDateMenu(false);
+              }}
+              onClose={() => setShowDateMenu(false)}
+            />
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+
+      <Drawer
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+        selectedTask={selectedTask}
+      />
     </div>
   );
 }
