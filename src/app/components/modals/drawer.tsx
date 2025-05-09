@@ -4,7 +4,7 @@ import React from 'react';
 
 type Task = {
   description: string;
-  status: 'completed' | 'notCompleted';
+  status: boolean;
   date: string;
 };
 
