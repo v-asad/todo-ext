@@ -1,49 +1,51 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+
 
 type DateSelectorProps = {
   onDateSelect: (date: string) => void;
-  onClose?: () => void;
+  onClose: () => void;
 };
 
-export default function DateSelector({ onDateSelect, onClose }: DateSelectorProps) {
+export default function DateSelector({
+  onDateSelect,
+  onClose,
+}: DateSelectorProps) {
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
   const handleOptionSelect = (option: string) => {
     const today = new Date();
-    const format = (d: Date) => d.toISOString().split('T')[0];
+    const format = (d: Date) => d.toISOString().split("T")[0];
 
-    if (option === 'today') {
+    if (option === "today") {
       onDateSelect(format(today));
       onClose?.();
-    } else if (option === 'tomorrow') {
+    } else if (option === "tomorrow") {
       today.setDate(today.getDate() + 1);
       onDateSelect(format(today));
       onClose?.();
-    } else if (option === 'nextWeek') {
+    } else if (option === "nextWeek") {
       today.setDate(today.getDate() + 7);
       onDateSelect(format(today));
       onClose?.();
-    } else if (option === 'custom') {
+    } else if (option === "custom") {
       setIsCalendarModalOpen(true);
     }
   };
-  const handleCustomDateSelect = (date: Date |null) => {
+  const handleCustomDateSelect = (date: Date | null) => {
     if (date) {
       setSelectedDate(date);
-      onDateSelect(date.toISOString().split('T')[0]);
+      onDateSelect(date.toISOString().split("T")[0]);
       setIsCalendarModalOpen(false);
       onClose?.();
     }
   };
 
-
   return (
-    <>
+    <div>
       <select
         className="text-sm border rounded px-3 py-1 bg-white"
         defaultValue=""
@@ -62,8 +64,7 @@ export default function DateSelector({ onDateSelect, onClose }: DateSelectorProp
             <h2 className="text-lg font-semibold mb-4">Select a date</h2>
             <DatePicker
               selected={selectedDate}
-              onChange={ handleCustomDateSelect
-              }
+              onChange={handleCustomDateSelect}
               inline
             />
             <button
@@ -75,6 +76,6 @@ export default function DateSelector({ onDateSelect, onClose }: DateSelectorProp
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
