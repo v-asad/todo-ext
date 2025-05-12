@@ -1,8 +1,8 @@
-import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
 import { IoMdStarOutline } from "react-icons/io";
-import { IoReorderThreeOutline } from "react-icons/io5";
-import { MdInsertChartOutlined } from "react-icons/md";
 import { TbBrightnessUpFilled } from "react-icons/tb";
+import { MdAddBusiness, MdInsertChartOutlined } from "react-icons/md";
+import { IoReorderThreeOutline } from "react-icons/io5";
+import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
 
 const SideBarItems = [
   {
@@ -46,7 +46,7 @@ const SideBarItems = [
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col h-screen bg-[black]/80 text-white w-full max-w-[280px] p-4 justify-between items-start">
+    <div className="flex flex-col h-screen bg-[black]/80 text-white w-full max-w-[280px] px-4 py-2 justify-center items-start gap-[100px]">
       <div className="flex flex-col gap-4 justify-center items-start">
         <div className="">
           <input
@@ -64,11 +64,21 @@ const Sidebar = () => {
           </ul>
         ))}
       </div>
-      <div>
-        <button className="flex items-center justify-center gap-2 w-full px-3 py-2 mb-12 bg-[#2B2B2B] rounded">
-          + New list
+     
+        <button className="flex items-center justify-between gap-2 w-full px-3 py-2 mb-12 bg-[#2B2B2B] rounded">
+          <div className="flex justify-center items-center gap-[15px]"> 
+            <p> +</p>
+             <p> New list</p>
+          </div>
+        
+          <div className="">
+            
+            <MdAddBusiness />
+
+          </div>
+         
         </button>
-      </div>
+      
     </div>
   );
 };
