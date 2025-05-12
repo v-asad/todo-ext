@@ -2,12 +2,12 @@
 
 import { useState, ChangeEvent, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { FaHome } from "react-icons/fa";
-import { IoIosAddCircleOutline } from "react-icons/io";
+import { FaHome, FaRegCircle } from "react-icons/fa";
 import { CgCalendar } from "react-icons/cg";
 import DateSelector from "./components/DateSelector";
 import Drawer from "./components/modals/drawer";
 import TaskLists from "./components/TaskLists";
+import Image from "next/image";
 
 type Task = {
   description: string;
@@ -71,57 +71,72 @@ export default function Home() {
   }, [tasks]);
 
   return (
-    <div className="p-10 bg-[darkblue]/60 h-screen relative overflow-hidden">
-      <div className="flex gap-2 items-center">
-        <button onClick={handleAddTask}>
-          <FaHome className="w-[30px] h-[30px]" color="white" />
-        </button>
-        <h1 className="text-2xl text-white">Tasks</h1>
-      </div>
-      <TaskLists
-        tasks={sortedTasks}
-        onTaskClick={handleTaskClick}
-        onTaskStatusChange={tasksUpdated}
-        onTaskDelete={deleteTask}
-      />
-
-      <div className="w-full flex justify-center items-end py-20">
-        <Toaster position="top-center" />
-        <div className="w-full flex justify-between items-center max-w-[1270px] bg-white p-3 rounded absolute bottom-14">
-          <div className="w-full flex gap-3 justify-start items-center">
-            <button onClick={handleAddTask}>
-              <IoIosAddCircleOutline className="w-[20px] h-[20px]" />
-            </button>
-            <input
-              value={task}
-              onChange={handleChange}
-              placeholder="Add a task"
-              className="w-full rounded outline-none"
-            />
-          </div>
-
-          <div className="w-full flex justify-end items-center">
-            <button onClick={() => setShowDateMenu(!showDateMenu)}>
-              <CgCalendar className="w-[25px] h-[25px]" />
-            </button>
-          </div>
-          {showDateMenu && (
-            <DateSelector
-              onDateSelect={(date) => {
-                setTaskDate(date);
-                setShowDateMenu(false);
-              }}
-              onClose={() => setShowDateMenu(false)}
-            />
-          )}
+    <div className="w-full p-10 bg-[black]/91 h-screen relative overflow-hidden">
+      <div>
+        <div className="flex gap-2 items-center">
+          <button onClick={handleAddTask}>
+            <FaHome className="w-[30px] h-[30px]" color="lightblue" />
+          </button>
+          <h1 className="text-2xl text-[lightblue]">Tasks</h1>
         </div>
-      </div>
+        {tasks.length === 0 && (
+          <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
+            <Image
+              alt="task"
+              width={200}
+              height={200}
+              src={"/assets/taskimg.PNG"}
+            />
+            <p className="text-[lightblue] w-full max-w-[300px] text-center">
+              Task show up here if they aren't part of any lists you've created
+            </p>
+          </div>
+        )}
+        <TaskLists
+          tasks={sortedTasks}
+          onTaskClick={handleTaskClick}
+          onTaskStatusChange={tasksUpdated}
+          onTaskDelete={deleteTask}
+        />
 
-      <Drawer
-        isOpen={isSidebarOpen}
-        onClose={() => setIsSidebarOpen(false)}
-        selectedTask={selectedTask}
-      />
+        <div className="w-full flex justify-center items-end py-20">
+          <Toaster position="top-center" />
+          <div className="w-full flex justify-between items-center max-w-[1000px] bg-[grey]/40 p-3 rounded absolute bottom-14">
+            <div className="w-full flex gap-3 justify-start items-center">
+              <button onClick={handleAddTask}>
+                <FaRegCircle color="lightblue" className="h-[25px] w-[25px] " />
+              </button>
+              <input
+                value={task}
+                onChange={handleChange}
+                placeholder="Add a task"
+                className="w-full rounded text-[lightblue] outline-none placeholder:text-[lightblue]"
+              />
+            </div>
+
+            <div className="w-full flex justify-end items-center">
+              <button onClick={() => setShowDateMenu(!showDateMenu)}>
+                <CgCalendar color="lightblue" className="w-[25px] h-[25px]" />
+              </button>
+            </div>
+            {showDateMenu && (
+              <DateSelector
+                onDateSelect={(date) => {
+                  setTaskDate(date);
+                  setShowDateMenu(false);
+                }}
+                onClose={() => setShowDateMenu(false)}
+              />
+            )}
+          </div>
+        </div>
+
+        <Drawer
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          selectedTask={selectedTask}
+        />
+      </div>
     </div>
   );
 }
