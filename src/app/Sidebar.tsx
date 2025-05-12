@@ -1,5 +1,4 @@
 import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
-import { GrPlan } from "react-icons/gr";
 import { IoMdStarOutline } from "react-icons/io";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { MdInsertChartOutlined } from "react-icons/md";

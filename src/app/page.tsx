@@ -2,14 +2,17 @@
 
 import { useState, ChangeEvent, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { v4 as uuidv4 } from "uuid";
 import { FaHome, FaRegCircle } from "react-icons/fa";
 import { CgCalendar } from "react-icons/cg";
 import DateSelector from "./components/DateSelector";
 import Drawer from "./components/modals/drawer";
 import TaskLists from "./components/TaskLists";
+
 import Image from "next/image";
 
 type Task = {
+  id: string;
   description: string;
   status: boolean;
   date: string;
@@ -34,6 +37,7 @@ export default function Home() {
       description: task,
       status: false,
       date: taskDate,
+      id: uuidv4(),
     };
     setTasks((prev) => [newTask, ...prev]);
     setTask("");
@@ -46,10 +50,10 @@ export default function Home() {
     setTasks(updated);
   };
 
-  const deleteTask = (index: number) => {
-    if (tasks[index].status) {
-      const updated = tasks.filter((_, i) => i !== index);
-      setTasks(updated);
+  const deleteTask = (id: string) => {
+    const taskToDelete = tasks.find((task) => task.id === id);
+    if (taskToDelete?.status) {
+      setTasks(tasks.filter((task) => task.id !== id));
     }
   };
 

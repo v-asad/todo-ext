@@ -5,13 +5,14 @@ type Task = {
   description: string;
   status: boolean;
   date: string;
+  id: string;
 };
 
 interface TaskListProps {
   tasks: Task[];
   onTaskClick: (task: Task) => void;
   onTaskStatusChange: (index: number) => void;
-  onTaskDelete: (index: number) => void;
+  onTaskDelete: (id: string) => void;
 }
 
 const TaskLists = ({
@@ -47,7 +48,7 @@ const TaskLists = ({
           <button
             onClick={(e) => {
               e.stopPropagation();
-              onTaskDelete(index);
+              onTaskDelete(item.id);
             }}
           >
             <RiDeleteBin6Line className="w-[20px] h-[20px]" />
