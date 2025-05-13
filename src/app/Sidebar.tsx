@@ -1,52 +1,61 @@
+"use client";
+
+import { useState } from "react";
 import { IoMdStarOutline } from "react-icons/io";
 import { TbBrightnessUpFilled } from "react-icons/tb";
-import { MdAddBusiness, MdInsertChartOutlined } from "react-icons/md";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
+import { MdAddBusiness, MdInsertChartOutlined } from "react-icons/md";
 
-const SideBarItems = [
+interface SidebarItem {
+  Icon: React.ComponentType<{ color?: string }>;
+  Text: string;
+}
+
+const sidebarItems: SidebarItem[] = [
   {
-    icon: <TbBrightnessUpFilled color="grey" />,
-    text: "My Day",
+    Icon: TbBrightnessUpFilled,
+    Text: "My Day",
   },
   {
-    icon: <IoMdStarOutline color="maroon" />,
-    text: "Important",
+    Icon: IoMdStarOutline,
+    Text: "Important",
   },
   {
-    icon: <MdInsertChartOutlined color="green" />,
-    text: "Planned",
+    Icon: MdInsertChartOutlined,
+    Text: "Planned",
   },
   {
-    icon: <CiUser color="green" />,
-    text: "Assigned to me",
+    Icon: CiUser,
+    Text: "Assigned to me",
   },
   {
-    icon: <CiFlag1 color="red" />,
-    text: "Flagged email",
+    Icon: CiFlag1,
+    Text: "Flagged email",
   },
   {
-    icon: <CiHome color="lightblue" />,
-    text: "Tasks",
+    Icon: CiHome,
+    Text: "Tasks",
   },
 
   {
-    icon: <IoReorderThreeOutline />,
-    text: "Current Sprint",
+    Icon: IoReorderThreeOutline,
+    Text: "Current Sprint",
   },
   {
-    icon: <IoReorderThreeOutline />,
-    text: "BackLog",
+    Icon: IoReorderThreeOutline,
+    Text: "BackLog",
   },
   {
-    icon: <IoReorderThreeOutline />,
-    text: "Done",
+    Icon: IoReorderThreeOutline,
+    Text: "Done",
   },
 ];
 
 const Sidebar = () => {
+  const [activeItem, setActiveItem] = useState<string>("Tasks");
   return (
-    <div className="flex flex-col h-screen bg-[black]/80 text-white w-full max-w-[280px] px-4   justify-center items-start  gap-[80px]">
+    <div className="flex flex-col h-screen bg-[black]/80 text-white w-full max-w-[280px] px-4 justify-center items-start  gap-[80px]">
       <div className="w-full flex flex-col gap-2 justify-center items-start">
         <input
           type="search"
@@ -54,11 +63,17 @@ const Sidebar = () => {
           className="w-full px-3 py-2 rounded bg-[#2B2B2B] text-white focus:outline-none"
         />
 
-        {SideBarItems.map((item, i) => (
+        {sidebarItems.map((item, i) => (
           <ul key={i} className="space-y-2 w-full">
-            <li className="flex items-center justify-start gap-3 px-2 py-2 rounded hover:bg-[#2B2B2B] cursor-pointer">
-              {item.icon}
-              {item.text}
+            <li
+              onClick={() => setActiveItem(item.Text)}
+              data-active={activeItem === item.Text ? "true" : "false"}
+              className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${
+                activeItem === item.Text ? "bg-[#535353]" : ""
+              }`}
+            >
+              <item.Icon color={activeItem === item.Text ? "yellow" : "grey"} />
+              <span>{item.Text}</span>
             </li>
           </ul>
         ))}
@@ -70,9 +85,7 @@ const Sidebar = () => {
           <p> New list</p>
         </div>
 
-        <div className="">
-          <MdAddBusiness />
-        </div>
+        <MdAddBusiness />
       </button>
     </div>
   );

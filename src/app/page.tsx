@@ -50,10 +50,7 @@ export default function Home() {
   };
 
   const deleteTask = (id: string) => {
-    const taskToDelete = tasks.find((task) => task.id === id);
-    if (taskToDelete?.status) {
-      setTasks(tasks.filter((task) => task.id !== id));
-    }
+    setTasks(tasks.filter((task) => task.id !== id));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -121,15 +118,22 @@ export default function Home() {
               <button onClick={() => setShowDateMenu(!showDateMenu)}>
                 <CgCalendar color="lightblue" className="w-[25px] h-[25px]" />
               </button>
+              {taskDate && (
+                <span className="text-sm text-white ml-2">
+                  {new Date(taskDate).toLocaleDateString()}
+                </span>
+              )}
             </div>
             {showDateMenu && (
-              <DateSelector
-                onDateSelect={(date) => {
-                  setTaskDate(date);
-                  setShowDateMenu(false);
-                }}
-                onClose={() => setShowDateMenu(false)}
-              />
+              <div className="absolute right-0 bottom-full mb-2">
+                <DateSelector
+                  onDateSelect={(date) => {
+                    setTaskDate(date);
+                    setShowDateMenu(false);
+                  }}
+                  onClose={() => setShowDateMenu(false)}
+                ></DateSelector>
+              </div>
             )}
           </div>
         </div>
