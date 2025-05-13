@@ -44,7 +44,7 @@ const sidebarItems: SidebarItem[] = [
     id: "tasks",
     Icon: CiHome,
     text: "Tasks",
-    color: "blue",
+    color: "#606da3",
   },
 
   {
@@ -88,7 +88,7 @@ const Sidebar = () => {
               }`}
             >
               <item.Icon color={item.color} />
-              <span>{item.id}</span>
+              <span>{item.text}</span>
             </li>
           </ul>
         ))}
