@@ -11,66 +11,75 @@ interface SidebarItem {
   id: string;
   Icon: React.ComponentType<{ color?: string }>;
   text: string;
+  color: string;
 }
 
 const sidebarItems: SidebarItem[] = [
-  { id: "my-day", Icon: TbBrightnessUpFilled, text: "My Day" },
+  { id: "my-day", Icon: TbBrightnessUpFilled, text: "My Day", color: "grey" },
   {
     id: "important",
     Icon: IoMdStarOutline,
     text: "Important",
+    color: "pink",
   },
   {
     id: "planned",
     Icon: MdInsertChartOutlined,
     text: "Planned",
+    color: "green",
   },
   {
     id: "assigned",
     Icon: CiUser,
     text: "Assigned to me",
+    color: "green",
   },
   {
     id: "flagged",
     Icon: CiFlag1,
     text: "Flagged email",
+    color: "red",
   },
   {
     id: "tasks",
     Icon: CiHome,
     text: "Tasks",
+    color: "blue",
   },
 
   {
     id: "sprint",
     Icon: IoReorderThreeOutline,
     text: "Current Sprint",
+    color: "#c2c1c1",
   },
   {
     id: "backlog",
     Icon: IoReorderThreeOutline,
     text: "BackLog",
+    color: "#c2c1c1",
   },
   {
     id: "done",
     Icon: IoReorderThreeOutline,
     text: "Done",
+    color: "#c2c1c1",
   },
 ];
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState<string>("Tasks");
   return (
-    <div className="flex flex-col h-screen bg-[black]/80 text-white w-full max-w-[280px] px-4 justify-center items-start gap-[80px]">
-      <div className="w-full flex flex-col gap-2 justify-center items-start">
+    <div className="h-full flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 justify-between items-start">
+      <div className="w-full flex flex-col gap-1 justify-center items-start ">
         <input
           type="search"
           placeholder="Search"
-          className="w-full px-3 py-2 rounded bg-[#2B2B2B] text-white focus:outline-none"
+          className="w-full px-3 py-2 rounded bg-[#2B2B2B] text-white focus:outline-non border-b-[0.5px]"
         />
 
         {sidebarItems.map((item, i) => (
-          <ul key={i} className="space-y-2 w-full">
+          <ul key={i} className="space-y-2 w-full pt-[10px]">
             <li
               onClick={() => setActiveItem(item.id)}
               data-active={activeItem === item.id ? "true" : "false"}
@@ -78,7 +87,7 @@ const Sidebar = () => {
                 activeItem === item.id ? "bg-[#535353]" : ""
               }`}
             >
-              <item.Icon color={activeItem === item.id ? "yellow" : "grey"} />
+              <item.Icon color={item.color} />
               <span>{item.id}</span>
             </li>
           </ul>

@@ -82,9 +82,9 @@ export default function Home() {
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
-            <FaHome className="w-[30px] h-[30px]" color="lightblue" />
+            <FaHome className="w-[30px] h-[30px]" color="#608cd4" />
           </button>
-          <h1 className="text-2xl text-[lightblue]">Tasks</h1>
+          <h1 className="text-2xl text-[#608cd4]">Tasks</h1>
         </div>
         {tasks.length === 0 && (
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
@@ -94,7 +94,7 @@ export default function Home() {
               height={200}
               src={"/assets/taskimg.PNG"}
             />
-            <p className="text-[lightblue] w-full max-w-[300px] text-center">
+            <p className="text-[#608cd4] w-full max-w-[300px] text-center">
               Task show up here if they aren't part of any lists you've created
             </p>
           </div>
@@ -111,19 +111,19 @@ export default function Home() {
           <div className="w-full flex justify-between items-center max-w-[1000px] bg-[grey]/40 p-3 rounded absolute bottom-14">
             <div className="w-full flex gap-3 justify-start items-center">
               <button onClick={handleAddTask}>
-                <FaRegCircle color="lightblue" className="h-[25px] w-[25px] " />
+                <FaRegCircle color="#608cd4" className="h-[25px] w-[25px] " />
               </button>
               <input
                 value={taskTitle}
                 onChange={handleChange}
                 placeholder="Add a task"
-                className="w-full rounded text-[lightblue] outline-none placeholder:text-[lightblue]"
+                className="w-full rounded text-[#608cd4] outline-none placeholder:text-[#608cd4]"
               />
             </div>
 
             <div className="w-full flex justify-end items-center">
               <button onClick={() => setShowDateMenu(!showDateMenu)}>
-                <CgCalendar color="lightblue" className="w-[25px] h-[25px]" />
+                <CgCalendar color="#608cd4" className="w-[25px] h-[25px]" />
               </button>
               {taskDate && (
                 <span className="text-sm text-white ml-2">

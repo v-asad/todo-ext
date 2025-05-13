@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="flex justify-start">
-          <main className="flex w-full">
+          <main className=" flex w-full justify-center items-start">
             <Sidebar />
             {children}
           </main>

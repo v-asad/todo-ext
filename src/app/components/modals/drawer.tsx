@@ -1,12 +1,7 @@
 "use client";
 
 import React from "react";
-
-type Task = {
-  description: string;
-  status: boolean;
-  date: string;
-};
+import { Task } from "@/app/page";
 
 interface DrawerProps {
   isOpen: boolean;

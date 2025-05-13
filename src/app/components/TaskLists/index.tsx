@@ -8,6 +8,12 @@ interface TaskListProps {
   onTaskStatusChange: (index: number) => void;
   onTaskDelete: (id: string) => void;
 }
+const handleTaskDelete = (id: string, onTaskDelete: (id: string) => void) => {
+  return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
+    onTaskDelete(id);
+  };
+};
 
 const TaskLists = ({
   tasks,
@@ -39,12 +45,7 @@ const TaskLists = ({
               <p className="text-xs text-gray-400">{item.date}</p>
             </div>
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onTaskDelete(item.id);
-            }}
-          >
+          <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
             <RiDeleteBin6Line className="w-[20px] h-[20px]" />
           </button>
         </div>
