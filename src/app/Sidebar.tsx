@@ -78,7 +78,6 @@ const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
               <ul className="py-2 divide-y divide-[#393939]" role="none">
                 <li className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors" role="menuitem">Manage account</li>
                 <li className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors" role="menuitem">Settings</li>
-                <li className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors" role="menuitem">Sync</li>
               </ul>
             </div>
           )}
