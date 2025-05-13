@@ -10,7 +10,7 @@ import { FaHome, FaRegCircle } from "react-icons/fa";
 import DateSelector from "./components/DateSelector";
 import { useState, ChangeEvent, useEffect } from "react";
 
-type Task = {
+export type Task = {
   id: string;
   description: string;
   status: boolean;
@@ -18,7 +18,7 @@ type Task = {
 };
 
 export default function Home() {
-  const [task, setTask] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -27,19 +27,19 @@ export default function Home() {
   const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
 
   const handleAddTask = () => {
-    if (task.trim() === "") {
+    if (taskTitle.trim() === "") {
       toast.error("Please add the text.");
       return;
     }
 
     const newTask: Task = {
-      description: task,
+      description: taskTitle,
       status: false,
       date: taskDate,
       id: uuidv4(),
     };
     setTasks((prev) => [newTask, ...prev]);
-    setTask("");
+    setTaskTitle("");
     setTaskDate("");
   };
 
@@ -54,13 +54,20 @@ export default function Home() {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTask(e.target.value);
+    setTaskTitle(e.target.value);
   };
 
   const handleTaskClick = (task: Task) => {
     setSelectedTask(task);
     setIsSidebarOpen(true);
   };
+  const handleDateSelect = (date: string) => {
+    setTaskDate(date);
+    setShowDateMenu(false);
+  };
+  const handleClose = ()=> {
+    setShowDateMenu(false)
+  }
   useEffect(() => {
     const sorted = [...tasks].sort((a, b) => {
       if (a.status && !b.status) return 1;
@@ -107,7 +114,7 @@ export default function Home() {
                 <FaRegCircle color="lightblue" className="h-[25px] w-[25px] " />
               </button>
               <input
-                value={task}
+                value={taskTitle}
                 onChange={handleChange}
                 placeholder="Add a task"
                 className="w-full rounded text-[lightblue] outline-none placeholder:text-[lightblue]"
@@ -127,11 +134,8 @@ export default function Home() {
             {showDateMenu && (
               <div className="absolute right-0 bottom-full mb-2">
                 <DateSelector
-                  onDateSelect={(date) => {
-                    setTaskDate(date);
-                    setShowDateMenu(false);
-                  }}
-                  onClose={() => setShowDateMenu(false)}
+                  onDateSelect={handleDateSelect}
+                  onClose={handleClose}
                 ></DateSelector>
               </div>
             )}

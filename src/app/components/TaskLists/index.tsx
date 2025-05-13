@@ -1,12 +1,6 @@
 import React from "react";
+import { Task } from "@/app/page";
 import { RiDeleteBin6Line } from "react-icons/ri";
-
-type Task = {
-  description: string;
-  status: boolean;
-  date: string;
-  id: string;
-};
 
 interface TaskListProps {
   tasks: Task[];
