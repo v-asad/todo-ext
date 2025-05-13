@@ -22,14 +22,14 @@ const TaskLists = ({
   onTaskDelete,
 }: TaskListProps) => {
   return (
-    <div className="flex flex-col gap-2 mt-10">
+    <div className="flex flex-col justify-center items-center gap-2 mt-10">
       {tasks.map((item, index) => (
         <div
           key={index}
           className="w-full flex justify-between items-center rounded px-6 py-2 bg-white cursor-pointer"
           onClick={() => onTaskClick(item)}
         >
-          <div className="flex gap-3 items-start">
+          <div className="flex gap-3 items-start justify-center">
             <div>
               <input
                 type="checkbox"
