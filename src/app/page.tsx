@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { CgCalendar } from "react-icons/cg";
-import TaskLists from "./components/TaskLists";
-import Drawer from "./components/modals/drawer";
+import TaskLists from "../components/TaskLists";
+import Drawer from "../components/modals/drawer";
 import toast, { Toaster } from "react-hot-toast";
 import { FaHome, FaRegCircle } from "react-icons/fa";
-import DateSelector from "./components/DateSelector";
+import DateSelector from "../components/DateSelector";
 import { useState, ChangeEvent, useEffect } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
 
@@ -140,7 +139,7 @@ export default function Home() {
             <DateSelector
               onDateSelect={handleDateSelect}
               onClose={handleClose}
-            ></DateSelector>
+            />
           </div>
         )}
       </div>
