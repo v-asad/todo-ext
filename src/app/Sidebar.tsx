@@ -2,7 +2,22 @@
 
 import { useState } from 'react';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import {
+  FaSun,
+  FaStar,
+  FaCalendarAlt,
+  FaUser,
+  FaFlag,
+  FaTasks,
+  FaRunning,
+  FaListAlt,
+  FaCheck,
+  FaPlus,
+} from 'react-icons/fa';
+import { MdFormatListBulletedAdd } from "react-icons/md";
 import { obfuscateEmail } from '@/utils/email';
+import { FaUserCog } from "react-icons/fa";
+import { IoSettingsSharp } from "react-icons/io5";
 
 interface SidebarProps {
   userEmail: string;
@@ -16,15 +31,15 @@ const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
   const displayEmail = obfuscateEmail(userEmail);
 
   const navigationItems = [
-    { id: 'my-day', label: 'My Day' },
-    { id: 'important', label: 'Important' },
-    { id: 'planned', label: 'Planned', count: 1 },
-    { id: 'assigned', label: 'Assigned to me' },
-    { id: 'flagged', label: 'Flagged email' },
-    { id: 'tasks', label: 'Tasks', count: 1 },
-    { id: 'sprint', label: 'Current Sprint', count: 1 },
-    { id: 'backlog', label: 'Backlog' },
-    { id: 'done', label: 'Done' },
+    { id: 'my-day', label: 'My Day', icon: <FaSun /> },
+    { id: 'important', label: 'Important', icon: <FaStar /> },
+    { id: 'planned', label: 'Planned', count: 1, icon: <FaCalendarAlt /> },
+    { id: 'assigned', label: 'Assigned to me', icon: <FaUser /> },
+    { id: 'flagged', label: 'Flagged email', icon: <FaFlag /> },
+    { id: 'tasks', label: 'Tasks', count: 1, icon: <FaTasks /> },
+    { id: 'sprint', label: 'Current Sprint', count: 1, icon: <FaRunning /> },
+    { id: 'backlog', label: 'Backlog', icon: <FaListAlt /> },
+    { id: 'done', label: 'Done', icon: <FaCheck /> },
   ];
 
   const handleSearch = (value: string) => {
@@ -74,10 +89,23 @@ const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
             <div
               className="absolute top-full left-0 w-full bg-[#2B2B2B] rounded-xl shadow-xl z-10 mt-2"
               role="menu"
-              aria-labelledby="user-menu-button">
+              aria-labelledby="user-menu-button"
+            >
               <ul className="py-2 divide-y divide-[#393939]" role="none">
-                <li className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors" role="menuitem">Manage account</li>
-                <li className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors" role="menuitem">Settings</li>
+                <li
+                  className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors flex items-center gap-3"
+                  role="menuitem"
+                >
+                  <FaUserCog className="text-white text-lg" />
+                  <span className="text-white">Manage accounts</span>
+                </li>
+                <li
+                  className="px-4 py-3 hover:bg-[#3B3B3B] cursor-pointer transition-colors flex items-center gap-3"
+                  role="menuitem"
+                >
+                  <IoSettingsSharp className="text-white text-lg" />
+                  <span className="text-white">Settings</span>
+                </li>
               </ul>
             </div>
           )}
@@ -102,9 +130,8 @@ const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
                   }`}
                 onClick={() => handleNavigationClick(item.id)}
               >
-                <span aria-current={activeItem === item.id ? 'page' : undefined}>
-                  {item.label}
-                </span>
+                <span className="text-lg">{item.icon}</span>
+                <span>{item.label}</span>
                 {item.count && (
                   <span className="ml-auto text-xs bg-[#2B2B2B] px-2 py-0.5 rounded">
                     {item.count}
@@ -115,13 +142,17 @@ const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
           </ul>
         </nav>
       </div>
-      <div className="w-full">
+      <div className="w-full flex items-center justify-between bg-[#2B2B2B] mb-12 px-3 py-2 text-lg rounded">
         <button
           type="button"
           onClick={() => handleNewList()}
-          className="flex items-center justify-center gap-2 w-full px-3 py-2 mb-12 bg-[#2B2B2B] rounded">
-          + New list
+          className="flex items-center justify-start gap-2 w-full  bg-[#2B2B2B] rounded">
+          <FaPlus />
+          New list
         </button>
+        <div>
+          <MdFormatListBulletedAdd />
+        </div>
       </div>
     </div>
   );
