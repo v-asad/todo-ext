@@ -9,6 +9,7 @@ import { FaHome, FaRegCircle } from "react-icons/fa";
 import DateSelector from "../components/DateSelector";
 import { useState, ChangeEvent, useEffect } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
+import { IoAdd } from "react-icons/io5";
 
 export type Task = {
   id: string;
@@ -21,6 +22,7 @@ export default function Home() {
   const [taskTitle, setTaskTitle] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
+  const [focused, setFocused] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [showDateMenu, setShowDateMenu] = useState(false);
@@ -41,6 +43,7 @@ export default function Home() {
     setTasks((prev) => [newTask, ...prev]);
     setTaskTitle("");
     setTaskDate("");
+    setFocused(false);
   };
 
   const tasksUpdated = (index: number) => {
@@ -77,8 +80,9 @@ export default function Home() {
     setSortedTasks(sorted);
   }, [tasks]);
 
+  console.log("showwwwwwwwwwwwwwww", showDateMenu);
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen relative overflow-hidden">
+    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -111,36 +115,47 @@ export default function Home() {
           selectedTask={selectedTask}
         />
       </div>
+      {showDateMenu && (
+        <div className="absolute bottom-22 right-10">
+          <DateSelector onDateSelect={handleDateSelect} onClose={handleClose} />
+        </div>
+      )}
       <div className="w-full flex justify-between items-center bg-[grey]/40 p-3 rounded ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
-            <FaRegCircle color="#608cd4" className="h-[25px] w-[25px] " />
+            {focused ? (
+              <FaRegCircle className="h-[25px] w-[25px] " color="#608cd4" />
+            ) : (
+              <IoAdd className="h-[25px] w-[25px] " color="#608cd4" />
+            )}
           </button>
           <input
             value={taskTitle}
             onChange={handleChange}
+            onFocus={() => setFocused(true)}
+            onBlur={() => !setFocused}
             placeholder="Add a task"
             className="w-full rounded text-[#608cd4] outline-none placeholder:text-[#608cd4]"
           />
         </div>
 
-        <div className="w-full flex justify-end items-center">
-          <button onClick={() => setShowDateMenu(!showDateMenu)}>
-            <CgCalendar color="#608cd4" className="w-[25px] h-[25px]" />
-          </button>
-          {taskDate && (
-            <span className="text-sm text-white ml-2">
-              {new Date(taskDate).toLocaleDateString()}
-            </span>
-          )}
-        </div>
-        {showDateMenu && (
-          <div className="absolute right-0 bottom-full mb-2">
-            <DateSelector
-              onDateSelect={handleDateSelect}
-              onClose={handleClose}
-            />
+        {focused ? (
+          <div className="w-full flex justify-end items-center">
+            <button>
+              <CgCalendar
+                onClick={() => setShowDateMenu(true)}
+                color="#608cd4"
+                className="w-[25px] h-[25px]"
+              />
+            </button>
+            {taskDate && (
+              <span className="text-sm text-white ml-2">
+                {new Date(taskDate).toLocaleDateString()}
+              </span>
+            )}
           </div>
+        ) : (
+          ""
         )}
       </div>
     </div>

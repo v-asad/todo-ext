@@ -44,7 +44,7 @@ export default function DateSelector({
   };
 
   return (
-    <div>
+    <div className="z-50">
       <select
         className="text-sm border rounded px-3 py-1 bg-white"
         defaultValue=""
