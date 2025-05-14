@@ -80,7 +80,6 @@ export default function Home() {
     setSortedTasks(sorted);
   }, [tasks]);
 
-  console.log("showwwwwwwwwwwwwwww", showDateMenu);
   return (
     <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
       <div>
