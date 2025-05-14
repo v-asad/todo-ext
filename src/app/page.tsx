@@ -9,6 +9,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { FaHome, FaRegCircle } from "react-icons/fa";
 import DateSelector from "./components/DateSelector";
 import { useState, ChangeEvent, useEffect } from "react";
+import { FaCircleCheck } from "react-icons/fa6";
 
 export type Task = {
   id: string;
@@ -65,9 +66,9 @@ export default function Home() {
     setTaskDate(date);
     setShowDateMenu(false);
   };
-  const handleClose = ()=> {
-    setShowDateMenu(false)
-  }
+  const handleClose = () => {
+    setShowDateMenu(false);
+  };
   useEffect(() => {
     const sorted = [...tasks].sort((a, b) => {
       if (a.status && !b.status) return 1;
@@ -78,7 +79,7 @@ export default function Home() {
   }, [tasks]);
 
   return (
-    <div className="w-full p-10 bg-[black]/91 h-screen relative overflow-hidden">
+    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen relative overflow-hidden">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -88,12 +89,7 @@ export default function Home() {
         </div>
         {tasks.length === 0 && (
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
-            <Image
-              alt="task"
-              width={200}
-              height={200}
-              src={"/assets/taskimg.PNG"}
-            />
+            <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#608cd4] w-full max-w-[300px] text-center">
               Task show up here if they aren't part of any lists you've created
             </p>
@@ -106,40 +102,8 @@ export default function Home() {
           onTaskDelete={deleteTask}
         />
 
-        <div className="w-full flex justify-center items-end py-20">
+        <div className="w-full h-full flex justify-center items-end">
           <Toaster position="top-center" />
-          <div className="w-full flex justify-between items-center max-w-[1000px] bg-[grey]/40 p-3 rounded absolute bottom-14">
-            <div className="w-full flex gap-3 justify-start items-center">
-              <button onClick={handleAddTask}>
-                <FaRegCircle color="#608cd4" className="h-[25px] w-[25px] " />
-              </button>
-              <input
-                value={taskTitle}
-                onChange={handleChange}
-                placeholder="Add a task"
-                className="w-full rounded text-[#608cd4] outline-none placeholder:text-[#608cd4]"
-              />
-            </div>
-
-            <div className="w-full flex justify-end items-center">
-              <button onClick={() => setShowDateMenu(!showDateMenu)}>
-                <CgCalendar color="#608cd4" className="w-[25px] h-[25px]" />
-              </button>
-              {taskDate && (
-                <span className="text-sm text-white ml-2">
-                  {new Date(taskDate).toLocaleDateString()}
-                </span>
-              )}
-            </div>
-            {showDateMenu && (
-              <div className="absolute right-0 bottom-full mb-2">
-                <DateSelector
-                  onDateSelect={handleDateSelect}
-                  onClose={handleClose}
-                ></DateSelector>
-              </div>
-            )}
-          </div>
         </div>
 
         <Drawer
@@ -147,6 +111,38 @@ export default function Home() {
           onClose={() => setIsSidebarOpen(false)}
           selectedTask={selectedTask}
         />
+      </div>
+      <div className="w-full flex justify-between items-center bg-[grey]/40 p-3 rounded ">
+        <div className="w-full flex gap-3 justify-start items-center">
+          <button onClick={handleAddTask}>
+            <FaRegCircle color="#608cd4" className="h-[25px] w-[25px] " />
+          </button>
+          <input
+            value={taskTitle}
+            onChange={handleChange}
+            placeholder="Add a task"
+            className="w-full rounded text-[#608cd4] outline-none placeholder:text-[#608cd4]"
+          />
+        </div>
+
+        <div className="w-full flex justify-end items-center">
+          <button onClick={() => setShowDateMenu(!showDateMenu)}>
+            <CgCalendar color="#608cd4" className="w-[25px] h-[25px]" />
+          </button>
+          {taskDate && (
+            <span className="text-sm text-white ml-2">
+              {new Date(taskDate).toLocaleDateString()}
+            </span>
+          )}
+        </div>
+        {showDateMenu && (
+          <div className="absolute right-0 bottom-full mb-2">
+            <DateSelector
+              onDateSelect={handleDateSelect}
+              onClose={handleClose}
+            ></DateSelector>
+          </div>
+        )}
       </div>
     </div>
   );
