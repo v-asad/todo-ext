@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import DatePicker from "react-datepicker";
+import CalendarModal from "../calendarModal";
 
 type DateSelectorProps = {
   onDateSelect: (date: string) => void;
@@ -44,36 +44,39 @@ export default function DateSelector({
   };
 
   return (
-    <div className="z-50">
-      <select
-        className="text-sm border rounded px-3 py-1 bg-white"
-        defaultValue=""
-        onChange={(e) => handleOptionSelect(e.target.value)}
+    <div className="z-50 bg-white border rounded shadow-md w-48 p-2 space-y-2s ">
+      <button
+        className="w-full text-left hover:bg-gray-100 px-2 py-1"
+        onClick={() => handleOptionSelect("today")}
       >
-        <option value="">Select Date</option>
-        <option value="today">Today</option>
-        <option value="tomorrow">Tomorrow</option>
-        <option value="nextWeek">Next Week</option>
-        <option value="custom">Pick a date</option>
-      </select>
-
+        Today
+      </button>
+      <button
+        className="w-full text-left hover:bg-gray-100 px-2 py-1"
+        onClick={() => handleOptionSelect("tomorrow")}
+      >
+        Tomorrow
+      </button>
+      <button
+        className="w-full text-left hover:bg-gray-100 px-2 py-1"
+        onClick={() => handleOptionSelect("nextWeek")}
+      >
+        Next Week
+      </button>
+      <button
+        className="w-full text-left hover:bg-gray-100 px-2 py-1"
+        onClick={() => {
+          handleOptionSelect("custom");
+        }}
+      >
+        Pick a date
+      </button>
       {isCalendarModalOpen && (
-        <div className="fixed inset-0 flex justify-end items-center bg-transparent bg-opacity-30 z-50 px-10">
-          <div className="bg-white p-6 rounded shadow-md z-50">
-            <h2 className="text-lg font-semibold mb-4">Select a date</h2>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleCustomDateSelect}
-              inline
-            />
-            <button
-              onClick={() => setIsCalendarModalOpen(false)}
-              className="mt-4 text-red-500"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+        <CalendarModal
+          selectedDate={selectedDate}
+          onSelectDate={handleCustomDateSelect}
+          onClose={() => setIsCalendarModalOpen(false)}
+        />
       )}
     </div>
   );

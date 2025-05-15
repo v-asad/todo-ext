@@ -2,14 +2,15 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { CgCalendar } from "react-icons/cg";
-import TaskLists from "../components/TaskLists";
-import Drawer from "../components/modals/drawer";
 import toast, { Toaster } from "react-hot-toast";
 import { FaHome, FaRegCircle } from "react-icons/fa";
-import DateSelector from "../components/DateSelector";
+
 import { useState, ChangeEvent, useEffect } from "react";
 import { FaCircleCheck } from "react-icons/fa6";
 import { IoAdd } from "react-icons/io5";
+import DateSelector from "@/components/DateSelector";
+import Drawer from "@/components/modals/drawer";
+import TaskLists from "@/components/TaskLists";
 
 export type Task = {
   id: string;
@@ -46,9 +47,10 @@ export default function Home() {
     setFocused(false);
   };
 
-  const tasksUpdated = (index: number) => {
-    const updated = [...tasks];
-    updated[index].status = !updated[index].status;
+  const tasksUpdated = (id: string) => {
+    const updated = tasks.map((task) =>
+      task.id === id ? { ...task, status: !task.status } : task
+    );
     setTasks(updated);
   };
 
@@ -93,7 +95,7 @@ export default function Home() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#608cd4] w-full max-w-[300px] text-center">
-              Task show up here if they aren't part of any lists you've created
+              Tasks show up here if they aren't part of any lists you've created
             </p>
           </div>
         )}
@@ -131,6 +133,12 @@ export default function Home() {
           <input
             value={taskTitle}
             onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAddTask();
+                setFocused(true);
+              }
+            }}
             onFocus={() => setFocused(true)}
             onBlur={() => !setFocused}
             placeholder="Add a task"
@@ -138,13 +146,13 @@ export default function Home() {
           />
         </div>
 
-        {focused ? (
+        {focused && taskTitle.trim().length > 0 && (
           <div className="w-full flex justify-end items-center">
             <button>
               <CgCalendar
-                onClick={() => setShowDateMenu(true)}
+                onClick={() => setShowDateMenu(!showDateMenu)}
                 color="#608cd4"
-                className="w-[25px] h-[25px]"
+                className="w-[25px] h-[25px] focus:outline-none"
               />
             </button>
             {taskDate && (
@@ -153,8 +161,6 @@ export default function Home() {
               </span>
             )}
           </div>
-        ) : (
-          ""
         )}
       </div>
     </div>

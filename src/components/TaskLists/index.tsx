@@ -1,11 +1,11 @@
-import React from "react";
 import { Task } from "@/app/page";
+import React from "react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface TaskListProps {
   tasks: Task[];
   onTaskClick: (task: Task) => void;
-  onTaskStatusChange: (index: number) => void;
+  onTaskStatusChange: (id: string) => void;
   onTaskDelete: (id: string) => void;
 }
 const handleTaskDelete = (id: string, onTaskDelete: (id: string) => void) => {
@@ -35,7 +35,7 @@ const TaskLists = ({
                 type="checkbox"
                 checked={item.status}
                 onClick={(e) => e.stopPropagation()}
-                onChange={() => onTaskStatusChange(index)}
+                onChange={() => onTaskStatusChange(item.id)}
               />
             </div>
             <div>
