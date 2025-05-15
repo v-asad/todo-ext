@@ -20,7 +20,7 @@ const CalendarModal = ({
     }
   };
   return (
-    <div className="fixed inset-0 flex justify-end items-center bg-black bg-opacity-40 z-50 px-[50px]">
+    <div className="fixed inset-0 flex justify-end items-center bg-opacity-40 z-50 px-[50px]">
       <div className="bg-white p-6 rounded shadow-md z-50">
         <h2 className="text-lg font-semibold mb-4">Select a date</h2>
         <DatePicker
