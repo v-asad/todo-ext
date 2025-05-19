@@ -149,7 +149,7 @@ export default function Tasks() {
           <DateSelector onDateSelect={handleDateSelect} onClose={handleClose} />
         </div>
       )}
-      <div className="w-full flex justify-between items-center bg-[grey]/40 p-3 rounded ">
+      <div className="w-full flex justify-between items-center bg-[#292929] p-3 rounded ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (

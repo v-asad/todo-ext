@@ -26,12 +26,13 @@ const TaskLists = ({
       {tasks.map((item, index) => (
         <div
           key={index}
-          className="w-full flex justify-between items-center rounded px-6 py-2 bg-white cursor-pointer"
+          className="w-full flex justify-between items-center rounded px-6 py-2 bg-[#2a2a2a] cursor-pointer"
           onClick={() => onTaskClick(item)}
         >
           <div className="flex gap-3 items-start justify-center">
             <div className="h-[40px]">
               <input
+                className="rounded-full "
                 type="checkbox"
                 checked={item.status}
                 onClick={(e) => e.stopPropagation()}
@@ -39,14 +40,18 @@ const TaskLists = ({
               />
             </div>
             <div>
-              <p className={item.status ? "line-through text-gray-500" : ""}>
+              <p
+                className={
+                  item.status ? "line-through text-white" : "text-white"
+                }
+              >
                 {item.description}
               </p>
-              <p className="text-xs text-gray-400">{item.date}</p>
+              <p className="text-xs text-[red]">{item.date}</p>
             </div>
           </div>
           <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
-            <RiDeleteBin6Line className="w-[20px] h-[20px]" />
+            <RiDeleteBin6Line color="white" className="w-[20px] h-[20px]" />
           </button>
         </div>
       ))}
