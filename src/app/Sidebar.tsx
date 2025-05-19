@@ -15,7 +15,7 @@ import {
   FaPlus,
 } from 'react-icons/fa';
 import { MdFormatListBulletedAdd } from "react-icons/md";
-import { obfuscateEmail } from '@/utils/email';
+import { maskEmail } from '@/utils/email';
 import { FaUserCog } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
 
@@ -24,11 +24,11 @@ interface SidebarProps {
   userName: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ userEmail, userName }) => {
+const Sidebar = ({ userEmail, userName }:SidebarProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeItem, setActiveItem] = useState<string>('Tasks');
-  const displayEmail = obfuscateEmail(userEmail);
+  const displayEmail = maskEmail(userEmail);
 
   const navigationItems = [
     { id: 'my-day', label: 'My Day', icon: <FaSun /> },
