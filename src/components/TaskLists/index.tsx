@@ -8,6 +8,7 @@ interface TaskListProps {
   onTaskStatusChange: (id: string) => void;
   onTaskDelete: (id: string) => void;
 }
+
 const handleTaskDelete = (id: string, onTaskDelete: (id: string) => void) => {
   return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
@@ -21,40 +22,81 @@ const TaskLists = ({
   onTaskStatusChange,
   onTaskDelete,
 }: TaskListProps) => {
-  return (
-    <div className="flex flex-col justify-center items-center gap-2 mt-10">
-      {tasks.map((item, index) => (
-        <div
-          key={index}
-          className="w-full flex justify-between items-center rounded px-6 py-2 bg-[#2a2a2a] cursor-pointer"
-          onClick={() => onTaskClick(item)}
-        >
-          <div className="flex gap-3 items-start justify-center">
-            <div className="h-[40px]">
-              <input
-                className="rounded-full "
-                type="checkbox"
-                checked={item.status}
-                onClick={(e) => e.stopPropagation()}
-                onChange={() => onTaskStatusChange(item.id)}
-              />
-            </div>
-            <div className="flex flex-col gap-[2px] justify-start items-start">
-              <p
-                className={
-                  item.status ? "line-through text-white" : "text-white"
-                }
-              >
-                {item.description}
-              </p>
-              <p className="text-xs text-[red]">{item.date}</p>
-            </div>
+  const completedTasks = tasks.filter((task) => task.status);
+  const incompleteTasks = tasks.filter((task) => !task.status);
+
+  const getDateLabel = (dateStr: string): string => {
+    const [year, month, day] = dateStr.split("-").map(Number);
+    const target = new Date(year, month - 1, day);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    target.setHours(0, 0, 0, 0);
+
+    const diffInDays = Math.round(
+      (target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffInDays === 0) return "Today";
+    if (diffInDays === 1) return "Tomorrow";
+
+    return target.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
+  const renderTasks = (taskArray: Task[]) =>
+    taskArray.map((item, index) => (
+      <div
+        key={index}
+        className="w-full flex justify-between items-center rounded px-6 py-2 bg-[#2a2a2a] cursor-pointer"
+        onClick={() => onTaskClick(item)}
+      >
+        <div className="flex gap-3 items-start justify-center">
+          <div className="h-[40px]">
+            <input
+              className="rounded-full"
+              type="checkbox"
+              checked={item.status}
+              onClick={(e) => e.stopPropagation()}
+              onChange={() => onTaskStatusChange(item.id)}
+            />
           </div>
-          <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
-            <RiDeleteBin6Line color="white" className="w-[20px] h-[20px]" />
-          </button>
+          <div className="flex flex-col gap-[2px] justify-start items-start">
+            <p
+              className={item.status ? "line-through text-white" : "text-white"}
+            >
+              {item.description}
+            </p>
+            {item.date && (
+              <p className="text-xs text-[red]">{getDateLabel(item.date)}</p>
+            )}
+          </div>
         </div>
-      ))}
+        <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
+          <RiDeleteBin6Line color="white" className="w-[20px] h-[20px]" />
+        </button>
+      </div>
+    ));
+
+  return (
+    <div className="flex flex-col justify-center items-center gap-4 mt-10 w-full ">
+      {incompleteTasks.length > 0 && (
+        <div className="w-full flex flex-col gap-2">
+          {renderTasks(incompleteTasks)}
+        </div>
+      )}
+
+      {completedTasks.length > 0 && (
+        <div className="w-full flex flex-col gap-2 mt-6">
+          <h2 className="text-left text-[#8fa8f3] font-semibold pl-6">
+            Completed
+          </h2>
+          {renderTasks(completedTasks)}
+        </div>
+      )}
     </div>
   );
 };

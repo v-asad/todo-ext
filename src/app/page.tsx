@@ -2,15 +2,16 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { IoAdd } from "react-icons/io5";
-import { CgCalendar } from "react-icons/cg";
 import { FaCircleCheck } from "react-icons/fa6";
 import toast, { Toaster } from "react-hot-toast";
-import { FaHome, FaRegCircle } from "react-icons/fa";
+import { FaRegCircle } from "react-icons/fa";
 import { useState, ChangeEvent, useEffect, useRef } from "react";
 
 import DateSelector from "@/components/DateSelector";
 import Drawer from "@/components/modals/drawer";
 import TaskLists from "@/components/TaskLists";
+import { CiHome } from "react-icons/ci";
+import { BsCalendar3 } from "react-icons/bs";
 
 export type Task = {
   id: string;
@@ -71,9 +72,7 @@ export default function Home() {
   const handleDateSelect = (date: string) => {
     setTaskDate(date);
     setShowDateMenu(false);
-    setTimeout(() => {
-      inputRef.current?.focus();
-    }, 0);
+    inputRef.current?.focus();
   };
   const handleClose = () => {
     setShowDateMenu(false);
@@ -84,6 +83,28 @@ export default function Home() {
       setFocused(true);
     }
   };
+  const getDateLabel = (dateStr: string): string => {
+    const [year, month, day] = dateStr.split("-").map(Number);
+    const target = new Date(year, month - 1, day);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    target.setHours(0, 0, 0, 0);
+
+    const diffInDays = Math.round(
+      (target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffInDays === 0) return "Today";
+    if (diffInDays === 1) return "Tomorrow";
+
+    return target.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   useEffect(() => {
     const sorted = [...tasks].sort((a, b) => {
       if (a.status && !b.status) return 1;
@@ -115,11 +136,11 @@ export default function Home() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
+    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-x-hidden relative ">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
-            <FaHome className="w-[30px] h-[30px]" color="#608cd4" />
+            <CiHome className="w-[30px] h-[30px]" color="#608cd4" />
           </button>
           <h1 className="text-2xl text-[#608cd4]">Tasks</h1>
         </div>
@@ -170,22 +191,22 @@ export default function Home() {
             onFocus={() => setFocused(true)}
             onBlur={() => !setFocused}
             placeholder="Add a task"
-            className="w-full rounded text-[#608cd4] outline-none placeholder:text-[#608cd4]"
+            className="w-full rounded text-white outline-none placeholder:text-[#608cd4]"
           />
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
           <div className="w-full flex justify-end items-center">
             <button>
-              <CgCalendar
+              <BsCalendar3
                 onMouseDown={() => setShowDateMenu(!showDateMenu)}
-                color="#608cd4"
-                className="w-[25px] h-[25px] focus:outline-none"
+                color="white"
+                className="w-[20px] h-[20px] focus:outline-none"
               />
             </button>
             {taskDate && (
               <span className="text-sm text-white ml-2">
-                {new Date(taskDate).toLocaleDateString()}
+                {getDateLabel(taskDate)}
               </span>
             )}
           </div>
