@@ -24,7 +24,7 @@ const Drawer = ({ isOpen, onClose, selectedTask }: DrawerProps) => {
           <>
             <p className="mt-4 font-bold">{selectedTask.description}</p>
             <p className="text-sm text-gray-500 mt-2">
-              Status: {selectedTask.status}
+              Status: {selectedTask.status ? "Completed" : "Uncompleted"}
             </p>
             <p className="text-sm text-gray-500 mt-2">
               Date: {selectedTask.date}

@@ -1,19 +1,22 @@
 import React from "react";
-import { CiUser } from "react-icons/ci";
+import { MdInsertChartOutlined } from "react-icons/md";
 
-function assigned() {
+function Planned() {
   return (
     <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
       <div>
         <div className="flex gap-2 items-center">
           <button>
-            <CiUser className="w-[30px] h-[30px]" color="green" />
+            <MdInsertChartOutlined
+              className="w-[30px] h-[30px]"
+              color="green"
+            />
           </button>
-          <h1 className="text-2xl text-[green]">Assigned to me</h1>
+          <h1 className="text-2xl text-[green]">Planned</h1>
         </div>
       </div>
     </div>
   );
 }
 
-export default assigned;
+export default Planned;

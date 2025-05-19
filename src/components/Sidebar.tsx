@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { IoMdStarOutline } from "react-icons/io";
 import { TbBrightnessUpFilled } from "react-icons/tb";
-import { IoAddSharp, IoReorderThreeOutline } from "react-icons/io5";
+import { IoAddSharp } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
 import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
 import { MdAddBusiness, MdInsertChartOutlined } from "react-icons/md";
 import { useRouter } from "next/navigation";
@@ -62,21 +63,21 @@ const sidebarItems: SidebarItem[] = [
 
   {
     id: "sprint",
-    Icon: IoReorderThreeOutline,
+    Icon: RxHamburgerMenu,
     text: "Current Sprint",
     color: "#c2c1c1",
-    path: "/sprints",
+    path: "/",
   },
   {
     id: "backlog",
-    Icon: IoReorderThreeOutline,
+    Icon: RxHamburgerMenu,
     text: "BackLog",
     color: "#c2c1c1",
     path: "/backlog",
   },
   {
     id: "done",
-    Icon: IoReorderThreeOutline,
+    Icon: RxHamburgerMenu,
     text: "Done",
     color: "#c2c1c1",
     path: "/done",
@@ -86,6 +87,11 @@ const sidebarItems: SidebarItem[] = [
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState<string>("Tasks");
   const router = useRouter();
+
+  const handleItemClick = (id: string, path: string) => {
+    setActiveItem(id);
+    router.push(path);
+  };
   return (
     <div className="h-full flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 justify-between items-start">
       <div className="w-full flex flex-col gap-1 justify-center items-start ">
@@ -98,10 +104,7 @@ const Sidebar = () => {
         {sidebarItems.map((item, i) => (
           <ul key={i} className="space-y-2 w-full pt-[10px]">
             <li
-              onClick={() => {
-                setActiveItem(item.id);
-                router.push(item.path);
-              }}
+              onClick={() => handleItemClick(item.id, item.path)}
               data-active={activeItem === item.id ? "true" : "false"}
               className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${
                 activeItem === item.id ? "bg-[#535353]" : ""

@@ -1,5 +1,5 @@
-import { Task } from "@/app/page";
 import React from "react";
+import { Task } from "@/app/page";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
 interface TaskListProps {
@@ -30,7 +30,7 @@ const TaskLists = ({
           onClick={() => onTaskClick(item)}
         >
           <div className="flex gap-3 items-start justify-center">
-            <div>
+            <div className="h-[40px]">
               <input
                 type="checkbox"
                 checked={item.status}

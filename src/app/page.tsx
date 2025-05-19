@@ -1,13 +1,13 @@
 "use client";
 
 import { v4 as uuidv4 } from "uuid";
+import { IoAdd } from "react-icons/io5";
 import { CgCalendar } from "react-icons/cg";
+import { FaCircleCheck } from "react-icons/fa6";
 import toast, { Toaster } from "react-hot-toast";
 import { FaHome, FaRegCircle } from "react-icons/fa";
+import { useState, ChangeEvent, useEffect, useRef } from "react";
 
-import { useState, ChangeEvent, useEffect } from "react";
-import { FaCircleCheck } from "react-icons/fa6";
-import { IoAdd } from "react-icons/io5";
 import DateSelector from "@/components/DateSelector";
 import Drawer from "@/components/modals/drawer";
 import TaskLists from "@/components/TaskLists";
@@ -24,6 +24,7 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [focused, setFocused] = useState(false);
+  const calendarRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [showDateMenu, setShowDateMenu] = useState(false);
@@ -73,6 +74,12 @@ export default function Home() {
   const handleClose = () => {
     setShowDateMenu(false);
   };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleAddTask();
+      setFocused(true);
+    }
+  };
   useEffect(() => {
     const sorted = [...tasks].sort((a, b) => {
       if (a.status && !b.status) return 1;
@@ -81,6 +88,27 @@ export default function Home() {
     });
     setSortedTasks(sorted);
   }, [tasks]);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        calendarRef.current &&
+        !calendarRef.current.contains(event.target as Node)
+      ) {
+        setShowDateMenu(false);
+      }
+    }
+
+    if (showDateMenu) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showDateMenu]);
 
   return (
     <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
@@ -117,7 +145,7 @@ export default function Home() {
         />
       </div>
       {showDateMenu && (
-        <div className="absolute bottom-22 right-10">
+        <div ref={calendarRef} className="absolute bottom-22 right-10">
           <DateSelector onDateSelect={handleDateSelect} onClose={handleClose} />
         </div>
       )}
@@ -133,12 +161,7 @@ export default function Home() {
           <input
             value={taskTitle}
             onChange={handleChange}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                handleAddTask();
-                setFocused(true);
-              }
-            }}
+            onKeyDown={handleKeyDown}
             onFocus={() => setFocused(true)}
             onBlur={() => !setFocused}
             placeholder="Add a task"
@@ -150,7 +173,7 @@ export default function Home() {
           <div className="w-full flex justify-end items-center">
             <button>
               <CgCalendar
-                onClick={() => setShowDateMenu(!showDateMenu)}
+                onMouseDown={() => setShowDateMenu(!showDateMenu)}
                 color="#608cd4"
                 className="w-[25px] h-[25px] focus:outline-none"
               />
