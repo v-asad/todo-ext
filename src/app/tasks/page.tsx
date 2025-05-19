@@ -29,6 +29,7 @@ export default function Tasks() {
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
   const [showDateMenu, setShowDateMenu] = useState(false);
   const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleAddTask = () => {
     if (taskTitle.trim() === "") {
@@ -70,6 +71,9 @@ export default function Tasks() {
   const handleDateSelect = (date: string) => {
     setTaskDate(date);
     setShowDateMenu(false);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 0);
   };
   const handleClose = () => {
     setShowDateMenu(false);
@@ -159,6 +163,7 @@ export default function Tasks() {
             )}
           </button>
           <input
+            ref={inputRef}
             value={taskTitle}
             onChange={handleChange}
             onKeyDown={handleKeyDown}

@@ -39,7 +39,7 @@ const TaskLists = ({
                 onChange={() => onTaskStatusChange(item.id)}
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-[2px] justify-start items-start">
               <p
                 className={
                   item.status ? "line-through text-white" : "text-white"
