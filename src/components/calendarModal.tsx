@@ -57,7 +57,7 @@ const CalendarModal = ({
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className="custom-header flex justify-between items-center px-[15px] bg-[#2a2a2a]">
+            <div className="custom-header flex justify-between items-center px-[15px] bg-[#2a2a2a] text-white">
               <div className="month-year">
                 {date.toLocaleString("default", {
                   month: "long",

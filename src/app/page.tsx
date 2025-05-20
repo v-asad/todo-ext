@@ -140,14 +140,14 @@ export default function Home() {
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
-            <CiHome className="w-[30px] h-[30px]" color="#608cd4" />
+            <CiHome className="w-[30px] h-[30px]" color="#8795a0" />
           </button>
-          <h1 className="text-2xl text-[#608cd4]">Tasks</h1>
+          <h1 className="text-2xl text-[#8795a0]">Tasks</h1>
         </div>
         {tasks.length === 0 && (
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
-            <p className="text-[#608cd4] w-full max-w-[300px] text-center">
+            <p className="text-[#8795a0] w-full max-w-[300px] text-center">
               Tasks show up here if they aren't part of any lists you've created
             </p>
           </div>
@@ -178,9 +178,9 @@ export default function Home() {
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
-              <FaRegCircle className="h-[25px] w-[25px] " color="#608cd4" />
+              <FaRegCircle className="h-[25px] w-[25px] " color="#8795a0" />
             ) : (
-              <IoAdd className="h-[25px] w-[25px] " color="#608cd4" />
+              <IoAdd className="h-[25px] w-[25px] " color="#8795a0" />
             )}
           </button>
           <input
@@ -191,7 +191,7 @@ export default function Home() {
             onFocus={() => setFocused(true)}
             onBlur={() => !setFocused}
             placeholder="Add a task"
-            className="w-full rounded text-white outline-none placeholder:text-[#608cd4]"
+            className="w-full rounded text-white outline-none placeholder:text-[#8795a0]"
           />
         </div>
 
