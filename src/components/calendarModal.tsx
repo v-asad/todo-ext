@@ -46,7 +46,6 @@ const CalendarModal = ({
         className="flex flex-col bg-[#2a2a2a] p-6 rounded shadow-md z-50"
       >
         <DatePicker
-          className="bg-[red]"
           selected={selectedDate}
           onChange={handleDateChange}
           inline

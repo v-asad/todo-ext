@@ -121,9 +121,7 @@ const TaskLists = ({
 
       {completedTasks.length > 0 && (
         <div className="w-full flex flex-col gap-2 mt-6">
-          <h2 className="text-left text-white font-semibold pl-6">
-            Completed
-          </h2>
+          <h2 className="text-left text-white font-semibold pl-6">Completed</h2>
           {renderTasks(completedTasks)}
         </div>
       )}
