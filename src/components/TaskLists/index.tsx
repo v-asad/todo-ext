@@ -93,7 +93,15 @@ const TaskLists = ({
               {item.description}
             </p>
             {item.date && (
-              <p className="text-xs text-[red]">{getDateLabel(item.date)}</p>
+              <p
+                className={`text-xs ${
+                  new Date(item.date) >= new Date(new Date().toDateString())
+                    ? "text-white"
+                    : "text-[red]"
+                }`}
+              >
+                {getDateLabel(item.date)}
+              </p>
             )}
           </div>
         </div>
@@ -113,7 +121,7 @@ const TaskLists = ({
 
       {completedTasks.length > 0 && (
         <div className="w-full flex flex-col gap-2 mt-6">
-          <h2 className="text-left text-[#8fa8f3] font-semibold pl-6">
+          <h2 className="text-left text-white font-semibold pl-6">
             Completed
           </h2>
           {renderTasks(completedTasks)}

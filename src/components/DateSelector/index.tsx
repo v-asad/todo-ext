@@ -47,7 +47,7 @@ export default function DateSelector({
   const handleCustomDateSelect = (date: Date | null) => {
     if (date) {
       setSelectedDate(date);
-      onDateSelect(date.toISOString().split("T")[0]);
+      onDateSelect(date.toLocaleDateString("en-CA"));
       setIsCalendarModalOpen(false);
       onClose();
     }
@@ -61,7 +61,7 @@ export default function DateSelector({
   return (
     <div className="z-5  py-[15px] border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-[250px] h-[250px]">
       <button
-        className="w-full  text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
+        className="w-full  text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
         onClick={() => handleOptionSelect("today")}
       >
         {" "}
@@ -69,21 +69,21 @@ export default function DateSelector({
         Today
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
+        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
         onClick={() => handleOptionSelect("tomorrow")}
       >
         <CgCalendarNext className="w-[20px] h-[20px]" />
         Tomorrow
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
+        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
         onClick={() => handleOptionSelect("nextWeek")}
       >
         <LiaCalendarWeekSolid className="w-[20px] h-[20px]" />
         Next Week
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
+        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
         onClick={() => {
           handleOptionSelect("custom");
         }}
