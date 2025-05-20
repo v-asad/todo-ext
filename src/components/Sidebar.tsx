@@ -110,7 +110,7 @@ const Sidebar = () => {
                 activeItem === item.id ? "bg-[#535353]" : ""
               }`}
             >
-              <item.Icon size={25} color={item.color} />
+              <item.Icon size={20} color={item.color} />
               <span>{item.text}</span>
             </li>
           </ul>

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Task } from "@/app/page";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { HiCheck } from "react-icons/hi";
 
 interface TaskListProps {
   tasks: Task[];
@@ -51,18 +52,39 @@ const TaskLists = ({
     taskArray.map((item, index) => (
       <div
         key={index}
-        className="w-full flex justify-between items-center rounded px-6 py-2 bg-[#2a2a2a] cursor-pointer"
+        className={
+          "w-full flex justify-between items-center rounded py-3 px-6  bg-[#2a2a2a] cursor-pointer"
+        }
         onClick={() => onTaskClick(item)}
       >
-        <div className="flex gap-3 items-start justify-center">
-          <div className="h-[40px]">
-            <input
-              className="rounded-full"
-              type="checkbox"
-              checked={item.status}
+        <div
+          className={` ${
+            item.date
+              ? "flex gap-3 justify-center items-start"
+              : "flex gap-3 justify-center items-center py-[8px]"
+          }`}
+        >
+          <div className="">
+            <label
+              className="inline-flex items-center "
               onClick={(e) => e.stopPropagation()}
-              onChange={() => onTaskStatusChange(item.id)}
-            />
+            >
+              <input
+                type="checkbox"
+                checked={item.status}
+                onChange={() => onTaskStatusChange(item.id)}
+                className="sr-only peer"
+              />
+              <div className="flex justify-center items-center w-5 h-5 rounded-full border-2 border-white peer-checked:bg-[#8bd3ce] peer-checked:border-[#8bd3ce] transition-colors">
+                <HiCheck
+                  className={`${
+                    item.status
+                      ? "text-[#2a2a2a]"
+                      : "hover:text-white text-[#2a2a2a]"
+                  }`}
+                />
+              </div>
+            </label>
           </div>
           <div className="flex flex-col gap-[2px] justify-start items-start">
             <p

@@ -4,6 +4,9 @@ import { useState } from "react";
 import CalendarModal from "../calendarModal";
 import { BsCalendar3 } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
+import { PiCalendarDotLight } from "react-icons/pi";
+import { CgCalendarNext } from "react-icons/cg";
+import { LiaCalendarWeekSolid } from "react-icons/lia";
 
 type DateSelectorProps = {
   onDateSelect: (date: string) => void;
@@ -50,6 +53,11 @@ export default function DateSelector({
     }
   };
 
+  const removeDueDate = () => {
+    setSelectedDate(null);
+    onDateSelect("");
+    onClose();
+  };
   return (
     <div className="z-5  py-[15px] border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-[250px] h-[250px]">
       <button
@@ -57,21 +65,21 @@ export default function DateSelector({
         onClick={() => handleOptionSelect("today")}
       >
         {" "}
-        <BsCalendar3 />
+        <PiCalendarDotLight className="w-[20px] h-[20px]" />
         Today
       </button>
       <button
         className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
         onClick={() => handleOptionSelect("tomorrow")}
       >
-        <BsCalendar3 />
+        <CgCalendarNext className="w-[20px] h-[20px]" />
         Tomorrow
       </button>
       <button
         className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] hover:cursor-pointer"
         onClick={() => handleOptionSelect("nextWeek")}
       >
-        <BsCalendar3 />
+        <LiaCalendarWeekSolid className="w-[20px] h-[20px]" />
         Next Week
       </button>
       <button
@@ -80,7 +88,7 @@ export default function DateSelector({
           handleOptionSelect("custom");
         }}
       >
-        <BsCalendar3 />
+        <BsCalendar3 className="w-[20px] h-[15px]" />
         Pick a date
       </button>
       {isCalendarModalOpen && (
@@ -90,8 +98,14 @@ export default function DateSelector({
           onClose={() => setIsCalendarModalOpen(false)}
         />
       )}
-      <button className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] text-[red] hover:cusror-pointer ">
-        <RiDeleteBin6Line color="red" className="w-[20px] h-[20px]" />
+      <button
+        onClick={removeDueDate}
+        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] text-[red] hover:cusror-pointer "
+      >
+        <RiDeleteBin6Line
+          color="red"
+          className="w-[20px] h-[20px] cursor-pointer"
+        />
         Remove due date
       </button>
     </div>
