@@ -21,7 +21,7 @@ export type Task = {
   date: string;
 };
 
-export default function Home() {
+export default function Tasks() {
   const [taskTitle, setTaskTitle] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
@@ -153,7 +153,7 @@ export default function Home() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-x-hidden relative ">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -169,14 +169,12 @@ export default function Home() {
             </p>
           </div>
         )}
-        <div className="max-h-[70vh] overflow-y-auto mt-4 pr-2">
-          <TaskLists
-            tasks={sortedTasks}
-            onTaskClick={handleTaskClick}
-            onTaskStatusChange={tasksUpdated}
-            onTaskDelete={deleteTask}
-          />
-        </div>
+        <TaskLists
+          tasks={sortedTasks}
+          onTaskClick={handleTaskClick}
+          onTaskStatusChange={tasksUpdated}
+          onTaskDelete={deleteTask}
+        />
 
         <div className="w-full h-full flex justify-center items-end">
           <Toaster position="top-center" />
@@ -236,7 +234,7 @@ export default function Home() {
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
-          <div className=" flex justify-end items-center">
+          <div className="w-full flex justify-end items-center">
             <button
               onMouseDown={() => setShowDateMenu(!showDateMenu)}
               className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
