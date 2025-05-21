@@ -12,6 +12,7 @@ import Drawer from "@/components/modals/drawer";
 import TaskLists from "@/components/TaskLists";
 import { CiHome } from "react-icons/ci";
 import { BsCalendar3 } from "react-icons/bs";
+import CalendarModal from "@/components/calendarModal";
 
 export type Task = {
   id: string;
@@ -28,9 +29,11 @@ export default function Home() {
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
-  const [showDateMenu, setShowDateMenu] = useState(false);
   const [sortedTasks, setSortedTasks] = useState<Task[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [showDateMenu, setShowDateMenu] = useState(false);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
 
   const handleAddTask = () => {
     if (taskTitle.trim() === "") {
@@ -71,6 +74,11 @@ export default function Home() {
   };
   const handleDateSelect = (date: string) => {
     setTaskDate(date);
+    if (date) {
+      setSelectedDate(new Date(date));
+    } else {
+      setSelectedDate(null);
+    }
     setShowDateMenu(false);
     inputRef.current?.focus();
   };
@@ -81,6 +89,15 @@ export default function Home() {
     if (e.key === "Enter") {
       handleAddTask();
       setFocused(true);
+    }
+  };
+  const handleCustomDateSelect = (date: Date | null) => {
+    if (date) {
+      if (date) {
+        setSelectedDate(date);
+        handleDateSelect(date.toLocaleDateString("en-CA"));
+      }
+      setShowCalendarModal(false);
     }
   };
   const getDateLabel = (dateStr: string): string => {
@@ -171,10 +188,27 @@ export default function Home() {
       </div>
       {showDateMenu && (
         <div ref={calendarRef} className="absolute bottom-22 right-10">
-          <DateSelector onDateSelect={handleDateSelect} onClose={handleClose} />
+          <DateSelector
+            setSelectedDate={setSelectedDate}
+            selectedDate={selectedDate}
+            onDateSelect={handleDateSelect}
+            onClose={handleClose}
+            openCalendarModal={() => {
+              setShowCalendarModal(true);
+              setShowDateMenu(false);
+            }}
+          />
         </div>
       )}
-      <div className="w-full flex justify-between items-center bg-[grey]/40 p-3 rounded ">
+      {showCalendarModal && (
+        <CalendarModal
+          selectedDate={selectedDate}
+          onSelectDate={handleCustomDateSelect}
+          onClose={() => setShowCalendarModal(false)}
+        />
+      )}
+
+      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
@@ -190,19 +224,22 @@ export default function Home() {
             onKeyDown={handleKeyDown}
             onFocus={() => setFocused(true)}
             onBlur={() => !setFocused}
-            placeholder="Add a task"
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0]"
+            placeholder={`${
+              focused
+                ? "Try typing 'Pay utilities bill by Friday 6pm' "
+                : "Add a task"
+            }`}
+            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
           />
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
           <div className="w-full flex justify-end items-center">
-            <button>
-              <BsCalendar3
-                onMouseDown={() => setShowDateMenu(!showDateMenu)}
-                color="white"
-                className="w-[20px] h-[20px] focus:outline-none"
-              />
+            <button
+              onMouseDown={() => setShowDateMenu(!showDateMenu)}
+              className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
+            >
+              <BsCalendar3 color="white" className="w-[20px] h-[20px]" />
             </button>
             {taskDate && (
               <span className="text-sm text-white ml-2">

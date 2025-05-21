@@ -1,25 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import CalendarModal from "../calendarModal";
 import { BsCalendar3 } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { PiCalendarDotLight } from "react-icons/pi";
-import { CgCalendarNext } from "react-icons/cg";
-import { LiaCalendarWeekSolid } from "react-icons/lia";
 
 type DateSelectorProps = {
   onDateSelect: (date: string) => void;
   onClose: () => void;
+  selectedDate: Date | null;
+  setSelectedDate: (date: Date | null) => void;
+  openCalendarModal: () => void;
 };
 
 export default function DateSelector({
   onDateSelect,
   onClose,
+  selectedDate,
+  setSelectedDate,
+  openCalendarModal,
 }: DateSelectorProps) {
-  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
   const handleOptionSelect = (option: string) => {
     const today = new Date();
     const formatLocalDate = (date: Date): string => {
@@ -30,25 +29,24 @@ export default function DateSelector({
     };
 
     if (option === "today") {
+      const today = new Date();
+      setSelectedDate(today);
       onDateSelect(formatLocalDate(today));
       onClose();
     } else if (option === "tomorrow") {
-      today.setDate(today.getDate() + 1);
-      onDateSelect(formatLocalDate(today));
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      setSelectedDate(tomorrow);
+      onDateSelect(formatLocalDate(tomorrow));
       onClose();
     } else if (option === "nextWeek") {
-      today.setDate(today.getDate() + 7);
-      onDateSelect(formatLocalDate(today));
+      const nextWeek = new Date();
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      setSelectedDate(nextWeek);
+      onDateSelect(formatLocalDate(nextWeek));
       onClose();
     } else if (option === "custom") {
-      setIsCalendarModalOpen(true);
-    }
-  };
-  const handleCustomDateSelect = (date: Date | null) => {
-    if (date) {
-      setSelectedDate(date);
-      onDateSelect(date.toLocaleDateString("en-CA"));
-      setIsCalendarModalOpen(false);
+      openCalendarModal();
       onClose();
     }
   };
@@ -58,32 +56,51 @@ export default function DateSelector({
     onDateSelect("");
     onClose();
   };
+  const getWeekDay = (offset: number): string => {
+    const date = new Date();
+    date.setDate(date.getDate() + offset);
+    return date.toLocaleDateString("en-US", { weekday: "short" });
+  };
   return (
-    <div className="z-5  py-[15px] border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-[250px] h-[250px]">
+    <div className="z-5 border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-[280px] h-full max-h-[300px]">
       <button
-        className="w-full  text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
+        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-[20px] py-[15px]"
         onClick={() => handleOptionSelect("today")}
       >
-        {" "}
-        <PiCalendarDotLight className="w-[20px] h-[20px]" />
-        Today
+        <div className="flex gap-[10px] justify-start items-center">
+          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+          <span>Today</span>
+        </div>
+        <span className="text-[grey]">{getWeekDay(0)}</span>
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
+        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-[20px] py-[15px]"
         onClick={() => handleOptionSelect("tomorrow")}
       >
-        <CgCalendarNext className="w-[20px] h-[20px]" />
-        Tomorrow
+        <div className="flex gap-[10px] justify-start items-center">
+          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+          <span>Tomorrow</span>
+        </div>
+        <span className="text-[grey]">{getWeekDay(1)}</span>
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
+        className={
+          "w-full flex justify-between items-center text-left ${} hover:bg-[#535353] px-[20px] py-[15px] "
+        }
         onClick={() => handleOptionSelect("nextWeek")}
       >
-        <LiaCalendarWeekSolid className="w-[20px] h-[20px]" />
-        Next Week
+        <div className="flex gap-[10px] justify-start items-center">
+          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+          <span>Next week</span>
+        </div>
+        <span className="text-[grey]">{getWeekDay(7)}</span>
       </button>
       <button
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px]"
+        className={`w-full text-left flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[15px] border-x-0 border-[grey]  ${
+          selectedDate
+            ? "border-b-[1px] border-t-[1px]"
+            : "border-t-[1px] border-b-0"
+        } `}
         onClick={() => {
           handleOptionSelect("custom");
         }}
@@ -91,23 +108,19 @@ export default function DateSelector({
         <BsCalendar3 className="w-[20px] h-[15px]" />
         Pick a date
       </button>
-      {isCalendarModalOpen && (
-        <CalendarModal
-          selectedDate={selectedDate}
-          onSelectDate={handleCustomDateSelect}
-          onClose={() => setIsCalendarModalOpen(false)}
-        />
+
+      {selectedDate && (
+        <button
+          onClick={removeDueDate}
+          className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[15px] text-[red] hover:cusror-pointer "
+        >
+          <RiDeleteBin6Line
+            color="red"
+            className="w-[20px] h-[20px] cursor-pointer"
+          />
+          Remove due date
+        </button>
       )}
-      <button
-        onClick={removeDueDate}
-        className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[10px] text-[red] hover:cusror-pointer "
-      >
-        <RiDeleteBin6Line
-          color="red"
-          className="w-[20px] h-[20px] cursor-pointer"
-        />
-        Remove due date
-      </button>
     </div>
   );
 }

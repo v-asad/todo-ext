@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
 
@@ -14,11 +14,19 @@ const CalendarModal = ({
   onSelectDate,
   onClose,
 }: CalendarModalProps) => {
+  const [tempSelectedDate, setTempSelectedDate] = useState<Date | null>(
+    selectedDate
+  );
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleDateChange = (date: Date | null) => {
     if (date) {
-      onSelectDate(date);
+      setTempSelectedDate(date);
+    }
+  };
+  const handleSaveDate = () => {
+    if (tempSelectedDate) {
+      onSelectDate(tempSelectedDate);
       onClose();
     }
   };
@@ -43,13 +51,12 @@ const CalendarModal = ({
     <div className="fixed inset-0 flex justify-end items-center bg-opacity-40 z-50 px-[50px]">
       <div
         ref={modalRef}
-        className="flex flex-col bg-[#2a2a2a] p-6 rounded shadow-md z-50"
+        className="flex flex-col  p-6 rounded shadow-md z-50 bg-[white]"
       >
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
           inline
-          calendarClassName="!bg-[#2a2a2a] !text-[white] !border-none"
           renderCustomHeader={({
             date,
             decreaseMonth,
@@ -57,8 +64,8 @@ const CalendarModal = ({
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className="custom-header flex justify-between items-center px-[15px] bg-[#2a2a2a] text-white">
-              <div className="month-year">
+            <div className="custom-header flex justify-between items-center px-[15px] text-black">
+              <div className="month-year bg-[white]">
                 {date.toLocaleString("default", {
                   month: "long",
                   year: "numeric",
@@ -84,11 +91,14 @@ const CalendarModal = ({
         <div className="w-full gap-1 flex justify-between items-baseline-last">
           <button
             onClick={onClose}
-            className="mt-4 text-[red] text-[14px] bg-[#535353] w-full py-[6px] rounded"
+            className="mt-4 text-[red] text-[14px] bg-[#535353] w-full py-[6px] rounded cursor-pointer"
           >
             Cancel
           </button>
-          <button className="bg-[#8bd3ce] text-black  py-[6px] rounded text-[14px] w-full">
+          <button
+            onClick={handleSaveDate}
+            className="bg-[#8bd3ce] text-black  py-[6px] rounded text-[14px] w-full cursor-pointer"
+          >
             Save
           </button>
         </div>

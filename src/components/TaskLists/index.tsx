@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Task } from "@/app/page";
-import { RiDeleteBin6Line } from "react-icons/ri";
+import { RiCalendarLine, RiDeleteBin6Line } from "react-icons/ri";
 import { HiCheck } from "react-icons/hi";
+import { TbBrightnessUpFilled } from "react-icons/tb";
 
 interface TaskListProps {
   tasks: Task[];
@@ -92,17 +93,29 @@ const TaskLists = ({
             >
               {item.description}
             </p>
-            {item.date && (
-              <p
-                className={`text-xs ${
-                  new Date(item.date) >= new Date(new Date().toDateString())
-                    ? "text-white"
-                    : "text-[red]"
-                }`}
-              >
-                {getDateLabel(item.date)}
-              </p>
-            )}
+            <div className="flex gap-2 justify-center items-center">
+              {item.date === new Date().toISOString().split("T")[0] && (
+                <div className="flex gap-1 justify-center items-center">
+                  <TbBrightnessUpFilled size={15} color="lightgrey" />
+                  <p className="text-[12px] text-[lightgrey]">My Day</p>
+                </div>
+              )}
+
+              {item.date && (
+                <div className="flex gap-1 justify-center items-center">
+                  <RiCalendarLine color="white" size={12} />
+                  <p
+                    className={`text-xs ${
+                      new Date(item.date) >= new Date(new Date().toDateString())
+                        ? "text-white"
+                        : "text-[red]"
+                    } `}
+                  >
+                    {getDateLabel(item.date)}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
