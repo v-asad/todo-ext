@@ -153,7 +153,7 @@ export default function Home() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-x-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative ">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -165,16 +165,18 @@ export default function Home() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren't part of any lists you've created
+              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
             </p>
           </div>
         )}
-        <TaskLists
-          tasks={sortedTasks}
-          onTaskClick={handleTaskClick}
-          onTaskStatusChange={tasksUpdated}
-          onTaskDelete={deleteTask}
-        />
+        <div className="max-h-[70vh] overflow-y-auto mt-4 pr-2">
+          <TaskLists
+            tasks={sortedTasks}
+            onTaskClick={handleTaskClick}
+            onTaskStatusChange={tasksUpdated}
+            onTaskDelete={deleteTask}
+          />
+        </div>
 
         <div className="w-full h-full flex justify-center items-end">
           <Toaster position="top-center" />
@@ -234,7 +236,7 @@ export default function Home() {
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
-          <div className="w-full flex justify-end items-center">
+          <div className=" flex justify-end items-center">
             <button
               onMouseDown={() => setShowDateMenu(!showDateMenu)}
               className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"

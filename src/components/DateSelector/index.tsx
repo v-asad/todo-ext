@@ -20,7 +20,6 @@ export default function DateSelector({
   openCalendarModal,
 }: DateSelectorProps) {
   const handleOptionSelect = (option: string) => {
-    const today = new Date();
     const formatLocalDate = (date: Date): string => {
       const year = date.getFullYear();
       const month = `${date.getMonth() + 1}`.padStart(2, "0");

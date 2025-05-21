@@ -165,7 +165,7 @@ export default function Tasks() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren't part of any lists you've created
+              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
             </p>
           </div>
         )}
