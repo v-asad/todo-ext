@@ -22,8 +22,6 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  userEmail = 'm.suleman@outlook.com',
-  userName = 'Muhammad Suleman',
 }: Readonly<{
   children: React.ReactNode;
   userEmail?: string;
