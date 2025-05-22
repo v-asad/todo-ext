@@ -156,7 +156,7 @@ const Sidebar = () => {
         )}
       </div>
       <div className=" w-full px-[8px] flex flex-col gap-1 justify-center items-start">
-        <input className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400"
+        <input className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400 hover:bg-[#3B3B3B] transition-colors duration-200"
           type="search"
           placeholder="Search"
         />

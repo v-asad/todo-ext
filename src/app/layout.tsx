@@ -24,8 +24,6 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  userEmail?: string;
-  userName?: string;
 }>) {
 
   return (
