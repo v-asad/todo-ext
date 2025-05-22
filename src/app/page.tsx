@@ -236,7 +236,7 @@ export default function Home() {
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
-          <div className=" flex justify-end items-center">
+          <div className="w-full flex justify-end items-center max-w-[130px]">
             <button
               onMouseDown={() => setShowDateMenu(!showDateMenu)}
               className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
@@ -244,7 +244,7 @@ export default function Home() {
               <BsCalendar3 color="white" className="w-[20px] h-[20px]" />
             </button>
             {taskDate && (
-              <span className="text-sm text-white ml-2">
+              <span className="w-full text-sm text-white ml-2">
                 {getDateLabel(taskDate)}
               </span>
             )}
