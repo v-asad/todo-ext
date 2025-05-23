@@ -210,7 +210,7 @@ export default function Home() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[grey]/40 hover:bg-[grey]/30 py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
@@ -231,7 +231,7 @@ export default function Home() {
                 ? "Try typing 'Pay utilities bill by Friday 6pm' "
                 : "Add a task"
             }`}
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
+            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] hover:[#fff]"
           />
         </div>
 
