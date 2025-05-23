@@ -215,7 +215,7 @@ export default function Tasks() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey] py-1 px-3 rounded h-[46px]">
+      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
@@ -224,7 +224,7 @@ export default function Tasks() {
               <IoAdd className="h-[25px] w-[25px] " color="#8795a0" />
             )}
           </button>
-          <div className="relative group w-full]">
+          <div className="relative group w-full">
             <input
               ref={inputRef}
               value={taskTitle}
