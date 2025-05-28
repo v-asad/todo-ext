@@ -1,8 +1,11 @@
-import Image from "next/image";
+"use client";
+
 import React from "react";
 import Illustration from "../Illustration";
+import { useRouter } from "next/navigation";
 
 function Login() {
+  const router = useRouter();
   return (
     <div className="w-full flex justify-center items-start overflow-y-hidden">
       <Illustration />
@@ -34,7 +37,10 @@ function Login() {
         </div>
 
         <div className="w-full max-w-[500px]">
-          <button className="w-full rounded bg-[black]/60 text-white font-bold py-3 hover:bg-[black]/40 cursor-pointer">
+          <button
+            onClick={() => router.push("/")}
+            className="w-full rounded bg-[black]/60 text-white font-bold py-3 hover:bg-[black]/40 cursor-pointer"
+          >
             Login
           </button>
         </div>
