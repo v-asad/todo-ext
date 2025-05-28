@@ -231,7 +231,7 @@ export default function Home() {
                 ? "Try typing 'Pay utilities bill by Friday 6pm' "
                 : "Add a task"
             }`}
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] hover:[#fff]"
+            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] hover:text-white"
           />
         </div>
 

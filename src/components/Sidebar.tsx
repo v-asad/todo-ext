@@ -101,10 +101,6 @@ const Sidebar = () => {
     router.push(path);
   };
 
-  const handleNewList = () => {
-    console.log("Creating new list...");
-  };
-
   return (
     <div className="h-screen flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
@@ -180,8 +176,7 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-auto pb-4">
-        <button 
-          onClick={handleNewList}
+        <button
           className="flex items-center justify-between gap-2 w-full px-3 py-2 bg-[#2B2B2B] rounded hover:bg-[#535353] transition-colors"
         >
           <div className="flex justify-center items-center gap-[15px]">
