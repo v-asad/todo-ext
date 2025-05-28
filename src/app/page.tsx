@@ -26,6 +26,8 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [focused, setFocused] = useState(false);
+  const [showToolTip, setShowTooltip] = useState(false);
+
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
@@ -51,6 +53,7 @@ export default function Home() {
     setTaskTitle("");
     setTaskDate("");
     setFocused(false);
+    setSelectedDate(null);
   };
 
   const tasksUpdated = (id: string) => {
@@ -86,6 +89,7 @@ export default function Home() {
     setShowDateMenu(false);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setShowTooltip(false);
     if (e.key === "Enter") {
       handleAddTask();
       setFocused(true);
@@ -165,7 +169,8 @@ export default function Home() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
+              Tasks show up here if they aren&apos;t part of any lists
+              you&apos;ve created
             </p>
           </div>
         )}
