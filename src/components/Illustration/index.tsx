@@ -3,7 +3,7 @@ import React from "react";
 
 function Illustration() {
   return (
-    <div className="w-full h-screen bg-[black]/80 flex flex-col gap-[50px] justify-center items-center py-[60px]">
+    <div className="w-full h-screen bg-[black]/80 flex flex-col gap-[40px] justify-start items-center py-[60px]">
       <div className="w-full flex flex-col gap-[30px] items-center justify-center">
         <Image
           width={100}
