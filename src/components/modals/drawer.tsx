@@ -1,6 +1,6 @@
 "use client";
 
-import { Task } from "@/app/page";
+import { Task } from "@/app/(main)/page";
 import React from "react";
 
 interface DrawerProps {

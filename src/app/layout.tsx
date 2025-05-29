@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Sidebar from "../components/Sidebar";
 
 import "../styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -33,7 +32,6 @@ export default function RootLayout({
       >
         <div className="flex justify-start">
           <main className=" flex w-full justify-center items-start">
-            {/* <Sidebar /> */}
             {children}
           </main>
         </div>

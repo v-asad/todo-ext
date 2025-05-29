@@ -16,6 +16,7 @@ function Login() {
             Email
           </label>
           <input
+            placeholder="Enter your email"
             type="email"
             className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[grey]/40 py-1 px-3 rounded h-[46px] hover:bg-[grey]/30"
           />
@@ -28,6 +29,7 @@ function Login() {
             Password
           </label>
           <input
+            placeholder="Enter your password"
             type="password"
             className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[grey]/40 py-1 px-3 rounded h-[46px] hover:bg-[grey]/30"
           />
