@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 // import Sidebar from "../components/Sidebar";
 
-import "../styles/globals.css";
+import "@/styles/globals.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 const geistSans = Geist({
@@ -22,23 +22,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  userEmail = 'm.suleman@outlook.com',
-  userName = 'Muhammad Suleman',
 }: Readonly<{
   children: React.ReactNode;
-  userEmail?: string;
-  userName?: string;
 }>) {
-
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <div className="flex justify-start">
-          <main className=" flex w-full justify-center items-start">
-        
+        <div className="flex justify-start items-center w-full">
+          <main className=" flex w-full items-start">
+            {/* <Sidebar /> */}
             {children}
           </main>
         </div>

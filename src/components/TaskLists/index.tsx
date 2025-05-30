@@ -1,5 +1,5 @@
 import React from "react";
-import { Task } from "@/app/page";
+import { Task } from "@/app/(main)/page";
 import { RiCalendarLine, RiDeleteBin6Line } from "react-icons/ri";
 import { HiCheck } from "react-icons/hi";
 import { TbBrightnessUpFilled } from "react-icons/tb";
