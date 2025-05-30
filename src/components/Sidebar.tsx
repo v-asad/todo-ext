@@ -69,7 +69,7 @@ const sidebarItems: SidebarItem[] = [
     Icon: RxHamburgerMenu,
     text: "Current Sprint",
     color: "#c2c1c1",
-    path: "/",
+    path: "/sprints",
   },
   {
     id: "backlog",
@@ -100,7 +100,7 @@ const Sidebar = () => {
     router.push(path);
   };
   return (
-    <div className="h-screen flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
         <div className="flex items-center justify-center gap-2">
           <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
