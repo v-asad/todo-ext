@@ -153,7 +153,7 @@ export default function Tasks() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-x-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative ">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -165,16 +165,19 @@ export default function Tasks() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
+              Tasks show up here if they aren&apos;t part of any lists
+              you&apos;ve created
             </p>
           </div>
         )}
-        <TaskLists
-          tasks={sortedTasks}
-          onTaskClick={handleTaskClick}
-          onTaskStatusChange={tasksUpdated}
-          onTaskDelete={deleteTask}
-        />
+        <div className="max-h-[70vh] overflow-y-auto mt-4 pr-2">
+          <TaskLists
+            tasks={sortedTasks}
+            onTaskClick={handleTaskClick}
+            onTaskStatusChange={tasksUpdated}
+            onTaskDelete={deleteTask}
+          />
+        </div>
 
         <div className="w-full h-full flex justify-center items-end">
           <Toaster position="top-center" />
@@ -208,7 +211,7 @@ export default function Tasks() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
@@ -234,7 +237,7 @@ export default function Tasks() {
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
-          <div className="w-full flex justify-end items-center">
+          <div className="w-full flex justify-end items-center max-w-[130px]">
             <button
               onMouseDown={() => setShowDateMenu(!showDateMenu)}
               className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
@@ -242,7 +245,7 @@ export default function Tasks() {
               <BsCalendar3 color="white" className="w-[20px] h-[20px]" />
             </button>
             {taskDate && (
-              <span className="text-sm text-white ml-2">
+              <span className="w-full text-sm text-white ml-2">
                 {getDateLabel(taskDate)}
               </span>
             )}

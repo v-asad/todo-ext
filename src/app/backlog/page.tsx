@@ -3,7 +3,7 @@ import { IoReorderThreeOutline } from "react-icons/io5";
 
 function Backlog() {
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative">
       <div>
         <div className="flex gap-2 items-center">
           <button>
