@@ -153,7 +153,7 @@ export default function Home() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative ">
       <div>
         <div className="flex gap-2 items-center">
           <button onClick={handleAddTask}>
@@ -165,7 +165,8 @@ export default function Home() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
+              Tasks show up here if they aren&apos;t part of any lists
+              you&apos;ve created
             </p>
           </div>
         )}
@@ -210,7 +211,7 @@ export default function Home() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
