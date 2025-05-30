@@ -7,21 +7,21 @@ import { useRouter } from "next/navigation";
 function Login() {
   const router = useRouter();
   return (
-    <div className="w-full flex justify-center items-start overflow-y-hidden">
+    <div className="w-full bg-[#333333] flex justify-center items-start overflow-y-hidden">
       <Illustration />
-      <div className="w-full h-screen bg-[black]/80 flex flex-col gap-[30px] justify-center items-center">
+      <div className="w-full h-screen bg-[#333333] flex flex-col gap-[30px] justify-center items-center">
         <h1 className="font-bold text-[30px] text-white">Sign In</h1>
-        <div className="w-full max-w-[500px] flex flex-col gap-[5px] justify-center items-start">
+        <div className="w-full max-w-[600px] flex flex-col gap-[5px] justify-center items-start">
           <label className="font-bold text-white text-[16px]" htmlFor="email">
             Email
           </label>
           <input
             placeholder="Enter your email"
             type="email"
-            className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[grey]/40 py-1 px-3 rounded h-[46px] hover:bg-[grey]/30"
+            className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
           />
         </div>
-        <div className="w-full max-w-[500px] flex flex-col gap-[5px] justify-center items-start">
+        <div className="w-full max-w-[600px] flex flex-col gap-[5px] justify-center items-start">
           <label
             className="font-bold text-white text-[16px]"
             htmlFor="Password"
@@ -31,24 +31,24 @@ function Login() {
           <input
             placeholder="Enter your password"
             type="password"
-            className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[grey]/40 py-1 px-3 rounded h-[46px] hover:bg-[grey]/30"
+            className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
           />
           <p className="text-white pt-[10px] cursor-pointer text-[14px]">
             Forgot Password
           </p>
         </div>
 
-        <div className="w-full max-w-[500px]">
+        <div className="w-full max-w-[600px]">
           <button
             onClick={() => router.push("/")}
-            className="w-full rounded bg-[black]/60 text-white font-bold py-3 hover:bg-[black]/40 cursor-pointer"
+            className="w-full rounded bg-[#161616] text-white font-bold py-3 hover:bg-[#222121] cursor-pointer"
           >
             Login
           </button>
         </div>
-        <div className="w-full max-w-[500px] flex gap-[5px] justify-center items-center">
+        <div className="w-full max-w-[600px] flex gap-[5px] justify-center items-center">
           <p className="text-white">Dont have an account?</p>
-          <button className="rounded text-[white]/60 font-bold py-3 cursor-pointer hover:underline">
+          <button className="rounded text-[grey] font-bold py-3 cursor-pointer hover:underline">
             Sign Up
           </button>
         </div>
