@@ -3,13 +3,14 @@
 import React from "react";
 import Illustration from "../Illustration";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function Login() {
   const router = useRouter();
   return (
     <div className="w-full bg-[#333333] flex justify-center items-start overflow-y-hidden">
       <Illustration />
-      <div className="w-full h-screen bg-[#333333] flex flex-col gap-[30px] justify-center items-center">
+      <div className="w-full min-h-screen bg-[#333333] flex flex-col gap-[30px] justify-center items-center">
         <h1 className="font-bold text-[30px] text-white">Sign In</h1>
         <div className="w-full max-w-[600px] flex flex-col gap-[5px] justify-center items-start">
           <label className="font-bold text-white text-[16px]" htmlFor="email">
@@ -48,9 +49,12 @@ function Login() {
         </div>
         <div className="w-full max-w-[600px] flex gap-[5px] justify-center items-center">
           <p className="text-white">Dont have an account?</p>
-          <button className="rounded text-[grey] font-bold py-3 cursor-pointer hover:underline">
-            Sign Up
-          </button>
+          <Link
+            className="rounded text-[grey] font-bold py-3 cursor-pointer hover:underline"
+            href={"/signup"}
+          >
+            Signup
+          </Link>
         </div>
       </div>
     </div>
