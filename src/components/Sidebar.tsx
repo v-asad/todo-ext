@@ -69,7 +69,7 @@ const sidebarItems: SidebarItem[] = [
     Icon: RxHamburgerMenu,
     text: "Current Sprint",
     color: "#c2c1c1",
-    path: "/",
+    path: "/sprint",
   },
   {
     id: "backlog",
