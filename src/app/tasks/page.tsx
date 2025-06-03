@@ -211,7 +211,7 @@ export default function Tasks() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[#333333] py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] hover:bg-[#4d4c4c] py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
