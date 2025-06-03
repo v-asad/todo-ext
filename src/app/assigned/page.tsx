@@ -3,9 +3,9 @@ import { CiUser } from "react-icons/ci";
 
 function assigned() {
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative">
       <div>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 justify-start items-center">
           <button>
             <CiUser className="w-[30px] h-[30px]" color="green" />
           </button>

@@ -70,7 +70,7 @@ const sidebarItems: SidebarItem[] = [
     Icon: RxHamburgerMenu,
     text: "Current Sprint",
     color: "#c2c1c1",
-    path: "/",
+    path: "/sprint",
   },
   {
     id: "backlog",
@@ -102,7 +102,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
         <div className="flex items-center justify-center gap-2">
           <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
@@ -118,8 +118,16 @@ const Sidebar = () => {
                 <p className="text-xs text-gray-400 flex items-center">
                   {displayEmail}
                   <span className="flex flex-col -space-y-1">
-                    <IoIosArrowUp className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
-                    <IoIosArrowDown className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
+                    <IoIosArrowUp
+                      className={` transition-opacity duration-200 ${
+                        isDropdownOpen ? "opacity-100" : "opacity-50"
+                      }`}
+                    />
+                    <IoIosArrowDown
+                      className={` transition-opacity duration-200 ${
+                        !isDropdownOpen ? "opacity-100" : "opacity-50"
+                      }`}
+                    />
                   </span>
                 </p>
               </div>
@@ -152,7 +160,8 @@ const Sidebar = () => {
         )}
       </div>
       <div className=" w-full px-[8px] flex flex-col gap-1 justify-center items-start">
-        <input className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400 hover:bg-[#3B3B3B] transition-colors duration-200"
+        <input
+          className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400"
           type="search"
           placeholder="Search"
         />
@@ -164,8 +173,9 @@ const Sidebar = () => {
               <li
                 onClick={() => handleItemClick(item.id, item.path)}
                 data-active={activeItem === item.id ? "true" : "false"}
-                className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${activeItem === item.id ? "bg-[#535353]" : ""
-                  }`}
+                className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${
+                  activeItem === item.id ? "bg-[#535353]" : ""
+                }`}
               >
                 <item.Icon size={20} color={item.color} />
                 <span>{item.text}</span>
@@ -191,20 +201,20 @@ const Sidebar = () => {
         .scrollbar-hide::-webkit-scrollbar {
           width: 4px;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-track {
           background: transparent;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-thumb {
           background: #535353;
           border-radius: 3px;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-thumb:hover {
           background: #666666;
         }
-        
+
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: thin;

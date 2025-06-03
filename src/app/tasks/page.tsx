@@ -157,10 +157,10 @@ export default function Tasks() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative ">
       <div>
-        <div className="flex gap-2 items-center">
-          <button onClick={handleAddTask}>
+        <div className="flex gap-2 justify-start items-center">
+          <button>
             <CiHome className="w-[30px] h-[30px]" color="#8795a0" />
           </button>
           <h1 className="text-2xl text-[#8795a0]">Tasks</h1>
@@ -215,7 +215,7 @@ export default function Tasks() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey]/40 py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] hover:bg-[#4d4c4c] py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
