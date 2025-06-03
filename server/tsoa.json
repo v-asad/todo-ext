@@ -4,7 +4,20 @@
   "controllerPathGlobs": ["src/**/*.controller.ts"],
   "spec": {
     "outputDirectory": "build",
-    "specVersion": 3
+    "specVersion": 3,
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter JWT Bearer token **_only_**"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
   },
   "routes": {
     "routesDir": "build"

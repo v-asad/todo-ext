@@ -14,6 +14,7 @@ import {
   Tags,
   TsoaResponse,
   Res,
+  Security,
 } from "tsoa";
 
 @Route("users")
@@ -22,6 +23,7 @@ export class UsersController extends Controller {
   private service = new UsersService();
 
   @Post("/")
+  @Security("BearerAuth")
   @SuccessResponse("201", "Created")
   public async create(
     @Body() body: any,
@@ -38,6 +40,7 @@ export class UsersController extends Controller {
   }
 
   @Get("/")
+  @Security("BearerAuth")
   @SuccessResponse("200", "OK")
   public async getAll(
     @Res() okResponse: TsoaResponse<200, any>,
@@ -53,6 +56,7 @@ export class UsersController extends Controller {
   }
 
   @Get("{id}")
+  @Security("BearerAuth")
   @SuccessResponse("200", "OK")
   public async getOne(
     @Path() id: number,
@@ -71,6 +75,7 @@ export class UsersController extends Controller {
   }
 
   @Patch("{id}")
+  @Security("BearerAuth")
   @SuccessResponse("200", "OK")
   public async update(
     @Path() id: number,
@@ -88,6 +93,7 @@ export class UsersController extends Controller {
   }
 
   @Delete("{id}")
+  @Security("BearerAuth")
   @SuccessResponse("200", "OK")
   public async delete(
     @Path() id: number,
