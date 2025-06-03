@@ -2,10 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import mainRouter from "./routes";
 
-import * as swaggerJson from "../swagger.json";
+import * as swaggerJson from "./swagger.json";
 import * as swaggerUI from "swagger-ui-express";
 
-import { RegisterRoutes } from "./tsoa/routes";
+import { RegisterRoutes } from "../build/routes";
 
 /** CONFIGURATIONS */
 dotenv.config();
