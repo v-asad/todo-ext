@@ -3,3 +3,5 @@ node_modules
 /generated/prisma/
 # Keep environment variables out of version control
 .env
+# Ignore build artifacts
+/build

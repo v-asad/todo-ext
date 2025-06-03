@@ -3,10 +3,24 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["src/**/*.controller.ts"],
   "spec": {
-    "outputDirectory": "src",
-    "specVersion": 3
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Enter JWT Bearer token **_only_**"
+      }
+    },
+    "security": [
+      {
+        "BearerAuth": []
+      }
+    ]
   },
   "routes": {
-    "routesDir": "src/tsoa/"
+    "routesDir": "build",
+    "authenticationModule": "./src/authentication.ts"
   }
 }
