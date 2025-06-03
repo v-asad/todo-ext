@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning
       >
-        <div className="flex justify-start">
+        <div className="flex justify-start items-center">
           <main className=" flex w-full justify-center items-start">
             {children}
           </main>
