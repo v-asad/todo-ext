@@ -12,15 +12,15 @@ export async function expressAuthentication(
     const authHeader = request.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     if (!token) {
-      throw new Error("No token provided");
+      return Promise.reject({ status: 401, message: { error: "No token provided" } });
     }
     try {
       const user = jwt.verify(token, JWT_SECRET);
       // Optionally check scopes here
       return user;
     } catch (err) {
-      throw new Error("Invalid token");
+      return Promise.reject({ status: 403, message: { error: "Invalid token" } });
     }
   }
-  throw new Error("Unknown security name");
+  return Promise.reject({ status: 401, message: { error: "Unknown security name" } });
 }
