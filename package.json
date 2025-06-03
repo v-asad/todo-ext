@@ -1,0 +1,14 @@
+{
+  "name": "todo-monorepo",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "install:all": "pnpm install --filter ./client... && pnpm install --filter ./server...",
+    "fe:install": "pnpm --filter ./client install",
+    "fe:build": "pnpm --filter ./client build",
+    "fe:dev": "pnpm --filter ./client dev",
+    "fe:start": "pnpm --filter ./client start",
+    "be:install": "pnpm --filter ./server install",
+    "be:dev": "pnpm --filter ./server dev"
+  }
+}
