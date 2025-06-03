@@ -155,8 +155,8 @@ export default function Tasks() {
   return (
     <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative ">
       <div>
-        <div className="flex gap-2 items-center">
-          <button onClick={handleAddTask}>
+        <div className="flex gap-2 justify-start items-center">
+          <button>
             <CiHome className="w-[30px] h-[30px]" color="#8795a0" />
           </button>
           <h1 className="text-2xl text-[#8795a0]">Tasks</h1>
