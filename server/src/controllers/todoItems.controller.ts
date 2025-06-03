@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import TodoItemsService from "../services/todoItems.service";
 
-class TodoItemsController {
+export class TodoItemsController {
   private service = new TodoItemsService();
 
   create = async (req: Request, res: Response) => {
@@ -28,8 +28,7 @@ class TodoItemsController {
     try {
       const id = Number(req.params.id);
       const result = await this.service.getOne(id);
-      if (!result)
-        res.status(404).json({ error: `todoItem not found` });
+      if (!result) res.status(404).json({ error: `todoItem not found` });
       else res.json(result);
     } catch (err) {
       console.error(`[todoItem] GetOne Error:`, err);
@@ -59,5 +58,3 @@ class TodoItemsController {
     }
   };
 }
-
-export default TodoItemsController;

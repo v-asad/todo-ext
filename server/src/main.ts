@@ -5,6 +5,8 @@ import mainRouter from "./routes";
 import * as swaggerJson from "../swagger.json";
 import * as swaggerUI from "swagger-ui-express";
 
+import { RegisterRoutes } from "./tsoa/routes";
+
 /** CONFIGURATIONS */
 dotenv.config();
 
@@ -17,10 +19,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(["/docs"], swaggerUI.serve, swaggerUI.setup(swaggerJson));
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJson));
 
 /** ROUTES */
 app.use("/", mainRouter);
+
+RegisterRoutes(app);
 
 /** LISTENERS */
 app.listen(PORT, () => console.info("Listening on ::" + PORT));

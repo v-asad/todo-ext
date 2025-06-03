@@ -1,4 +1,3 @@
-import { Response } from "express";
 import UsersService from "../services/users.service";
 import jwt from "jsonwebtoken";
 
@@ -13,54 +12,61 @@ import {
   Patch,
   Delete,
   Tags,
+  TsoaResponse,
   Res,
 } from "tsoa";
 
 @Route("users")
 @Tags("Users")
-class UsersController extends Controller {
+export class UsersController extends Controller {
   private service = new UsersService();
 
   @Post("/")
   @SuccessResponse("201", "Created")
-  public async create(@Body() body: any, @Res() res?: Response): Promise<any> {
+  public async create(
+    @Body() body: any,
+    @Res() createdResponse: TsoaResponse<201, any>,
+    @Res() badRequestResponse: TsoaResponse<400, { error: string }>
+  ): Promise<any> {
     try {
       const result = await this.service.create(body);
-      if (res) {
-        res.status(201).json(result);
-      }
+      return createdResponse(201, result);
     } catch (err) {
       console.error(`[user] Create Error:`, err);
-      if (res) {
-        res.status(400).json({ error: "Create failed" });
-      }
+      return badRequestResponse(400, { error: "Create failed" });
     }
   }
 
   @Get("/")
   @SuccessResponse("200", "OK")
-  public async getAll(@Res() res: Response): Promise<any> {
+  public async getAll(
+    @Res() okResponse: TsoaResponse<200, any>,
+    @Res() errorResponse: TsoaResponse<500, { error: string }>
+  ): Promise<any> {
     try {
       const result = await this.service.getAll();
-      res.json(result);
+      return okResponse(200, result);
     } catch (err) {
       console.error(`[user] GetAll Error:`, err);
-      if (res) {
-        res.status(500).json({ error: "Fetch failed" });
-      }
+      return errorResponse(500, { error: "Fetch failed" });
     }
   }
 
   @Get("{id}")
   @SuccessResponse("200", "OK")
-  public async getOne(@Path() id: number, @Res() res: Response): Promise<any> {
+  public async getOne(
+    @Path() id: number,
+    @Res() okResponse: TsoaResponse<200, any>,
+    @Res() notFoundResponse: TsoaResponse<404, { error: string }>,
+    @Res() badRequestResponse: TsoaResponse<400, { error: string }>
+  ): Promise<any> {
     try {
       const result = await this.service.getOne(id);
-      if (!result) res.status(404).json({ error: `user not found` });
-      else res.json(result);
+      if (!result) return notFoundResponse(404, { error: `user not found` });
+      return okResponse(200, result);
     } catch (err) {
       console.error(`[user] GetOne Error:`, err);
-      res.status(400).json({ error: "Fetch failed" });
+      return badRequestResponse(400, { error: "Fetch failed" });
     }
   }
 
@@ -69,75 +75,89 @@ class UsersController extends Controller {
   public async update(
     @Path() id: number,
     @Body() body: any,
-    @Res() res: Response
+    @Res() okResponse: TsoaResponse<200, any>,
+    @Res() badRequestResponse: TsoaResponse<400, { error: string }>
   ): Promise<any> {
     try {
       const result = await this.service.update(id, body);
-      res.json(result);
+      return okResponse(200, result);
     } catch (err) {
       console.error(`[user] Update Error:`, err);
-      res.status(400).json({ error: "Update failed" });
+      return badRequestResponse(400, { error: "Update failed" });
     }
   }
 
   @Delete("{id}")
   @SuccessResponse("200", "OK")
-  public async delete(@Path() id: number, @Res() res: Response): Promise<any> {
+  public async delete(
+    @Path() id: number,
+    @Res() okResponse: TsoaResponse<200, any>,
+    @Res() badRequestResponse: TsoaResponse<400, { error: string }>
+  ): Promise<any> {
     try {
       const result = await this.service.delete(id);
-      res.json(result);
+      return okResponse(200, result);
     } catch (err) {
       console.error(`[user] Delete Error:`, err);
-      res.status(400).json({ error: "Delete failed" });
+      return badRequestResponse(400, { error: "Delete failed" });
     }
   }
 
   @Post("/login")
   @SuccessResponse("200", "OK")
-  public async login(@Body() body: any, @Res() res: Response): Promise<any> {
+  public async login(
+    @Body() body: any,
+    @Res() okResponse: TsoaResponse<200, { token: string }>,
+    @Res() unauthorizedResponse: TsoaResponse<401, { error: string }>,
+    @Res() errorResponse: TsoaResponse<500, { error: string }>
+  ): Promise<any> {
     try {
       const { email, password } = body;
       const user = await this.service.authenticate(email, password);
       if (!user) {
-        res.status(401).json({ error: "Invalid credentials" });
+        return unauthorizedResponse(401, { error: "Invalid credentials" });
       } else {
         const token = jwt.sign(
           { userId: user.id, email: user.email },
           process.env.JWT_SECRET || "secret",
           { expiresIn: "1h" }
         );
-        res.json({ token });
+        return okResponse(200, { token });
       }
     } catch (err) {
       console.error(`[user] Login Error:`, err);
-      if (res) {
-        res.status(500).json({ error: "Login failed" });
-      }
+      return errorResponse(500, { error: "Login failed" });
     }
   }
 
   @Post("/signup")
   @SuccessResponse("201", "Created")
-  public async signup(@Body() body: any, @Res() res: Response): Promise<any> {
+  public async signup(
+    @Body() body: any,
+    @Res() createdResponse: TsoaResponse<201, { id: number; email: string }>,
+    @Res() badRequestResponse: TsoaResponse<400, { error: string }>,
+    @Res() conflictResponse: TsoaResponse<409, { error: string }>,
+    @Res() errorResponse: TsoaResponse<500, { error: string }>
+  ): Promise<any> {
     try {
       const { email, password, ...rest } = body;
       if (!email || !password) {
-        res.status(400).json({ error: "Email and password are required" });
+        return badRequestResponse(400, {
+          error: "Email and password are required",
+        });
       } else {
         // Check if user already exists
         const existingUser = await this.service.getByEmail(email);
         if (existingUser) {
-          res.status(409).json({ error: "User already exists" });
+          return conflictResponse(409, { error: "User already exists" });
         } else {
           const user = await this.service.create({ email, password, ...rest });
-          res.status(201).json({ id: user.id, email: user.email });
+          return createdResponse(201, { id: user.id, email: user.email });
         }
       }
     } catch (err) {
       console.error(`[user] Signup Error:`, err);
-      res.status(500).json({ error: "Signup failed" });
+      return errorResponse(500, { error: "Signup failed" });
     }
   }
 }
-
-export default UsersController;
