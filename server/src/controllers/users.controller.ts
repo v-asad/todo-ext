@@ -16,22 +16,21 @@ import {
   Res,
   Security,
 } from "tsoa";
+import { LoginRequest, SignupRequest } from "../dtos/users.dto";
 
 @Route("users")
 @Tags("Users")
 export class UsersController extends Controller {
-  private service = new UsersService();
-
   @Post("/")
   @Security("BearerAuth")
   @SuccessResponse("201", "Created")
-  public async create(
+  async create(
     @Body() body: any,
     @Res() createdResponse: TsoaResponse<201, any>,
     @Res() badRequestResponse: TsoaResponse<400, { error: string }>
   ): Promise<any> {
     try {
-      const result = await this.service.create(body);
+      const result = await UsersService.create(body);
       return createdResponse(201, result);
     } catch (err) {
       console.error(`[user] Create Error:`, err);
@@ -42,12 +41,12 @@ export class UsersController extends Controller {
   @Get("/")
   @Security("BearerAuth")
   @SuccessResponse("200", "OK")
-  public async getAll(
+  async getAll(
     @Res() okResponse: TsoaResponse<200, any>,
     @Res() errorResponse: TsoaResponse<500, { error: string }>
   ): Promise<any> {
     try {
-      const result = await this.service.getAll();
+      const result = await UsersService.getAll();
       return okResponse(200, result);
     } catch (err) {
       console.error(`[user] GetAll Error:`, err);
@@ -58,14 +57,14 @@ export class UsersController extends Controller {
   @Get("{id}")
   @Security("BearerAuth")
   @SuccessResponse("200", "OK")
-  public async getOne(
+  async getOne(
     @Path() id: number,
     @Res() okResponse: TsoaResponse<200, any>,
     @Res() notFoundResponse: TsoaResponse<404, { error: string }>,
     @Res() badRequestResponse: TsoaResponse<400, { error: string }>
   ): Promise<any> {
     try {
-      const result = await this.service.getOne(id);
+      const result = await UsersService.getOne(id);
       if (!result) return notFoundResponse(404, { error: `user not found` });
       return okResponse(200, result);
     } catch (err) {
@@ -77,14 +76,14 @@ export class UsersController extends Controller {
   @Patch("{id}")
   @Security("BearerAuth")
   @SuccessResponse("200", "OK")
-  public async update(
+  async update(
     @Path() id: number,
     @Body() body: any,
     @Res() okResponse: TsoaResponse<200, any>,
     @Res() badRequestResponse: TsoaResponse<400, { error: string }>
   ): Promise<any> {
     try {
-      const result = await this.service.update(id, body);
+      const result = await UsersService.update(id, body);
       return okResponse(200, result);
     } catch (err) {
       console.error(`[user] Update Error:`, err);
@@ -95,13 +94,13 @@ export class UsersController extends Controller {
   @Delete("{id}")
   @Security("BearerAuth")
   @SuccessResponse("200", "OK")
-  public async delete(
+  async delete(
     @Path() id: number,
     @Res() okResponse: TsoaResponse<200, any>,
     @Res() badRequestResponse: TsoaResponse<400, { error: string }>
   ): Promise<any> {
     try {
-      const result = await this.service.delete(id);
+      const result = await UsersService.delete(id);
       return okResponse(200, result);
     } catch (err) {
       console.error(`[user] Delete Error:`, err);
@@ -111,15 +110,15 @@ export class UsersController extends Controller {
 
   @Post("/login")
   @SuccessResponse("200", "OK")
-  public async login(
-    @Body() body: any,
+  async login(
+    @Body() body: LoginRequest,
     @Res() okResponse: TsoaResponse<200, { token: string }>,
     @Res() unauthorizedResponse: TsoaResponse<401, { error: string }>,
     @Res() errorResponse: TsoaResponse<500, { error: string }>
   ): Promise<any> {
     try {
       const { email, password } = body;
-      const user = await this.service.authenticate(email, password);
+      const user = await UsersService.authenticate(email, password);
       if (!user) {
         return unauthorizedResponse(401, { error: "Invalid credentials" });
       } else {
@@ -138,8 +137,8 @@ export class UsersController extends Controller {
 
   @Post("/signup")
   @SuccessResponse("201", "Created")
-  public async signup(
-    @Body() body: any,
+  async signup(
+    @Body() body: SignupRequest,
     @Res() createdResponse: TsoaResponse<201, { id: number; email: string }>,
     @Res() badRequestResponse: TsoaResponse<400, { error: string }>,
     @Res() conflictResponse: TsoaResponse<409, { error: string }>,
@@ -153,11 +152,11 @@ export class UsersController extends Controller {
         });
       } else {
         // Check if user already exists
-        const existingUser = await this.service.getByEmail(email);
+        const existingUser = await UsersService.getByEmail(email);
         if (existingUser) {
           return conflictResponse(409, { error: "User already exists" });
         } else {
-          const user = await this.service.create({ email, password, ...rest });
+          const user = await UsersService.create({ email, password, ...rest });
           return createdResponse(201, { id: user.id, email: user.email });
         }
       }

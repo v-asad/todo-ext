@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import mainRouter from "./routes";
 
 import * as swaggerJson from "../build/swagger.json";
 import * as swaggerUI from "swagger-ui-express";
@@ -22,8 +21,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJson));
 
 /** ROUTES */
-app.use("/", mainRouter);
-
 RegisterRoutes(app);
 
 /** LISTENERS */
