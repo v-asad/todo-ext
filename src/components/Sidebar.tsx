@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { FaUserCog } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { maskEmail } from "../utils/email";
 
 interface SidebarItem {
   id: string;
@@ -69,7 +70,7 @@ const sidebarItems: SidebarItem[] = [
     Icon: RxHamburgerMenu,
     text: "Current Sprint",
     color: "#c2c1c1",
-    path: "/",
+    path: "/sprint",
   },
   {
     id: "backlog",
@@ -93,12 +94,13 @@ const Sidebar = () => {
   const router = useRouter();
 
   const userName = "Muhammad Suleman";
-  const displayEmail = "m.suleman1911@example.com";
+  const displayEmail = maskEmail("m.suleman1911@example.com");
 
   const handleItemClick = (id: string, path: string) => {
     setActiveItem(id);
     router.push(path);
   };
+
   return (
     <div className="h-screen flex flex-col bg-[black]/80 text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
