@@ -54,7 +54,7 @@ const TaskLists = ({
       <div
         key={index}
         className={
-          "w-full flex justify-between items-center rounded py-3 px-6  bg-[#2a2a2a] cursor-pointer"
+          "w-full flex justify-between items-center rounded py-3 px-6 bg-[#2a2a2a] cursor-pointer"
         }
         onClick={() => onTaskClick(item)}
       >

@@ -157,10 +157,10 @@ export default function Home() {
   }, [showDateMenu]);
 
   return (
-    <div className="w-full flex flex-col justify-between p-10 bg-[black]/91 h-screen overflow-hidden relative ">
+    <div className="w-full flex flex-col justify-between p-10 bg-[#171717] h-screen overflow-hidden relative ">
       <div>
-        <div className="flex gap-2 items-center">
-          <button onClick={handleAddTask}>
+        <div className="flex gap-2 justify-start items-center">
+          <button>
             <CiHome className="w-[30px] h-[30px]" color="#8795a0" />
           </button>
           <h1 className="text-2xl text-[#8795a0]">Tasks</h1>
@@ -215,7 +215,7 @@ export default function Home() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[grey]/40 hover:bg-[grey]/30 py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] hover:bg-[#4d4c4c] py-1 px-3 rounded h-[46px] ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
@@ -224,20 +224,28 @@ export default function Home() {
               <IoAdd className="h-[25px] w-[25px] " color="#8795a0" />
             )}
           </button>
-          <input
-            ref={inputRef}
-            value={taskTitle}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setFocused(true)}
-            onBlur={() => !setFocused}
-            placeholder={`${
-              focused
-                ? "Try typing 'Pay utilities bill by Friday 6pm' "
-                : "Add a task"
-            }`}
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] hover:text-white"
-          />
+          <div className="relative group w-full">
+            <input
+              ref={inputRef}
+              value={taskTitle}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onFocus={() => setFocused(true)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onBlur={() => setFocused(false)}
+              placeholder={`${
+                focused
+                  ? "Try typing 'Pay utilities bill by Friday 6pm' "
+                  : "Add a task"
+              }`}
+              className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
+            />
+            {showToolTip && (
+              <div className=" absolute bottom-full mb-4 hidden w-max max-w-xs rounded bg-[#2a2a2a] px-2 py-2 text-sm text-white group-hover:block transition-opacity duration-300">
+                <p className="text-[12px]">{'Add a task in "Tasks"'}</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
