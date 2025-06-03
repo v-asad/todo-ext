@@ -26,6 +26,8 @@ export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [focused, setFocused] = useState(false);
+  const [showToolTip, setShowTooltip] = useState(false);
+
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
@@ -51,6 +53,7 @@ export default function Tasks() {
     setTaskTitle("");
     setTaskDate("");
     setFocused(false);
+    setSelectedDate(null);
   };
 
   const tasksUpdated = (id: string) => {
@@ -86,6 +89,7 @@ export default function Tasks() {
     setShowDateMenu(false);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setShowTooltip(false);
     if (e.key === "Enter") {
       handleAddTask();
       setFocused(true);
@@ -220,20 +224,28 @@ export default function Tasks() {
               <IoAdd className="h-[25px] w-[25px] " color="#8795a0" />
             )}
           </button>
-          <input
-            ref={inputRef}
-            value={taskTitle}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onFocus={() => setFocused(true)}
-            onBlur={() => !setFocused}
-            placeholder={`${
-              focused
-                ? "Try typing 'Pay utilities bill by Friday 6pm' "
-                : "Add a task"
-            }`}
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
-          />
+          <div className="relative group w-full">
+            <input
+              ref={inputRef}
+              value={taskTitle}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onFocus={() => setFocused(true)}
+              onMouseEnter={() => setShowTooltip(true)}
+              onBlur={() => setFocused(false)}
+              placeholder={`${
+                focused
+                  ? "Try typing 'Pay utilities bill by Friday 6pm' "
+                  : "Add a task"
+              }`}
+              className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
+            />
+            {showToolTip && (
+              <div className=" absolute bottom-full mb-4 hidden w-max max-w-xs rounded bg-[#2a2a2a] px-2 py-2 text-sm text-white group-hover:block transition-opacity duration-300">
+                <p className="text-[12px]">{'Add a task in "Tasks"'}</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {focused && taskTitle.trim().length > 0 && (

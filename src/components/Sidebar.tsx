@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import { FaUserCog } from "react-icons/fa";
 import { IoSettingsSharp } from "react-icons/io5";
+import { maskEmail } from "../utils/email";
 
 interface SidebarItem {
   id: string;
@@ -93,12 +94,13 @@ const Sidebar = () => {
   const router = useRouter();
 
   const userName = "Muhammad Suleman";
-  const displayEmail = "m.suleman1911@example.com";
+  const displayEmail = maskEmail("m.suleman1911@example.com");
 
   const handleItemClick = (id: string, path: string) => {
     setActiveItem(id);
     router.push(path);
   };
+
   return (
     <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-[30px] px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
@@ -184,7 +186,9 @@ const Sidebar = () => {
       </div>
 
       <div className="mt-auto pb-4">
-        <button className="flex items-center justify-between gap-2 w-full px-3 py-2 bg-[#2B2B2B] rounded">
+        <button
+          className="flex items-center justify-between gap-2 w-full px-3 py-2 bg-[#2B2B2B] rounded hover:bg-[#535353] transition-colors"
+        >
           <div className="flex justify-center items-center gap-[15px]">
             <IoAddSharp />
             <p> New list</p>

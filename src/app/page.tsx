@@ -26,6 +26,8 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [taskDate, setTaskDate] = useState("");
   const [focused, setFocused] = useState(false);
+  const [showToolTip, setShowTooltip] = useState(false);
+
   const calendarRef = useRef<HTMLDivElement>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | undefined>(undefined);
@@ -52,6 +54,7 @@ export default function Home() {
     setTaskDate("");
     setSelectedDate(null);
     setFocused(false);
+    setSelectedDate(null);
   };
 
   const tasksUpdated = (id: string) => {
@@ -87,6 +90,7 @@ export default function Home() {
     setShowDateMenu(false);
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setShowTooltip(false);
     if (e.key === "Enter") {
       handleAddTask();
       setFocused(true);
@@ -233,7 +237,7 @@ export default function Home() {
                 ? "Try typing 'Pay utilities bill by Friday 6pm' "
                 : "Add a task"
             }`}
-            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
+            className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] hover:text-white"
           />
         </div>
 
