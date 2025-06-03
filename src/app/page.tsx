@@ -50,6 +50,7 @@ export default function Home() {
     setTasks((prev) => [newTask, ...prev]);
     setTaskTitle("");
     setTaskDate("");
+    setSelectedDate(null);
     setFocused(false);
   };
 
