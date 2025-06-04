@@ -14,17 +14,17 @@ import {
   FaCheck,
   FaPlus,
 } from 'react-icons/fa';
-import { MdFormatListBulletedAdd } from "react-icons/md";
+import { MdFormatListBulletedAdd } from 'react-icons/md';
 import { maskEmail } from '@/utils/email';
-import { FaUserCog } from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
+import { FaUserCog } from 'react-icons/fa';
+import { IoSettingsSharp } from 'react-icons/io5';
 
 interface SidebarProps {
   userEmail: string;
   userName: string;
 }
 
-const Sidebar = ({ userEmail, userName }:SidebarProps) => {
+const Sidebar = ({ userEmail, userName }: SidebarProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeItem, setActiveItem] = useState<string>('Tasks');
@@ -77,8 +77,12 @@ const Sidebar = ({ userEmail, userName }:SidebarProps) => {
                   <p className="text-xs text-gray-400 flex items-center gap-1">
                     {displayEmail}
                     <span className="flex flex-col -space-y-1">
-                      <IoIosArrowUp className={`text-gray-400 transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
-                      <IoIosArrowDown className={`text-gray-400 transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
+                      <IoIosArrowUp
+                        className={`text-gray-400 transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                      />
+                      <IoIosArrowDown
+                        className={`text-gray-400 transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                      />
                     </span>
                   </p>
                 </div>
@@ -126,8 +130,9 @@ const Sidebar = ({ userEmail, userName }:SidebarProps) => {
             {navigationItems.map((item) => (
               <li
                 key={item.id}
-                className={`flex items-center justify-start gap-3 px-2 py-2 rounded hover:bg-[#2B2B2B] cursor-pointer ${activeItem === item.id ? 'bg-[#2B2B2B]' : ''
-                  }`}
+                className={`flex items-center justify-start gap-3 px-2 py-2 rounded hover:bg-[#2B2B2B] cursor-pointer ${
+                  activeItem === item.id ? 'bg-[#2B2B2B]' : ''
+                }`}
                 onClick={() => handleNavigationClick(item.id)}
               >
                 <span className="text-lg">{item.icon}</span>
@@ -146,7 +151,8 @@ const Sidebar = ({ userEmail, userName }:SidebarProps) => {
         <button
           type="button"
           onClick={() => handleNewList()}
-          className="flex items-center justify-start gap-2 w-full  bg-[#2B2B2B] rounded">
+          className="flex items-center justify-start gap-2 w-full  bg-[#2B2B2B] rounded"
+        >
           <FaPlus />
           New list
         </button>

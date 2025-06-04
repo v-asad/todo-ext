@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { IoMdStarOutline } from "react-icons/io";
-import { TbBrightnessUpFilled } from "react-icons/tb";
-import { IoAddSharp } from "react-icons/io5";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { CiFlag1, CiHome, CiUser } from "react-icons/ci";
-import { MdAddBusiness, MdInsertChartOutlined } from "react-icons/md";
-import { useRouter } from "next/navigation";
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { FaUserCog } from "react-icons/fa";
-import { IoSettingsSharp } from "react-icons/io5";
-import { maskEmail } from "../utils/email";
+import { useState } from 'react';
+import { IoMdStarOutline } from 'react-icons/io';
+import { TbBrightnessUpFilled } from 'react-icons/tb';
+import { IoAddSharp } from 'react-icons/io5';
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { CiFlag1, CiHome, CiUser } from 'react-icons/ci';
+import { MdAddBusiness, MdInsertChartOutlined } from 'react-icons/md';
+import { useRouter } from 'next/navigation';
+import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { FaUserCog } from 'react-icons/fa';
+import { IoSettingsSharp } from 'react-icons/io5';
+import { maskEmail } from '../utils/email';
 
 interface SidebarItem {
   id: string;
@@ -23,78 +23,78 @@ interface SidebarItem {
 
 const sidebarItems: SidebarItem[] = [
   {
-    id: "my-day",
+    id: 'my-day',
     Icon: TbBrightnessUpFilled,
-    text: "My Day",
-    color: "grey",
-    path: "/",
+    text: 'My Day',
+    color: 'grey',
+    path: '/',
   },
   {
-    id: "important",
+    id: 'important',
     Icon: IoMdStarOutline,
-    text: "Important",
-    color: "pink",
-    path: "/important",
+    text: 'Important',
+    color: 'pink',
+    path: '/important',
   },
   {
-    id: "planned",
+    id: 'planned',
     Icon: MdInsertChartOutlined,
-    text: "Planned",
-    color: "green",
-    path: "/planned",
+    text: 'Planned',
+    color: 'green',
+    path: '/planned',
   },
   {
-    id: "assigned",
+    id: 'assigned',
     Icon: CiUser,
-    text: "Assigned to me",
-    color: "green",
-    path: "/assigned",
+    text: 'Assigned to me',
+    color: 'green',
+    path: '/assigned',
   },
   {
-    id: "flagged",
+    id: 'flagged',
     Icon: CiFlag1,
-    text: "Flagged email",
-    color: "red",
-    path: "flaggedemail",
+    text: 'Flagged email',
+    color: 'red',
+    path: 'flaggedemail',
   },
   {
-    id: "tasks",
+    id: 'tasks',
     Icon: CiHome,
-    text: "Tasks",
-    color: "#606da3",
-    path: "/tasks",
+    text: 'Tasks',
+    color: '#606da3',
+    path: '/tasks',
   },
 
   {
-    id: "sprint",
+    id: 'sprint',
     Icon: RxHamburgerMenu,
-    text: "Current Sprint",
-    color: "#c2c1c1",
-    path: "/sprint",
+    text: 'Current Sprint',
+    color: '#c2c1c1',
+    path: '/sprint',
   },
   {
-    id: "backlog",
+    id: 'backlog',
     Icon: RxHamburgerMenu,
-    text: "BackLog",
-    color: "#c2c1c1",
-    path: "/backlog",
+    text: 'BackLog',
+    color: '#c2c1c1',
+    path: '/backlog',
   },
   {
-    id: "done",
+    id: 'done',
     Icon: RxHamburgerMenu,
-    text: "Done",
-    color: "#c2c1c1",
-    path: "/done",
+    text: 'Done',
+    color: '#c2c1c1',
+    path: '/done',
   },
 ];
 
 const Sidebar = () => {
-  const [activeItem, setActiveItem] = useState<string>("Tasks");
+  const [activeItem, setActiveItem] = useState<string>('Tasks');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 
-  const userName = "Muhammad Suleman";
-  const displayEmail = maskEmail("m.suleman1911@example.com");
+  const userName = 'Muhammad Suleman';
+  const displayEmail = maskEmail('m.suleman1911@example.com');
 
   const handleItemClick = (id: string, path: string) => {
     setActiveItem(id);
@@ -118,8 +118,12 @@ const Sidebar = () => {
                 <p className="text-xs text-gray-400 flex items-center">
                   {displayEmail}
                   <span className="flex flex-col -space-y-1">
-                    <IoIosArrowUp className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
-                    <IoIosArrowDown className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`} />
+                    <IoIosArrowUp
+                      className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                    />
+                    <IoIosArrowDown
+                      className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                    />
                   </span>
                 </p>
               </div>
@@ -152,7 +156,8 @@ const Sidebar = () => {
         )}
       </div>
       <div className=" w-full px-[8px] flex flex-col gap-1 justify-center items-start">
-        <input className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400"
+        <input
+          className="w-full px-[10px] py-[4px] rounded bg-[#2B2B2B] text-white outline-none border-b-[1px] border-white focus:border-b-[3px] focus:border-b-blue-400"
           type="search"
           placeholder="Search"
         />
@@ -163,9 +168,10 @@ const Sidebar = () => {
             <ul key={i} className="space-y-2 w-full pt-[10px]">
               <li
                 onClick={() => handleItemClick(item.id, item.path)}
-                data-active={activeItem === item.id ? "true" : "false"}
-                className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${activeItem === item.id ? "bg-[#535353]" : ""
-                  }`}
+                data-active={activeItem === item.id ? 'true' : 'false'}
+                className={`flex items-center justify-start gap-3 px-2 py-2 rounded cursor-pointer ${
+                  activeItem === item.id ? 'bg-[#535353]' : ''
+                }`}
               >
                 <item.Icon size={20} color={item.color} />
                 <span>{item.text}</span>
@@ -189,20 +195,20 @@ const Sidebar = () => {
         .scrollbar-hide::-webkit-scrollbar {
           width: 4px;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-track {
           background: transparent;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-thumb {
           background: #535353;
           border-radius: 3px;
         }
-        
+
         .scrollbar-hide::-webkit-scrollbar-thumb:hover {
           background: #666666;
         }
-        
+
         .scrollbar-hide {
           -ms-overflow-style: none;
           scrollbar-width: thin;

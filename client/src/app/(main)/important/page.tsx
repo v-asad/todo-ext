@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { IoIosStarOutline } from "react-icons/io";
+import { IoIosStarOutline } from 'react-icons/io';
 
 export default function Important() {
   return (

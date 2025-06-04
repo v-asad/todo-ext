@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import CategoriesService from "../services/categories.service";
 
-class CategoriesController {
+export class CategoriesController {
   private service = new CategoriesService();
 
   create = async (req: Request, res: Response) => {
@@ -28,8 +28,7 @@ class CategoriesController {
     try {
       const id = Number(req.params.id);
       const result = await this.service.getOne(id);
-      if (!result)
-        res.status(404).json({ error: `category not found` });
+      if (!result) res.status(404).json({ error: `category not found` });
       else res.json(result);
     } catch (err) {
       console.error(`[category] GetOne Error:`, err);
@@ -59,5 +58,3 @@ class CategoriesController {
     }
   };
 }
-
-export default CategoriesController;

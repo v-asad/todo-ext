@@ -1,5 +1,5 @@
-import React from "react";
-import { CiFlag1 } from "react-icons/ci";
+import React from 'react';
+import { CiFlag1 } from 'react-icons/ci';
 
 function flaggedemail() {
   return (
