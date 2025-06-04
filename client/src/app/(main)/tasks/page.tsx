@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { v4 as uuidv4 } from "uuid";
-import { IoAdd } from "react-icons/io5";
-import { FaCircleCheck } from "react-icons/fa6";
-import toast, { Toaster } from "react-hot-toast";
-import { FaRegCircle } from "react-icons/fa";
-import { useState, ChangeEvent, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { IoAdd } from 'react-icons/io5';
+import { FaCircleCheck } from 'react-icons/fa6';
+import toast, { Toaster } from 'react-hot-toast';
+import { FaRegCircle } from 'react-icons/fa';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
 
-import DateSelector from "@/components/DateSelector";
-import Drawer from "@/components/modals/drawer";
-import TaskLists from "@/components/TaskLists";
-import { CiHome } from "react-icons/ci";
-import { BsCalendar3 } from "react-icons/bs";
-import CalendarModal from "@/components/calendarModal";
+import DateSelector from '@/components/DateSelector';
+import Drawer from '@/components/modals/drawer';
+import TaskLists from '@/components/TaskLists';
+import { CiHome } from 'react-icons/ci';
+import { BsCalendar3 } from 'react-icons/bs';
+import CalendarModal from '@/components/calendarModal';
 
 export type Task = {
   id: string;
@@ -22,9 +22,9 @@ export type Task = {
 };
 
 export default function Tasks() {
-  const [taskTitle, setTaskTitle] = useState("");
+  const [taskTitle, setTaskTitle] = useState('');
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [taskDate, setTaskDate] = useState("");
+  const [taskDate, setTaskDate] = useState('');
   const [focused, setFocused] = useState(false);
   const [showToolTip, setShowTooltip] = useState(false);
 
@@ -38,8 +38,8 @@ export default function Tasks() {
   const [showCalendarModal, setShowCalendarModal] = useState(false);
 
   const handleAddTask = () => {
-    if (taskTitle.trim() === "") {
-      toast.error("Please add the text.");
+    if (taskTitle.trim() === '') {
+      toast.error('Please add the text.');
       return;
     }
 
@@ -50,8 +50,8 @@ export default function Tasks() {
       id: uuidv4(),
     };
     setTasks((prev) => [newTask, ...prev]);
-    setTaskTitle("");
-    setTaskDate("");
+    setTaskTitle('');
+    setTaskDate('');
     setSelectedDate(null);
     setFocused(false);
     setSelectedDate(null);
@@ -59,7 +59,7 @@ export default function Tasks() {
 
   const tasksUpdated = (id: string) => {
     const updated = tasks.map((task) =>
-      task.id === id ? { ...task, status: !task.status } : task
+      task.id === id ? { ...task, status: !task.status } : task,
     );
     setTasks(updated);
   };
@@ -91,7 +91,7 @@ export default function Tasks() {
   };
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     setShowTooltip(false);
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       handleAddTask();
       setFocused(true);
     }
@@ -100,30 +100,28 @@ export default function Tasks() {
     if (date) {
       if (date) {
         setSelectedDate(date);
-        handleDateSelect(date.toLocaleDateString("en-CA"));
+        handleDateSelect(date.toLocaleDateString('en-CA'));
       }
       setShowCalendarModal(false);
     }
   };
   const getDateLabel = (dateStr: string): string => {
-    const [year, month, day] = dateStr.split("-").map(Number);
+    const [year, month, day] = dateStr.split('-').map(Number);
     const target = new Date(year, month - 1, day);
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     target.setHours(0, 0, 0, 0);
 
-    const diffInDays = Math.round(
-      (target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-    );
+    const diffInDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
 
-    if (diffInDays === 0) return "Today";
-    if (diffInDays === 1) return "Tomorrow";
+    if (diffInDays === 0) return 'Today';
+    if (diffInDays === 1) return 'Tomorrow';
 
-    return target.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    return target.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
     });
   };
 
@@ -138,22 +136,19 @@ export default function Tasks() {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        calendarRef.current &&
-        !calendarRef.current.contains(event.target as Node)
-      ) {
+      if (calendarRef.current && !calendarRef.current.contains(event.target as Node)) {
         setShowDateMenu(false);
       }
     }
 
     if (showDateMenu) {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showDateMenu]);
 
@@ -170,8 +165,7 @@ export default function Tasks() {
           <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
             <FaCircleCheck size={50} color="#7686bf" />
             <p className="text-[#8795a0] w-full max-w-[300px] text-center">
-              Tasks show up here if they aren&apos;t part of any lists
-              you&apos;ve created
+              Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
             </p>
           </div>
         )}
@@ -235,9 +229,7 @@ export default function Tasks() {
               onMouseEnter={() => setShowTooltip(true)}
               onBlur={() => setFocused(false)}
               placeholder={`${
-                focused
-                  ? "Try typing 'Pay utilities bill by Friday 6pm' "
-                  : "Add a task"
+                focused ? "Try typing 'Pay utilities bill by Friday 6pm' " : 'Add a task'
               }`}
               className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
             />
@@ -258,9 +250,7 @@ export default function Tasks() {
               <BsCalendar3 color="white" className="w-[20px] h-[20px]" />
             </button>
             {taskDate && (
-              <span className="w-full text-sm text-white ml-2">
-                {getDateLabel(taskDate)}
-              </span>
+              <span className="w-full text-sm text-white ml-2">{getDateLabel(taskDate)}</span>
             )}
           </div>
         )}

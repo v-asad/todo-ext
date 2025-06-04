@@ -1,7 +1,7 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import DatePicker from "react-datepicker";
-import { MdArrowDropDown, MdArrowDropUp } from "react-icons/md";
+'use client';
+import React, { useEffect, useRef, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
 interface CalendarModalProps {
   selectedDate: Date | null;
@@ -9,14 +9,8 @@ interface CalendarModalProps {
   onClose: () => void;
 }
 
-const CalendarModal = ({
-  selectedDate,
-  onSelectDate,
-  onClose,
-}: CalendarModalProps) => {
-  const [tempSelectedDate, setTempSelectedDate] = useState<Date | null>(
-    selectedDate
-  );
+const CalendarModal = ({ selectedDate, onSelectDate, onClose }: CalendarModalProps) => {
+  const [tempSelectedDate, setTempSelectedDate] = useState<Date | null>(selectedDate);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const handleDateChange = (date: Date | null) => {
@@ -33,26 +27,20 @@ const CalendarModal = ({
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
         onClose();
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [onClose]);
 
   return (
     <div className="fixed inset-0 flex justify-end items-center bg-opacity-40 z-50 px-[50px]">
-      <div
-        ref={modalRef}
-        className="flex flex-col  p-6 rounded shadow-md z-50 bg-[white]"
-      >
+      <div ref={modalRef} className="flex flex-col  p-6 rounded shadow-md z-50 bg-[white]">
         <DatePicker
           selected={selectedDate}
           onChange={handleDateChange}
@@ -66,22 +54,16 @@ const CalendarModal = ({
           }) => (
             <div className="custom-header flex justify-between items-center px-[15px] text-black">
               <div className="month-year bg-[white]">
-                {date.toLocaleString("default", {
-                  month: "long",
-                  year: "numeric",
+                {date.toLocaleString('default', {
+                  month: 'long',
+                  year: 'numeric',
                 })}
               </div>
               <div className="flex gap-2 justify-center items-center">
-                <button
-                  onClick={decreaseMonth}
-                  disabled={nextMonthButtonDisabled}
-                >
+                <button onClick={decreaseMonth} disabled={nextMonthButtonDisabled}>
                   <MdArrowDropUp size={25} />
                 </button>
-                <button
-                  onClick={increaseMonth}
-                  disabled={prevMonthButtonDisabled}
-                >
+                <button onClick={increaseMonth} disabled={prevMonthButtonDisabled}>
                   <MdArrowDropDown size={25} />
                 </button>
               </div>
