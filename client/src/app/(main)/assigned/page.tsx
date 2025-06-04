@@ -1,5 +1,5 @@
-import React from "react";
-import { CiUser } from "react-icons/ci";
+import React from 'react';
+import { CiUser } from 'react-icons/ci';
 
 function assigned() {
   return (

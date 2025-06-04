@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Signup from "@/components/Signup";
+import Signup from '@/components/Signup';
 
 export default function SignupPage() {
   return (
@@ -8,4 +8,4 @@ export default function SignupPage() {
       <Signup />
     </div>
   );
-} 
+}

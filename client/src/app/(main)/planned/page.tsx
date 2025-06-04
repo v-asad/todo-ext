@@ -1,5 +1,5 @@
-import React from "react";
-import { MdInsertChartOutlined } from "react-icons/md";
+import React from 'react';
+import { MdInsertChartOutlined } from 'react-icons/md';
 
 function Planned() {
   return (
@@ -7,10 +7,7 @@ function Planned() {
       <div>
         <div className="flex gap-2 justify-start items-center">
           <button>
-            <MdInsertChartOutlined
-              className="w-[30px] h-[30px]"
-              color="green"
-            />
+            <MdInsertChartOutlined className="w-[30px] h-[30px]" color="green" />
           </button>
           <h1 className="text-2xl text-[green]">Planned</h1>
         </div>
