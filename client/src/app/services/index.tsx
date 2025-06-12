@@ -20,7 +20,7 @@ export const loginService = async (payload: LoginPayLoad): Promise<LoginResponse
 
     return response.data;
   } catch (error: unknown) {
-    const err = error as AxiosError<{ message: string }>;
+    const err = error as AxiosError<AxiosError>;
     throw new Error(err.response?.data?.message || 'Login failed: email or password incorrect.');
   }
 };

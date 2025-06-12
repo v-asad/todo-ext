@@ -1,14 +1,10 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useState, ReactNode } from 'react';
+import { useEffect, useState, PropsWithChildren } from 'react';
 import Loader from '../Loader';
 
-type AuthWrapperProps = {
-  children: ReactNode;
-};
-
-const AuthWrapper = ({ children }: AuthWrapperProps) => {
+const AuthWrapper = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
@@ -21,11 +17,11 @@ const AuthWrapper = ({ children }: AuthWrapperProps) => {
     }
   }, [router]);
 
-  if (isAuthenticated === null) {
-    return <Loader />;
+  if (isAuthenticated) {
+    return <>{children}</>;
   }
 
-  return <>{children}</>;
+  return <Loader />;
 };
 
 export default AuthWrapper;
