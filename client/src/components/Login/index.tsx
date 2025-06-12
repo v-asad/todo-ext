@@ -19,7 +19,7 @@ function Login() {
       router.push('/');
     } catch (err) {
       console.error(err);
-      setError('Something went wrong');
+      setError('Email or password incorrect');
     }
   };
 
