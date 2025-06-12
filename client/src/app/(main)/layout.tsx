@@ -1,3 +1,4 @@
+import AuthWrapper from '@/components/AuthWrapper';
 import Sidebar from '@/components/Sidebar';
 
 export default function MainLayout({
@@ -7,8 +8,10 @@ export default function MainLayout({
 }>) {
   return (
     <div className="w-full flex justify-start items-center">
-      <Sidebar />
-      <main className="flex w-full justify-center items-start">{children}</main>
+      <AuthWrapper>
+        <Sidebar />
+        <main className="flex w-full justify-center items-start">{children}</main>
+      </AuthWrapper>
     </div>
   );
 }

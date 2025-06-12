@@ -1,0 +1,26 @@
+import axios, { AxiosError } from 'axios';
+
+interface LoginPayLoad {
+  email: string;
+  password: string;
+}
+
+interface LoginResponse {
+  token: string;
+}
+
+const END_POINT = 'http://localhost:8080/users';
+export const loginService = async (payload: LoginPayLoad): Promise<LoginResponse> => {
+  try {
+    const response = await axios.post(`${END_POINT}/login`, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+  } catch (error: unknown) {
+    const err = error as AxiosError<{ message: string }>;
+    throw new Error(err.response?.data?.message || 'Login failed: email or password incorrect.');
+  }
+};
