@@ -13,6 +13,11 @@ function Login() {
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      setError('Email and password required');
+      return;
+    }
+
     try {
       const response = await loginService({ email, password });
       localStorage.setItem('token', response.token);
