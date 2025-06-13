@@ -33,6 +33,13 @@ function Login() {
     }
   };
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, email: e.target.value }));
+  };
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, password: e.target.value }));
+  };
+
   return (
     <div className="w-full bg-[#333333] flex justify-center items-start overflow-y-hidden">
       <Illustration />
@@ -54,7 +61,7 @@ function Login() {
               placeholder="Enter your email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+              onChange={handleEmailChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
             />
           </div>
@@ -68,7 +75,7 @@ function Login() {
               placeholder="Enter your password"
               type="password"
               value={formData.password}
-              onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
+              onChange={handlePasswordChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
             />
             <p className="text-white pt-[10px] cursor-pointer text-[14px]">Forgot Password</p>
