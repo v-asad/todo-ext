@@ -18,13 +18,19 @@ function Login() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!formData.email || !formData.password) {
+    const { email, password } = formData;
+
+    if (!email || !password) {
       setError('Email and password required');
       return;
     }
+    const payload = {
+      email: email,
+      password: password,
+    };
 
     try {
-      const response = await loginService({ email: formData.email, password: formData.password });
+      const response = await loginService(payload);
       localStorage.setItem('token', response.token);
       router.push('/');
     } catch (err) {
@@ -33,11 +39,12 @@ function Login() {
     }
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, email: e.target.value }));
-  };
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({ ...prev, password: e.target.value }));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   return (
@@ -58,10 +65,11 @@ function Login() {
             </label>
             <input
               id="email"
+              name="email"
               placeholder="Enter your email"
               type="email"
               value={formData.email}
-              onChange={handleEmailChange}
+              onChange={handleChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
             />
           </div>
@@ -72,10 +80,11 @@ function Login() {
             </label>
             <input
               id="password"
+              name="password"
               placeholder="Enter your password"
               type="password"
               value={formData.password}
-              onChange={handlePasswordChange}
+              onChange={handleChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
             />
             <p className="text-white pt-[10px] cursor-pointer text-[14px]">Forgot Password</p>
