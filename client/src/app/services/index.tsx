@@ -1,5 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
+const END_POINT = 'http://localhost:8080/users';
+
 interface LoginPayLoad {
   email: string;
   password: string;
@@ -9,7 +11,6 @@ interface LoginResponse {
   token: string;
 }
 
-const END_POINT = 'http://localhost:8080/users';
 export const loginService = async (payload: LoginPayLoad): Promise<LoginResponse> => {
   try {
     const response = await axios.post(`${END_POINT}/login`, payload, {
