@@ -5,6 +5,7 @@ import Illustration from '../Illustration';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { loginService } from '@/app/services';
+import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
   const router = useRouter();
@@ -13,15 +14,13 @@ function Login() {
     password: '',
   });
 
-  const [error, setError] = useState('');
-
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const { email, password } = formData;
 
     if (!email || !password) {
-      setError('Email and password required');
+      toast.error('Email and password required');
       return;
     }
     const payload = {
@@ -35,7 +34,7 @@ function Login() {
       router.push('/');
     } catch (err) {
       console.error(err);
-      setError('Email or password incorrect');
+      toast.error('Email or password incorrect');
     }
   };
 
@@ -53,7 +52,7 @@ function Login() {
       <div className="w-full min-h-screen bg-[#333333] flex flex-col gap-[30px] justify-center items-center">
         <h1 className="font-bold text-[30px] text-white">Sign In</h1>
 
-        {error && <p className="text-red-500 font-semibold">{error}</p>}
+        <Toaster position="top-center" />
 
         <form
           className="w-full flex flex-col gap-[30px] justify-center items-center"
