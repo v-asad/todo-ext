@@ -31,6 +31,12 @@ const Signup = () => {
 
     const { firstName, lastName, email, password, confirmPassword } = formData;
 
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      toast.error('Please fill in all the fields');
+      setIsLoading(false);
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       setIsLoading(false);
