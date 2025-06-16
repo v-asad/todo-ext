@@ -7,8 +7,8 @@ function Illustration() {
       <div className="w-full flex flex-col gap-[24px] items-center justify-center">
         <Image
           className="w-[200px] h-[150px]"
-          width={100}
-          height={100}
+          width={200}
+          height={150}
           src={'/assets/illustration/logo.png'}
           alt="logo"
         />
