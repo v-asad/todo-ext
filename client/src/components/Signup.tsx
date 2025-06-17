@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { signupService } from '@/services/signupService';
 
 const Signup = () => {
   const router = useRouter();
@@ -51,14 +52,15 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/users/signup', {
-        name: `${firstName} ${lastName}`,
-        email: email,
-        password: password,
+      const response = await signupService.signup({
+        firstName,
+        lastName,
+        email,
+        password,
       });
 
       setFormData(payload);
-      toast.success(response.data.message || 'Signup successful!');
+      toast.success(response.message || 'Signup successful!');
       router.push('/login');
     } catch (err: unknown) {
       console.error(err);
