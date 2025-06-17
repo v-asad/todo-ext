@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Illustration from '../Illustration';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { loginService } from '@/app/services';
+import { loginService } from '@/app/services/loginService';
 import toast, { Toaster } from 'react-hot-toast';
 
 function Login() {
