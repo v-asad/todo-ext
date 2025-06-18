@@ -4,12 +4,18 @@ import React, { useState } from 'react';
 import Illustration from '../Illustration';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { loginService } from '@/app/services/loginService';
-import toast, { Toaster } from 'react-hot-toast';
+import { login } from '@/app/services/loginService';
+import toast from 'react-hot-toast';
 
 function Login() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+
+  type FormData = {
+    email: string;
+    password: string;
+  };
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
   });
@@ -18,24 +24,37 @@ function Login() {
     e.preventDefault();
 
     const { email, password } = formData;
+    const emailTrimmed = email.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 
-    if (!email || !password) {
+    if (!emailTrimmed || !password) {
       toast.error('Email and password required');
       return;
     }
+    if (!emailRegex.test(emailTrimmed)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        'Password must be at least 6 characters long and include uppercase, lowercase, number, and special character',
+      );
+      return;
+    }
     const payload = {
-      email: email,
+      email: emailTrimmed,
       password: password,
     };
 
-    try {
-      const response = await loginService(payload);
-      localStorage.setItem('token', response.token);
-      router.push('/');
-    } catch (err) {
-      console.error(err);
-      toast.error('Email or password incorrect');
+    const response = await login(payload);
+    if ('error' in response) {
+      setLoading(false);
+      toast.error(response.error);
+      return;
     }
+    setLoading(true);
+    router.push('/');
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,8 +70,6 @@ function Login() {
       <Illustration />
       <div className="w-full min-h-screen bg-[#333333] flex flex-col gap-[30px] justify-center items-center">
         <h1 className="font-bold text-[30px] text-white">Sign In</h1>
-
-        <Toaster position="top-center" />
 
         <form
           className="w-full flex flex-col gap-[30px] justify-center items-center"
@@ -86,15 +103,16 @@ function Login() {
               onChange={handleChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px] bg-[#525252] py-1 px-3 rounded h-[46px] hover:bg-[#494949]"
             />
-            <p className="text-white pt-[10px] cursor-pointer text-[14px]">Forgot Password</p>
+            <p className="text-white pt-2.5 cursor-pointer text-[14px]">Forgot Password</p>
           </div>
 
           <div className="w-full max-w-[600px]">
             <button
+              disabled={loading}
               type="submit"
               className="w-full rounded bg-[#161616] text-white font-bold py-3 hover:bg-[#222121] cursor-pointer"
             >
-              Login
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </div>
 

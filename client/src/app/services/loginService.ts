@@ -11,20 +11,32 @@ interface LoginResponse {
   token: string;
 }
 
-export const loginService = async (payload: LoginPayLoad): Promise<LoginResponse> => {
+type LoginResult = { token: string } | { error: string };
+
+export const login = async (payload: LoginPayLoad): Promise<LoginResult> => {
   try {
-    const response = await axios.post(`${END_POINT}/login`, payload, {
+    const response = await axios.post<LoginResponse>(`${END_POINT}/login`, payload, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message = (error.response?.data as { message?: string })?.message;
-      throw new Error(message || 'Login failed: email or password incorrect.');
+    const { token } = response.data;
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('token', token);
     }
-    throw new Error('Unexpected error occurred while logging in.');
+
+    return { token };
+  } catch (error) {
+    let message = 'Unexpected error occurred while logging in.';
+
+    if (axios.isAxiosError(error)) {
+      const data = error.response?.data as { message?: string };
+      message = data?.message || 'Login failed: email or password incorrect.';
+    }
+
+    console.error('Login error:', error);
+    return { error: message };
   }
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { CiFlag1 } from 'react-icons/ci';
 
-function flaggedemail() {
+function FlaggedEmail() {
   return (
     <div className="w-full flex flex-col justify-between items-start p-10 bg-[#171717] h-screen overflow-hidden relative">
       <div>
@@ -16,4 +16,4 @@ function flaggedemail() {
   );
 }
 
-export default flaggedemail;
+export default FlaggedEmail;

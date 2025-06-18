@@ -1,7 +1,7 @@
 import React from 'react';
 import { CiUser } from 'react-icons/ci';
 
-function assigned() {
+function Assigned() {
   return (
     <div className="w-full flex flex-col justify-between items-start p-10 bg-[#171717] h-screen overflow-hidden relative">
       <div>
@@ -16,4 +16,4 @@ function assigned() {
   );
 }
 
-export default assigned;
+export default Assigned;
