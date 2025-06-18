@@ -6,7 +6,7 @@ import Loader from '../Loader';
 
 const AuthWrapper = ({ children }: PropsWithChildren) => {
   const router = useRouter();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
