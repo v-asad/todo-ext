@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-
+import { Toaster } from 'react-hot-toast';
 import '../styles/globals.css';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -32,6 +32,7 @@ export default function RootLayout({
       >
         <div className="flex justify-start items-center">
           <main className=" flex w-full justify-center items-start">{children}</main>
+          <Toaster position="top-right" />
         </div>
       </body>
     </html>

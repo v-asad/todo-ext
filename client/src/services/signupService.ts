@@ -8,18 +8,44 @@ interface SignupData {
 }
 
 interface SignupResponse {
+  success: boolean;
   message: string;
 }
 
-const API_URL = 'http://localhost:8080';
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-export const signupService = {
+export const signup = {
   signup: async (data: SignupData): Promise<SignupResponse> => {
-    const response = await axios.post(`${API_URL}/users/signup`, {
-      name: `${data.firstName} ${data.lastName}`,
-      email: data.email,
-      password: data.password,
-    });
-    return response.data;
+    try {
+      const response = await axios.post(`${API_URL}/users/signup`, {
+        name: `${data.firstName} ${data.lastName}`,
+        email: data.email,
+        password: data.password,
+      });
+
+      return {
+        success: true,
+        message: response.data?.message || 'Signup successful!',
+      };
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 409) {
+          return {
+            success: false,
+            message:
+              'This email is already registered. Please use a different email or try logging in.',
+          };
+        }
+        return {
+          success: false,
+          message: error.response?.data?.message || 'Something went wrong. Please try again.',
+        };
+      }
+
+      return {
+        success: false,
+        message: 'An unexpected error occurred.',
+      };
+    }
   },
 };

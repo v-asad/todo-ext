@@ -1,16 +1,24 @@
 'use client';
+
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
-import toast, { Toaster } from 'react-hot-toast';
-import { signupService } from '@/services/signupService';
+import toast from 'react-hot-toast';
+import { signup } from '@/services/signupService';
+
+type SignupFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const Signup = () => {
   const router = useRouter();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<SignupFormData>({
     firstName: '',
     lastName: '',
     email: '',
@@ -38,50 +46,62 @@ const Signup = () => {
       return;
     }
 
+    if (!email.trim()) {
+      toast.error('Email cannot be empty or just spaces');
+      setIsLoading(false);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error('Invalid email format');
+      setIsLoading(false);
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        'Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
+      );
+      setIsLoading(false);
+      return;
+    }
+
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
       setIsLoading(false);
       return;
     }
-    const payload = {
+
+    const response = await signup.signup({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+
+    if (!response.success) {
+      toast.error(response.message);
+      setIsLoading(false);
+      return;
+    }
+
+    setFormData({
       firstName: '',
       lastName: '',
       email: '',
       password: '',
       confirmPassword: '',
-    };
+    });
 
-    try {
-      const response = await signupService.signup({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
-
-      setFormData(payload);
-      toast.success(response.message || 'Signup successful!');
-      router.push('/login');
-    } catch (err: unknown) {
-      console.error(err);
-      if (axios.isAxiosError(err)) {
-        if (err.response?.status === 409) {
-          toast.error(
-            'This email is already registered. Please use a different email or try logging in.',
-          );
-        } else {
-          toast.error(err.response?.data?.message || 'Something went wrong. Please try again.');
-        }
-      } else {
-        toast.error('An unexpected error occurred');
-      }
-    }
+    toast.success(response.message);
+    router.push('/login');
     setIsLoading(false);
   };
 
   return (
     <div className="flex items-center justify-center rounded-lg shadow-lg overflow-hidden w-full">
-      <Toaster position="top-right" />
       <div className="w-full min-h-screen bg-[#333333] text-white p-8 flex flex-col justify-center items-center gap-6">
         <Image src="/assets/logo.png" alt="Welcome" width={200} height={200} className="mb-2" />
         <h1 className="text-white text-6xl font-bold">MicroSoft To Do</h1>
