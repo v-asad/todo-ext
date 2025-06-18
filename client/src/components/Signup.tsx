@@ -28,6 +28,15 @@ const Signup = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const [errors, setErrors] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    general: '',
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -37,39 +46,67 @@ const Signup = () => {
     e.preventDefault();
     if (isLoading) return;
     setIsLoading(true);
+    setErrors({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      general: '',
+    });
 
     const { firstName, lastName, email, password, confirmPassword } = formData;
+    let hasError = false;
+    const newErrors = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      general: '',
+    };
 
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      toast.error('Please fill in all the fields');
-      setIsLoading(false);
-      return;
+    if (!firstName) {
+      newErrors.firstName = 'First name is required';
+      hasError = true;
     }
-
-    if (!email.trim()) {
-      toast.error('Email cannot be empty or just spaces');
-      setIsLoading(false);
-      return;
+    if (!lastName) {
+      newErrors.lastName = 'Last name is required';
+      hasError = true;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error('Invalid email format');
-      setIsLoading(false);
-      return;
+    if (!email) {
+      newErrors.email = 'Email is required';
+      hasError = true;
+    } else if (!email.trim()) {
+      newErrors.email = 'Email cannot be empty or just spaces';
+      hasError = true;
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        newErrors.email = 'Invalid email format';
+        hasError = true;
+      }
     }
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
-    if (!passwordRegex.test(password)) {
-      toast.error(
-        'Password must be at least 6 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.',
-      );
-      setIsLoading(false);
-      return;
+    if (!password) {
+      newErrors.password = 'Password is required';
+      hasError = true;
+    } else {
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+      if (!passwordRegex.test(password)) {
+        newErrors.password =
+          'Password must be at least 6 characters and include one uppercase letter, one lowercase letter, one number, and one special character.';
+        hasError = true;
+      }
     }
-
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+    if (!confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+      hasError = true;
+    } else if (password !== confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+      hasError = true;
+    }
+    if (hasError) {
+      setErrors(newErrors);
       setIsLoading(false);
       return;
     }
@@ -82,7 +119,7 @@ const Signup = () => {
     });
 
     if (!response.success) {
-      toast.error(response.message);
+      setErrors((prev) => ({ ...prev, general: response.message }));
       setIsLoading(false);
       return;
     }
@@ -94,14 +131,21 @@ const Signup = () => {
       password: '',
       confirmPassword: '',
     });
-
+    setErrors({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      general: '',
+    });
     toast.success(response.message);
     router.push('/login');
     setIsLoading(false);
   };
 
   return (
-    <div className="flex items-center justify-center rounded-lg shadow-lg overflow-hidden w-full">
+    <div className="flex items-center justify-center rounded-lg shadow-lg overflow-hidden w-full max-h-screen">
       <div className="w-full min-h-screen bg-[#333333] text-white p-8 flex flex-col justify-center items-center gap-6">
         <Image src="/assets/logo.png" alt="Welcome" width={200} height={200} className="mb-2" />
         <h1 className="text-white text-6xl font-bold">MicroSoft To Do</h1>
@@ -109,7 +153,7 @@ const Signup = () => {
       <div className="w-full bg-[#333333] p-8 flex flex-col items-center justify-center min-h-screen">
         <h2 className="text-2xl font-bold text-center mb-6 text-white">Register Here</h2>
         <form className="mb-8 w-[600px]" onSubmit={handleSubmit}>
-          <div className="mb-2">
+          <div className="mb-2 h-22">
             <label htmlFor="firstName" className="block text-white text-sm font-bold mb-1 ">
               First Name
             </label>
@@ -122,9 +166,10 @@ const Signup = () => {
               placeholder="Enter your First Name"
               className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
             />
+            {errors.firstName && <p className="text-red-400 text-xs mt-1">{errors.firstName}</p>}
           </div>
 
-          <div className="mb-2">
+          <div className="mb-2 h-22">
             <label htmlFor="lastName" className="block text-white text-sm font-bold mb-1 ">
               Last Name
             </label>
@@ -137,9 +182,10 @@ const Signup = () => {
               placeholder="Enter your Last Name"
               className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
             />
+            {errors.lastName && <p className="text-red-400 text-xs mt-1">{errors.lastName}</p>}
           </div>
 
-          <div className="mb-2">
+          <div className="mb-2 h-22">
             <label htmlFor="email" className="block text-white text-sm font-bold mb-1 ">
               Email
             </label>
@@ -152,9 +198,10 @@ const Signup = () => {
               placeholder="user@example.com"
               className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
             />
+            {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
           </div>
 
-          <div className="mb-2">
+          <div className="mb-2 h-24">
             <label htmlFor="password" className="block text-white text-sm font-bold mb-1 ">
               Password
             </label>
@@ -167,9 +214,10 @@ const Signup = () => {
               placeholder="Enter Your Password"
               className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
             />
+            {errors.password && <p className="text-red-400 text-xs my-1">{errors.password}</p>}
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2 h-22">
             <label htmlFor="confirmPassword" className="block text-white text-sm font-bold mb-1 ">
               Confirm Password
             </label>
@@ -182,7 +230,14 @@ const Signup = () => {
               placeholder="Confirm Password"
               className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
             />
+            {errors.confirmPassword && (
+              <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>
+            )}
           </div>
+
+          {errors.general && (
+            <p className="text-red-400 text-xs text-center mt-1">{errors.general}</p>
+          )}
 
           <div className="flex items-center justify-center mt-8">
             <button

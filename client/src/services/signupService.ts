@@ -14,15 +14,22 @@ interface SignupResponse {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 export const signup = {
   signup: async (data: SignupData): Promise<SignupResponse> => {
     try {
-      const response = await axios.post(`${API_URL}/users/signup`, {
+      const userPayload = {
         name: `${data.firstName} ${data.lastName}`,
         email: data.email,
         password: data.password,
-      });
+      };
 
+      const response = await axios.post(`${API_URL}/users/signup`, userPayload, config);
       return {
         success: true,
         message: response.data?.message || 'Signup successful!',
