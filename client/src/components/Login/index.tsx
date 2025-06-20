@@ -61,6 +61,9 @@ function Login() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailError('');
+    setPasswordError('');
+    setEmailPasswordRequired('');
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
