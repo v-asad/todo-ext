@@ -119,7 +119,7 @@ const Signup = () => {
       return;
     }
 
-    const response = await signup.signup({
+    const response = await signup({
       firstName,
       lastName,
       email,

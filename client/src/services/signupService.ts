@@ -20,39 +20,37 @@ const config = {
   },
 };
 
-export const signup = {
-  signup: async (data: SignupData): Promise<SignupResponse> => {
-    try {
-      const userPayload = {
-        name: `${data.firstName} ${data.lastName}`,
-        email: data.email,
-        password: data.password,
-      };
+export const signup = async (data: SignupData): Promise<SignupResponse> => {
+  try {
+    const userPayload = {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      password: data.password,
+    };
 
-      const response = await axios.post(`${API_URL}/users/signup`, userPayload, config);
-      return {
-        success: true,
-        message: response.data?.message || 'Signup successful!',
-      };
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 409) {
-          return {
-            success: false,
-            message:
-              'This email is already registered. Please use a different email or try logging in.',
-          };
-        }
+    const response = await axios.post(`${API_URL}/users/signup`, userPayload, config);
+    return {
+      success: true,
+      message: response.data?.message || 'Signup successful!',
+    };
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 409) {
         return {
           success: false,
-          message: error.response?.data?.message || 'Something went wrong. Please try again.',
+          message:
+            'This email is already registered. Please use a different email or try logging in.',
         };
       }
-
       return {
         success: false,
-        message: 'An unexpected error occurred.',
+        message: error.response?.data?.message || 'Something went wrong. Please try again.',
       };
     }
-  },
+
+    return {
+      success: false,
+      message: 'An unexpected error occurred.',
+    };
+  }
 };
