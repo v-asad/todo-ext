@@ -7,18 +7,22 @@ import Link from 'next/link';
 import { login } from '@/app/services/loginService';
 import toast from 'react-hot-toast';
 
+type UserLoginData = {
+  email: string;
+  password: string;
+};
+type Errors = {
+  email: string;
+  password: string;
+};
+
 function Login() {
   const router = useRouter();
 
-  type FormData = {
-    email: string;
-    password: string;
-  };
   const [loading, setLoading] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [emailPasswordRequired, setEmailPasswordRequired] = useState('');
-  const [formData, setFormData] = useState<FormData>({
+  const [errors, setErrors] = useState<Errors>({ email: '', password: '' });
+
+  const [formData, setFormData] = useState<UserLoginData>({
     email: '',
     password: '',
   });
@@ -31,26 +35,26 @@ function Login() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
 
-    if (!emailTrimmed || !password) {
-      setEmailPasswordRequired('Email and password required');
-      return;
-    }
-    if (!emailRegex.test(emailTrimmed)) {
-      setEmailError('Please enter a valid email address');
-      return;
-    }
-    if (!passwordRegex.test(password)) {
-      setPasswordError(
-        'Password must be at least 6 characters long and include uppercase, lowercase, number, and special character',
-      );
-      return;
-    }
-    const payload = {
-      email: emailTrimmed,
-      password: password,
-    };
+    const newErrors: Errors = { email: '', password: '' };
 
-    const response = await login(payload);
+    if (!emailTrimmed) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(emailTrimmed)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    if (!password) {
+      newErrors.password = 'Password is required';
+    } else if (!passwordRegex.test(password)) {
+      newErrors.password =
+        'Password must be at least 6 characters long and include uppercase, lowercase, number, and special character';
+    }
+
+    setErrors(newErrors);
+
+    if (newErrors.email || newErrors.password) return;
+
+    const response = await login({ email: emailTrimmed, password });
     if ('error' in response) {
       setLoading(false);
       toast.error(response.error);
@@ -61,9 +65,6 @@ function Login() {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmailError('');
-    setPasswordError('');
-    setEmailPasswordRequired('');
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -76,8 +77,6 @@ function Login() {
       <Illustration />
       <div className="w-full min-h-screen bg-[#333333] flex flex-col gap-7 justify-center items-center">
         <h1 className="font-bold text-3xl text-white">Sign In</h1>
-        {emailPasswordRequired && <p className="text-red-500 text-sm">{emailPasswordRequired}</p>}
-
         <form
           className="w-full flex flex-col gap-8 justify-center items-center"
           onSubmit={handleLogin}
@@ -95,7 +94,7 @@ function Login() {
               onChange={handleChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-sm bg-[#525252] py-1 px-3 rounded h-12 hover:bg-[#494949]"
             />
-            {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
+            {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
           </div>
 
           <div className="w-full max-w-150 flex flex-col gap-1 justify-center items-start ">
@@ -111,7 +110,7 @@ function Login() {
               onChange={handleChange}
               className="w-full text-white outline-none placeholder:text-[#8795a0] placeholder:text-sm bg-[#525252] py-1 px-3 rounded h-12 hover:bg-[#494949]"
             />
-            {passwordError && <p className="text-red-500 text-sm">{passwordError}</p>}
+            {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
             <p className="text-white pt-2.5 cursor-pointer text-sm">Forgot Password</p>
           </div>
 

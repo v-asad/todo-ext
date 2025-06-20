@@ -13,13 +13,13 @@ import { FaUserCog } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { maskEmail } from '../utils/email';
 
-interface SidebarItem {
+type SidebarItem = {
   id: string;
   Icon: React.ComponentType<{ color?: string; size?: number }>;
   text: string;
   color: string;
   path: string;
-}
+};
 
 const sidebarItems: SidebarItem[] = [
   {

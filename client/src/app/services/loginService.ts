@@ -8,10 +8,10 @@ const config = {
   },
 };
 
-interface LoginPayLoad {
+type LoginPayLoad = {
   email: string;
   password: string;
-}
+};
 
 type LoginResult = { token: string } | { error: string };
 
