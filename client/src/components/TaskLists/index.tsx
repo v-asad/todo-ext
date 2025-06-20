@@ -4,12 +4,12 @@ import { RiCalendarLine, RiDeleteBin6Line } from 'react-icons/ri';
 import { HiCheck } from 'react-icons/hi';
 import { TbBrightnessUpFilled } from 'react-icons/tb';
 
-interface TaskListProps {
+type TaskListProps = {
   tasks: Task[];
   onTaskClick: (task: Task) => void;
   onTaskStatusChange: (id: string) => void;
   onTaskDelete: (id: string) => void;
-}
+};
 
 const handleTaskDelete = (id: string, onTaskDelete: (id: string) => void) => {
   return (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
