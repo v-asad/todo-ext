@@ -14,6 +14,14 @@ type SignupFormData = {
   password: string;
   confirmPassword: string;
 };
+type SignupError = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  general: string;
+};
 
 const Signup = () => {
   const router = useRouter();
@@ -28,7 +36,7 @@ const Signup = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<SignupError>({
     firstName: '',
     lastName: '',
     email: '',
@@ -164,7 +172,7 @@ const Signup = () => {
               value={formData.firstName}
               onChange={handleChange}
               placeholder="Enter your First Name"
-              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
+              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-12 placeholder:text-[#8795a0] placeholder:text-sm text-white"
             />
             {errors.firstName && <p className="text-red-400 text-xs mt-1">{errors.firstName}</p>}
           </div>
@@ -180,7 +188,7 @@ const Signup = () => {
               value={formData.lastName}
               onChange={handleChange}
               placeholder="Enter your Last Name"
-              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
+              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-12 placeholder:text-[#8795a0] placeholder:text-sm text-white"
             />
             {errors.lastName && <p className="text-red-400 text-xs mt-1">{errors.lastName}</p>}
           </div>
@@ -196,7 +204,7 @@ const Signup = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="user@example.com"
-              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
+              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-12 placeholder:text-[#8795a0] placeholder:text-sm text-white"
             />
             {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
           </div>
@@ -212,7 +220,7 @@ const Signup = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter Your Password"
-              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
+              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-12 placeholder:text-[#8795a0] placeholder:text-sm text-white"
             />
             {errors.password && <p className="text-red-400 text-xs my-1">{errors.password}</p>}
           </div>
@@ -228,7 +236,7 @@ const Signup = () => {
               value={formData.confirmPassword}
               onChange={handleChange}
               placeholder="Confirm Password"
-              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-[46px] placeholder:text-[#8795a0] placeholder:text-[14px] text-white"
+              className="w-full bg-[#525252] hover:bg-[#494949] py-1 px-3 rounded h-12 placeholder:text-[#8795a0] placeholder:text-sm text-white"
             />
             {errors.confirmPassword && (
               <p className="text-red-400 text-xs mt-1">{errors.confirmPassword}</p>
