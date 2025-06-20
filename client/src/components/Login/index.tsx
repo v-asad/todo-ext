@@ -79,7 +79,7 @@ function Login() {
           className="w-full flex flex-col gap-8 justify-center items-center"
           onSubmit={handleLogin}
         >
-          <div className="w-full max-w-[600px] flex flex-col gap-1 justify-center items-start ">
+          <div className="w-full max-w-150 flex flex-col gap-1 justify-center items-start ">
             <label className="font-bold text-white text-base" htmlFor="email">
               Email
             </label>
@@ -95,7 +95,7 @@ function Login() {
             {emailError && <p className="text-red-500 text-sm">{emailError}</p>}
           </div>
 
-          <div className="w-full max-w-[600px] flex flex-col gap-1 justify-center items-start ">
+          <div className="w-full max-w-150 flex flex-col gap-1 justify-center items-start ">
             <label className="font-bold text-white text-base" htmlFor="password">
               Password
             </label>
@@ -112,7 +112,7 @@ function Login() {
             <p className="text-white pt-2.5 cursor-pointer text-sm">Forgot Password</p>
           </div>
 
-          <div className="w-full max-w-[600px]">
+          <div className="w-full max-w-150">
             <button
               disabled={loading}
               type="submit"
@@ -122,7 +122,7 @@ function Login() {
             </button>
           </div>
 
-          <div className="w-full max-w-[600px] flex gap-1 justify-center items-center">
+          <div className="w-full max-w-150 flex gap-1 justify-center items-center">
             <p className="text-white">Don&apos;t have an account?</p>
             <Link
               className="rounded text-[grey] font-bold py-3 cursor-pointer hover:underline"
