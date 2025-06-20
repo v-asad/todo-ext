@@ -1,16 +1,16 @@
 import axios from 'axios';
 
-interface SignupData {
+type SignupData = {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-}
+};
 
-interface SignupResponse {
+type SignupResponse = {
   success: boolean;
   message: string;
-}
+};
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
