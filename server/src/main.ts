@@ -7,6 +7,9 @@ import * as swaggerUI from "swagger-ui-express";
 
 import { RegisterRoutes } from "../build/routes";
 
+import errorHandler from "./errorHandler";
+import notFoundHandler from "./notFoundHandler";
+
 /** CONFIGURATIONS */
 dotenv.config();
 
@@ -25,14 +28,10 @@ app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJson));
 /** ROUTES */
 RegisterRoutes(app);
 
-/** ERROR HANDLER */
-app.use((err: any, _req: express.Request, res: express.Response) => {
-  if (err && typeof err === "object" && err.status && err.message) {
-    res.status(err.status).json(err.message);
-  } else {
-    res.status(500).json({ error: err?.message || "Internal Server Error" });
-  }
-});
+// @ts-ignore 
+// Since errorHandler is not a proper middleware, we need to ignore the type error
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 /** LISTENERS */
 app.listen(PORT, () => console.info("Listening on ::" + PORT));
