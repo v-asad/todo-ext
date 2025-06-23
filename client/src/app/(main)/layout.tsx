@@ -1,5 +1,5 @@
 import AuthWrapper from '@/components/AuthWrapper';
-import Sidebar from '@/components/Sidebar';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 export default function MainLayout({
   children,

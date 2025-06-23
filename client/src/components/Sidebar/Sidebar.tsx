@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import { FaUserCog } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
-import { maskEmail } from '../utils/email';
+import { maskEmail } from '@/utils/email';
 
 type SidebarItem = {
   id: string;

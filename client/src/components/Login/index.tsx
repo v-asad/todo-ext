@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Illustration from '../Illustration';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { login } from '@/services/loginService';
+import { login } from '@/services/userService';
 import toast from 'react-hot-toast';
 
 type UserLoginData = {
