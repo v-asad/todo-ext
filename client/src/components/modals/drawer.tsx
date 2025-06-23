@@ -3,11 +3,11 @@
 import { Task } from '@/app/(main)/page';
 import React from 'react';
 
-interface DrawerProps {
+type DrawerProps = {
   isOpen: boolean;
   onClose: () => void;
   selectedTask: Task | undefined;
-}
+};
 
 const Drawer = ({ isOpen, onClose, selectedTask }: DrawerProps) => {
   return (

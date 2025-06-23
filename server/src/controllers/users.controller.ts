@@ -21,6 +21,15 @@ import { LoginRequest, SignupRequest } from "../dtos/users.dto";
 @Route("users")
 @Tags("Users")
 export class UsersController extends Controller {
+  @Get("/verify-token")
+  @Security("BearerAuth")
+  @SuccessResponse("200", "OK")
+  async verifyToken(
+    @Res() okResponse: TsoaResponse<200, { valid: boolean }>,
+  ): Promise<any> {
+    return okResponse(200, { valid: true });
+  }
+
   @Post("/")
   @Security("BearerAuth")
   @SuccessResponse("201", "Created")
