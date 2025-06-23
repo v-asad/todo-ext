@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "pnpm -r dev",
-    "install:all": "pnpm install --filter ./client... && pnpm install --filter ./server...",
+    "install:all": "pnpm fe install && pnpm be install",
     "postinstall": "pnpm install:all",
     "prepare": "node .husky/install.mjs",
     "fe": "pnpm --filter ./client...",
