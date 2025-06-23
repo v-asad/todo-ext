@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <div className="flex justify-start items-center">
           <main className=" flex w-full justify-center items-start">{children}</main>
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
         </div>
       </body>
     </html>

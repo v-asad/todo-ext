@@ -3,7 +3,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IoAdd } from 'react-icons/io5';
 import { FaCircleCheck } from 'react-icons/fa6';
-import toast, { Toaster } from 'react-hot-toast';
 import { FaRegCircle } from 'react-icons/fa';
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 
@@ -13,6 +12,7 @@ import TaskLists from '@/components/TaskLists';
 import { CiHome } from 'react-icons/ci';
 import { BsCalendar3 } from 'react-icons/bs';
 import CalendarModal from '@/components/calendarModal';
+import toast from 'react-hot-toast';
 
 export type Task = {
   id: string;
@@ -175,10 +175,6 @@ export default function Home() {
             onTaskStatusChange={tasksUpdated}
             onTaskDelete={deleteTask}
           />
-        </div>
-
-        <div className="w-full h-full flex justify-center items-end">
-          <Toaster position="top-center" />
         </div>
 
         <Drawer
