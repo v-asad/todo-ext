@@ -114,15 +114,13 @@ function Login() {
             <p className="text-white pt-2.5 cursor-pointer text-sm">Forgot Password</p>
           </div>
 
-          <div className="w-full ">
-            <button
-              disabled={loading}
-              type="submit"
-              className="w-full rounded bg-[#161616] text-white font-bold py-3 hover:bg-[#222121] cursor-pointer"
-            >
-              {loading ? 'Logging in...' : 'Login'}
-            </button>
-          </div>
+          <button
+            disabled={loading}
+            type="submit"
+            className="w-full rounded bg-[#161616] text-white font-bold py-3 hover:bg-[#222121] cursor-pointer"
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
 
           <div className="w-full  flex gap-1 justify-center items-center">
             <p className="text-white">Don&apos;t have an account?</p>
