@@ -19,10 +19,10 @@ import { maskEmail } from '@/utils/email';
 import { FaUserCog } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
 
-type SidebarProps = {
+interface SidebarProps {
   userEmail: string;
   userName: string;
-};
+}
 
 const Sidebar = ({ userEmail, userName }: SidebarProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);

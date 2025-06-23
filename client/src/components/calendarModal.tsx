@@ -3,11 +3,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 
-type CalendarModalProps = {
+interface CalendarModalProps {
   selectedDate: Date | null;
   onSelectDate: (date: Date) => void;
   onClose: () => void;
-};
+}
 
 const CalendarModal = ({ selectedDate, onSelectDate, onClose }: CalendarModalProps) => {
   const [tempSelectedDate, setTempSelectedDate] = useState<Date | null>(selectedDate);

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+
 import '../styles/globals.css';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Toaster } from 'react-hot-toast';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +31,6 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="flex justify-start items-center">
-          <Toaster position="top-center" />
           <main className=" flex w-full justify-center items-start">{children}</main>
         </div>
       </body>
