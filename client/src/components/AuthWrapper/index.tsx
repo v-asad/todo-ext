@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, PropsWithChildren } from 'react';
 import Loader from '../Loader';
-import { verifyToken } from '@/app/services/verifyTokenService';
+import { verifyToken } from '@/services/verifyTokenService';
 
 const AuthWrapper = ({ children }: PropsWithChildren) => {
   const router = useRouter();

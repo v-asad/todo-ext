@@ -7,9 +7,6 @@ settings:
 importers:
   .:
     dependencies:
-      all:
-        specifier: ^0.0.0
-        version: 0.0.0
       axios:
         specifier: ^1.10.0
         version: 1.10.0
@@ -65,6 +62,10 @@ importers:
       typescript:
         specifier: ^5
         version: 5.8.3
+
+  ..: {}
+
+  ../server: {}
 
 packages:
   '@alloc/quick-lru@5.2.0':
@@ -958,12 +959,6 @@ packages:
     resolution:
       {
         integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==,
-      }
-
-  all@0.0.0:
-    resolution:
-      {
-        integrity: sha512-0oKlfNVv2d+d7c1gwjGspzgbwot47PGQ4b3v1ccx4mR8l9P/Y6E6Dr/yE8lNT63EcAKEbHo6UG3odDpC/NQcKw==,
       }
 
   ansi-styles@4.3.0:
@@ -3904,8 +3899,6 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
-
-  all@0.0.0: {}
 
   ansi-styles@4.3.0:
     dependencies:

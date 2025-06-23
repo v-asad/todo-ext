@@ -12,7 +12,7 @@ type SignupResponse = {
   message: string;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const END_POINT = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
 const config = {
   headers: {
@@ -28,7 +28,7 @@ export const signup = async (data: SignupData): Promise<SignupResponse> => {
       password: data.password,
     };
 
-    const response = await axios.post(`${API_URL}/users/signup`, userPayload, config);
+    const response = await axios.post(`${END_POINT}/signup`, userPayload, config);
     return {
       success: true,
       message: response.data?.message || 'Signup successful!',
