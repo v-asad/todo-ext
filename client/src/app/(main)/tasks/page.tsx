@@ -157,14 +157,14 @@ export default function Tasks() {
       <div>
         <div className="flex gap-2 justify-start items-center">
           <button>
-            <CiHome className="w-[30px] h-[30px]" color="#8795a0" />
+            <CiHome className="w-7.5 h-7.5" color="#8795a0" />
           </button>
           <h1 className="text-2xl text-[#8795a0]">Tasks</h1>
         </div>
         {tasks.length === 0 && (
-          <div className="w-full flex flex-col gap-[20px] justify-center items-center mt-[100px]">
+          <div className="w-full flex flex-col gap-5 justify-center items-center mt-25">
             <FaCircleCheck size={50} color="#7686bf" />
-            <p className="text-[#8795a0] w-full max-w-[300px] text-center">
+            <p className="text-[#8795a0] w-full max-w-75 text-center">
               Tasks show up here if they aren&apos;t part of any lists you&apos;ve created
             </p>
           </div>
@@ -210,13 +210,13 @@ export default function Tasks() {
         />
       )}
 
-      <div className="w-full flex justify-between items-center bg-[#333333] hover:bg-[#4d4c4c] py-1 px-3 rounded h-[46px] ">
+      <div className="w-full flex justify-between items-center bg-[#333333] hover:bg-[#4d4c4c] py-1 px-3 rounded h-12 ">
         <div className="w-full flex gap-3 justify-start items-center">
           <button onClick={handleAddTask}>
             {focused ? (
-              <FaRegCircle className="h-[25px] w-[25px] " color="#8795a0" />
+              <FaRegCircle className="h-6 w-6 " color="#8795a0" />
             ) : (
-              <IoAdd className="h-[25px] w-[25px] " color="#8795a0" />
+              <IoAdd className="h-6 w-6 " color="#8795a0" />
             )}
           </button>
           <div className="relative group w-full">
@@ -231,7 +231,7 @@ export default function Tasks() {
               placeholder={`${
                 focused ? "Try typing 'Pay utilities bill by Friday 6pm' " : 'Add a task'
               }`}
-              className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-[14px]"
+              className="w-full rounded text-white outline-none placeholder:text-[#8795a0] placeholder:text-sm"
             />
             {showToolTip && (
               <div className=" absolute bottom-full mb-4 hidden w-max max-w-xs rounded bg-[#2a2a2a] px-2 py-2 text-sm text-white group-hover:block transition-opacity duration-300">
@@ -242,12 +242,12 @@ export default function Tasks() {
         </div>
 
         {focused && taskTitle.trim().length > 0 && (
-          <div className="w-full flex justify-end items-center max-w-[130px]">
+          <div className="w-full flex justify-end items-center max-w-32">
             <button
               onMouseDown={() => setShowDateMenu(!showDateMenu)}
-              className="py-3 px-[6px] hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
+              className="py-3 px-2 hover:bg-[#535353] rounded transition duration-200 focus:outline-none"
             >
-              <BsCalendar3 color="white" className="w-[20px] h-[20px]" />
+              <BsCalendar3 color="white" className="w-5 h-5" />
             </button>
             {taskDate && (
               <span className="w-full text-sm text-white ml-2">{getDateLabel(taskDate)}</span>
