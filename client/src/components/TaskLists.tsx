@@ -55,7 +55,7 @@ const TaskLists = ({ tasks, onTaskClick, onTaskStatusChange, onTaskDelete }: Tas
           className={` ${
             item.date
               ? 'flex gap-3 justify-center items-start'
-              : 'flex gap-3 justify-center items-center py-[8px]'
+              : 'flex gap-3 justify-center items-center py-2'
           }`}
         >
           <div className="">
@@ -75,7 +75,7 @@ const TaskLists = ({ tasks, onTaskClick, onTaskStatusChange, onTaskDelete }: Tas
               </div>
             </label>
           </div>
-          <div className="flex flex-col gap-[2px] justify-start items-start">
+          <div className="flex flex-col gap-0.5 justify-start items-start">
             <p className={item.status ? 'line-through text-white' : 'text-white'}>
               {item.description}
             </p>
@@ -105,7 +105,7 @@ const TaskLists = ({ tasks, onTaskClick, onTaskStatusChange, onTaskDelete }: Tas
           </div>
         </div>
         <button onClick={handleTaskDelete(item.id, onTaskDelete)}>
-          <RiDeleteBin6Line color="white" className="w-[20px] h-[20px]" />
+          <RiDeleteBin6Line color="white" className="w-5 h-5" />
         </button>
       </div>
     ));

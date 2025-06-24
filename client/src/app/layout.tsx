@@ -31,8 +31,8 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <div className="flex justify-start items-center">
-          <Toaster position="top-center" />
           <main className=" flex w-full justify-center items-start">{children}</main>
+          <Toaster position="top-center" />
         </div>
       </body>
     </html>
