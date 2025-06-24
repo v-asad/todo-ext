@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, PropsWithChildren } from 'react';
-import Loader from '../Loader';
+import Loader from './Loader';
 import { verifyToken } from '@/services/userService';
 
 const AuthWrapper = ({ children }: PropsWithChildren) => {

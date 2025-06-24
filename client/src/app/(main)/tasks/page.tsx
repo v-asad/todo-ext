@@ -8,11 +8,11 @@ import { FaRegCircle } from 'react-icons/fa';
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 
 import DateSelector from '@/components/DateSelector';
-import Drawer from '@/components/Modals/drawer';
+import Drawer from '@/components/Drawer';
 import TaskLists from '@/components/TaskLists';
 import { CiHome } from 'react-icons/ci';
 import { BsCalendar3 } from 'react-icons/bs';
-import CalendarModal from '@/components/CalenderModal/CalendarModal';
+import CalendarModal from '@/components/CalendarModal';
 
 export type Task = {
   id: string;
