@@ -61,57 +61,57 @@ export default function DateSelector({
     return date.toLocaleDateString('en-US', { weekday: 'short' });
   };
   return (
-    <div className="z-5 border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-[280px] h-full max-h-[300px]">
+    <div className="z-5 border border-[gray] rounded shadow-md  space-y-2s bg-[#2a2a2a] text-white w-70 h-full max-h-75">
       <button
-        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-[20px] py-[15px]"
+        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-5 py-4"
         onClick={() => handleOptionSelect('today')}
       >
-        <div className="flex gap-[10px] justify-start items-center">
-          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+        <div className="flex gap-2.5 justify-start items-center">
+          <PiCalendarDotLight className="w-5 h-5" />
           <span>Today</span>
         </div>
         <span className="text-[grey]">{getWeekDay(0)}</span>
       </button>
       <button
-        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-[20px] py-[15px]"
+        className="w-full flex justify-between items-center text-left hover:bg-[#535353] px-5  py-4"
         onClick={() => handleOptionSelect('tomorrow')}
       >
-        <div className="flex gap-[10px] justify-start items-center">
-          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+        <div className="flex gap-2.5 justify-start items-center">
+          <PiCalendarDotLight className="w-5 h-5" />
           <span>Tomorrow</span>
         </div>
         <span className="text-[grey]">{getWeekDay(1)}</span>
       </button>
       <button
         className={
-          'w-full flex justify-between items-center text-left ${} hover:bg-[#535353] px-[20px] py-[15px] '
+          'w-full flex justify-between items-center text-left ${} hover:bg-[#535353] px-5 py-4 '
         }
         onClick={() => handleOptionSelect('nextWeek')}
       >
-        <div className="flex gap-[10px] justify-start items-center">
-          <PiCalendarDotLight className="w-[20px] h-[20px]" />
+        <div className="flex gap-2.5 justify-start items-center">
+          <PiCalendarDotLight className="w-5 h-5" />
           <span>Next week</span>
         </div>
         <span className="text-[grey]">{getWeekDay(7)}</span>
       </button>
       <button
-        className={`w-full text-left flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[15px] border-x-0 border-[grey]  ${
+        className={`w-full text-left flex gap-2.5 justify-start items-center hover:bg-[#535353] px-5 py-4 border-x-0 border-[grey]  ${
           selectedDate ? 'border-b-[1px] border-t-[1px]' : 'border-t-[1px] border-b-0'
         } `}
         onClick={() => {
           handleOptionSelect('custom');
         }}
       >
-        <BsCalendar3 className="w-[20px] h-[15px]" />
+        <BsCalendar3 className="w-5 h-4" />
         Pick a date
       </button>
 
       {selectedDate && (
         <button
           onClick={removeDueDate}
-          className="w-full text-left px- flex gap-[10px] justify-start items-center hover:bg-[#535353] px-[20px] py-[15px] text-[red] hover:cusror-pointer "
+          className="w-full text-left px- flex gap-2.5 justify-start items-center hover:bg-[#535353] px-5 py-4 text-[red] hover:cusror-pointer "
         >
-          <RiDeleteBin6Line color="red" className="w-[20px] h-[20px] cursor-pointer" />
+          <RiDeleteBin6Line color="red" className="w-5 h-5 cursor-pointer" />
           Remove due date
         </button>
       )}

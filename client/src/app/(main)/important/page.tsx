@@ -8,7 +8,7 @@ export default function Important() {
       <div>
         <div className="flex gap-2 justify-start items-center">
           <button>
-            <IoIosStarOutline className="w-[30px] h-[30px]" color="pink" />
+            <IoIosStarOutline className="w-7.5 h-7.5" color="pink" />
           </button>
           <h1 className="text-2xl text-[pink]">Important</h1>
         </div>

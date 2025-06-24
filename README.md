@@ -39,13 +39,13 @@ pnpm install
 ```
 
 ### 2. Set up environment variables
-create .env file in server  `server/.env` and add these fields
+create .env file in server `server/.env` and add these fields
 ```
-PORT = 
-DATABASE_URL = 
-JWT_SECRET = 
+PORT =
+DATABASE_URL =
+JWT_SECRET =
 ```
-create .env file in client  `client/.env` and add these fields
+create .env file in client `client/.env` and add these fields
 ```
 NEXT_PUBLIC_API_URL =
 ```
