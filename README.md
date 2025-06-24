@@ -5,7 +5,6 @@ Todo-Ext is a fullstack productivity application inspired by Microsoft To Do. It
 ---
 
 ## Features
-
 - User authentication (signup/login)
 - Task management: create, update, delete, categorize
 - Task lists: My Day, Important, Planned, Assigned, Flagged, Backlog, Done
@@ -17,7 +16,6 @@ Todo-Ext is a fullstack productivity application inspired by Microsoft To Do. It
 ---
 
 ## Folder Structure
-
 ```
 client/   # Next.js frontend
 server/   # Node.js/Express backend (Prisma, API)
@@ -28,52 +26,40 @@ server/   # Node.js/Express backend (Prisma, API)
 ## Getting Started
 
 ### Prerequisites
-
 - [Node.js](https://nodejs.org/) (v18+ recommended)
 - [pnpm](https://pnpm.io/) (or npm/yarn)
-
 ```
 npm i -g pnpm
 ```
 
 ### 1. Install dependencies
-
 This command to install dependencies for both client and server
-
 ```bash
 pnpm install
 ```
 
 ### 2. Set up environment variables
-
 create .env file in server `server/.env` and add these fields
-
 ```
 PORT =
 DATABASE_URL =
 JWT_SECRET =
 ```
-
 create .env file in client `client/.env` and add these fields
-
 ```
 NEXT_PUBLIC_API_URL =
 ```
 
 ### 3. Run Todo app
-
 This command will start both client and server
-
 ```bash
 pnpm dev
 ```
-
 The API will be available at `http://localhost:8080`<br>Swagger docs: `http://localhost:8080/docs`<br>The app will be available at `http://localhost:3000`
 
 ---
 
 ## Best Practices
-
 - **Code Quality:**
   - Use `pnpm fe lint` and `pnpm fe format` before committing (enforced by Husky pre-commit hook)
   - Follow the existing folder structure for new features/components
@@ -96,7 +82,6 @@ The API will be available at `http://localhost:8080`<br>Swagger docs: `http://lo
 ---
 
 ## Learn More
-
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Express Documentation](https://expressjs.com/)
