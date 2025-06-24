@@ -39,7 +39,7 @@ const CalendarModal = ({ selectedDate, onSelectDate, onClose }: CalendarModalPro
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 flex justify-end items-center bg-opacity-40 z-50 px-[50px]">
+    <div className="fixed inset-0 flex justify-end items-center bg-opacity-40 z-50 px-12.5">
       <div ref={modalRef} className="flex flex-col  p-6 rounded shadow-md z-50 bg-[white]">
         <DatePicker
           selected={selectedDate}
@@ -52,7 +52,7 @@ const CalendarModal = ({ selectedDate, onSelectDate, onClose }: CalendarModalPro
             prevMonthButtonDisabled,
             nextMonthButtonDisabled,
           }) => (
-            <div className="custom-header flex justify-between items-center px-[15px] text-black">
+            <div className="custom-header flex justify-between items-center px-4 text-black">
               <div className="month-year bg-[white]">
                 {date.toLocaleString('default', {
                   month: 'long',
@@ -73,13 +73,13 @@ const CalendarModal = ({ selectedDate, onSelectDate, onClose }: CalendarModalPro
         <div className="w-full gap-1 flex justify-between items-baseline-last">
           <button
             onClick={onClose}
-            className="mt-4 text-[red] text-[14px] bg-[#535353] w-full py-[6px] rounded cursor-pointer"
+            className="mt-4 text-[red] text-sm bg-[#535353] w-full py-1.5 rounded cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={handleSaveDate}
-            className="bg-[#8bd3ce] text-black  py-[6px] rounded text-[14px] w-full cursor-pointer"
+            className="bg-[#8bd3ce] text-black  py-[6px] rounded text-sm w-full cursor-pointer"
           >
             Save
           </button>

@@ -7,7 +7,7 @@ function FlaggedEmail() {
       <div>
         <div className="flex gap-2 justify-start items-center">
           <button>
-            <CiFlag1 className="w-[30px] h-[30px]" color="red" />
+            <CiFlag1 className="w-7.5 h-7.5" color="red" />
           </button>
           <h1 className="text-2xl text-[red]">Flagged email</h1>
         </div>
