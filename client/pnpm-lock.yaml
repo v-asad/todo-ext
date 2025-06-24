@@ -63,10 +63,6 @@ importers:
         specifier: ^5
         version: 5.8.3
 
-  ..: {}
-
-  ../server: {}
-
 packages:
   '@alloc/quick-lru@5.2.0':
     resolution:
