@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoMdStarOutline } from 'react-icons/io';
 import { TbBrightnessUpFilled } from 'react-icons/tb';
 import { IoAddSharp } from 'react-icons/io5';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
 import { FaUserCog } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
-import { maskEmail } from '@/utils/email';
+import { getUserById, User } from '@/services/userService';
 
 type SidebarItem = {
   id: string;
@@ -91,45 +91,63 @@ const sidebarItems: SidebarItem[] = [
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState<string>('Tasks');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const router = useRouter();
+  const [users, setUsers] = useState<User | null>(null);
 
-  const userName = 'Muhammad Suleman';
-  const displayEmail = maskEmail('m.suleman1911@example.com');
+  const router = useRouter();
 
   const handleItemClick = (id: string, path: string) => {
     setActiveItem(id);
     router.push(path);
   };
 
+  const fetchUser = async () => {
+    const response = await getUserById();
+    setUsers(response);
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <div className="h-screen flex flex-col bg-[#171717] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
-        <div className="flex items-center justify-center gap-2">
-          <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
-            <span className="text-sm font-medium">MS</span>
-          </div>
-          <div
-            className="flex items-center justify-center gap-3"
-            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-          >
-            <div className="flex items-center justify-between gap-1">
-              <div>
-                <p className="text-sm font-medium">{userName}</p>
-                <p className="text-xs text-gray-400 flex items-center">
-                  {displayEmail}
-                  <span className="flex flex-col -space-y-1">
-                    <IoIosArrowUp
-                      className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
-                    />
-                    <IoIosArrowDown
-                      className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
-                    />
-                  </span>
-                </p>
+        {users ? (
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
+              <p className="text-sm font-medium">
+                {users.name
+                  .split(' ')
+                  .map((n) => n[0])
+                  .slice(0, 2)
+                  .join('')
+                  .toUpperCase()}
+              </p>
+            </div>
+            <div
+              className="flex items-center justify-center gap-3"
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              <div className="flex items-center justify-between gap-1">
+                <div>
+                  <p className="text-sm font-medium">{users.name}</p>
+                  <p className="text-xs text-gray-400 flex items-center">
+                    {users.email}
+                    <span className="flex flex-col -space-y-1">
+                      <IoIosArrowUp
+                        className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                      />
+                      <IoIosArrowDown
+                        className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                      />
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        ) : (
+          'no user exits'
+        )}
         {isDropdownOpen && (
           <div
             className="absolute top-full left-0 w-full bg-[#2B2B2B] rounded-xl shadow-xl z-10 "
