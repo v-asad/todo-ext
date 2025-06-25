@@ -121,7 +121,7 @@ export class UsersController extends Controller {
   @SuccessResponse("200", "OK")
   async login(
     @Body() body: LoginRequest,
-    @Res() okResponse: TsoaResponse<200, { token: string }>,
+    @Res() okResponse: TsoaResponse<200, { token: string, id: number }>,
     @Res() unauthorizedResponse: TsoaResponse<401, { error: string }>,
     @Res() errorResponse: TsoaResponse<500, { error: string }>
   ): Promise<any> {
@@ -136,7 +136,7 @@ export class UsersController extends Controller {
           process.env.JWT_SECRET || "secret",
           { expiresIn: "1h" }
         );
-        return okResponse(200, { token });
+        return okResponse(200, { token, id: user.id });
       }
     } catch (err) {
       console.error(`[user] Login Error:`, err);
