@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { IoMdStarOutline } from 'react-icons/io';
+import { IoIosLogOut, IoMdStarOutline } from 'react-icons/io';
 import { TbBrightnessUpFilled } from 'react-icons/tb';
 import { IoAddSharp } from 'react-icons/io5';
 import { RxHamburgerMenu } from 'react-icons/rx';
@@ -108,6 +108,11 @@ const Sidebar = () => {
     fetchUser();
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    router.push('/login');
+  };
+
   return (
     <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
@@ -168,6 +173,14 @@ const Sidebar = () => {
               >
                 <IoSettingsSharp className="text-white text-lg" />
                 <span className="text-white">Settings</span>
+              </li>
+              <li
+                onClick={handleLogout}
+                className="px-4 py-3 hover:bg-[#535353] cursor-pointer transition-colors flex items-center gap-3"
+                role="menuitem"
+              >
+                <IoIosLogOut className="text-white text-lg" />
+                <span className="text-white">Logout</span>
               </li>
             </ul>
           </div>
