@@ -109,7 +109,7 @@ const Sidebar = () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col bg-[#171717] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
         {users ? (
           <div className="flex items-center justify-center gap-2">
