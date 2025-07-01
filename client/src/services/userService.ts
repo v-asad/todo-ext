@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const END_POINT = process.env.NEXT_PUBLIC_API_URL;
+const END_POINT = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
 const config = {
   headers: {
@@ -17,7 +17,7 @@ type LoginResult = { token: string } | { error: string };
 
 export const login = async (payload: LoginPayLoad): Promise<LoginResult> => {
   try {
-    const response = await axios.post(`${END_POINT}/users/login`, payload, config);
+    const response = await axios.post(`${END_POINT}/login`, payload, config);
 
     const { token, id } = response.data;
 
@@ -58,7 +58,7 @@ export const signup = async (data: SignupData): Promise<SignupResponse> => {
       password: data.password,
     };
 
-    const response = await axios.post(`${END_POINT}/users/signup`, userPayload, config);
+    const response = await axios.post(`${END_POINT}/signup`, userPayload, config);
     return {
       success: true,
       message: response.data?.message || 'Signup successful!',
@@ -96,7 +96,7 @@ export const verifyToken = async (): Promise<boolean> => {
   };
 
   try {
-    const res = await axios.get(`${END_POINT}/users/verify-token`, config);
+    const res = await axios.get(`${END_POINT}/verify-token`, config);
 
     return res.data?.valid === true;
   } catch (error) {
@@ -129,7 +129,7 @@ export const getUserById = async (): Promise<User | null> => {
   }
 
   try {
-    const response = await axios.get(`${END_POINT}/users/${userId}`, {
+    const response = await axios.get(`${END_POINT}/${userId}`, {
       headers: getHeaders(),
     });
 

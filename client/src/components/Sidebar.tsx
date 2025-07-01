@@ -100,11 +100,11 @@ const Sidebar = () => {
     router.push(path);
   };
 
-  const fetchUser = async () => {
-    const response = await getUserById();
-    setUser(response);
-  };
   useEffect(() => {
+    const fetchUser = async () => {
+      const response = await getUserById();
+      setUser(response);
+    };
     fetchUser();
   }, []);
 
