@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/utils';
 import axios from 'axios';
 
 const END_POINT = `${process.env.NEXT_PUBLIC_API_URL}/users`;
@@ -19,9 +20,10 @@ export const login = async (payload: LoginPayLoad): Promise<LoginResult> => {
   try {
     const response = await axios.post(`${END_POINT}/login`, payload, config);
 
-    const { token } = response.data;
+    const { token, id } = response.data;
 
     localStorage.setItem('token', token);
+    localStorage.setItem('id', id);
 
     return { token };
   } catch (error) {
@@ -101,5 +103,44 @@ export const verifyToken = async (): Promise<boolean> => {
   } catch (error) {
     console.error('verification error :', error);
     return false;
+  }
+};
+
+export const getHeaders = () => {
+  const token = getToken();
+
+  const headers: Record<string, string> = {
+    Accept: 'application/json',
+  };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
+};
+
+export type User = {
+  name: string;
+  email: string;
+  id: number;
+};
+
+export const getUserById = async (): Promise<User | null> => {
+  const userId = localStorage.getItem('id');
+
+  if (!userId) {
+    return null;
+  }
+
+  try {
+    const response = await axios.get(`${END_POINT}/${userId}`, {
+      headers: getHeaders(),
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Something went wrong', error);
+    return null;
   }
 };
