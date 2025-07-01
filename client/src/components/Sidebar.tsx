@@ -8,7 +8,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { CiFlag1, CiHome, CiUser } from 'react-icons/ci';
 import { MdAddBusiness, MdInsertChartOutlined } from 'react-icons/md';
 import { useRouter } from 'next/navigation';
-import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown } from 'react-icons/io';
 import { FaUserCog } from 'react-icons/fa';
 import { IoSettingsSharp } from 'react-icons/io5';
 import { getUserById, User } from '@/services/userService';
@@ -91,7 +91,7 @@ const sidebarItems: SidebarItem[] = [
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState<string>('Tasks');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [users, setUsers] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const router = useRouter();
 
@@ -102,7 +102,7 @@ const Sidebar = () => {
 
   const fetchUser = async () => {
     const response = await getUserById();
-    setUsers(response);
+    setUser(response);
   };
   useEffect(() => {
     fetchUser();
@@ -117,11 +117,11 @@ const Sidebar = () => {
   return (
     <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
-        {users ? (
+        {user ? (
           <div className="flex items-center justify-center gap-2">
             <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
               <p className="text-sm font-medium">
-                {users.name
+                {user.name
                   .split(' ')
                   .map((n) => n[0])
                   .slice(0, 2)
@@ -135,13 +135,10 @@ const Sidebar = () => {
             >
               <div className="flex items-center justify-between gap-1">
                 <div>
-                  <p className="text-sm font-medium">{users.name}</p>
+                  <p className="text-sm font-medium">{user.name}</p>
                   <p className="text-xs text-gray-400 flex items-center">
-                    {users.email}
+                    {user.email}
                     <span className="flex flex-col -space-y-1">
-                      <IoIosArrowUp
-                        className={` transition-opacity duration-200 ${isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
-                      />
                       <IoIosArrowDown
                         className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
                       />
@@ -152,7 +149,7 @@ const Sidebar = () => {
             </div>
           </div>
         ) : (
-          'no user exits'
+          'no user exists'
         )}
         {isDropdownOpen && (
           <div
