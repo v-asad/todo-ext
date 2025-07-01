@@ -1,3 +1,4 @@
+import { getToken } from '@/utils/utils';
 import axios from 'axios';
 
 const END_POINT = `${process.env.NEXT_PUBLIC_API_URL}/users`;
@@ -104,15 +105,19 @@ export const verifyToken = async (): Promise<boolean> => {
     return false;
   }
 };
-export const getToken = () => {
-  return localStorage.getItem('token');
-};
 
 export const getHeaders = () => {
-  return {
+  const token = getToken();
+
+  const headers: Record<string, string> = {
     Accept: 'application/json',
-    Authorization: `Bearer ${getToken()}`,
   };
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
+  return headers;
 };
 
 export type User = {
@@ -122,7 +127,7 @@ export type User = {
 };
 
 export const getUserById = async (): Promise<User | null> => {
-  const userId = Number(localStorage.getItem('id'));
+  const userId = localStorage.getItem('id');
 
   if (!userId) {
     return null;
