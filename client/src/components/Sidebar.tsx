@@ -103,10 +103,16 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const response = await getUserById();
-      setUser(response);
+      if (!response) {
+        router.push('/login');
+      } else {
+        setUser(response);
+      }
     };
     fetchUser();
-  }, []);
+  }, [router]);
+
+  if (!user) return null;
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -117,40 +123,37 @@ const Sidebar = () => {
   return (
     <div className="h-screen flex flex-col bg-[#333333] text-white w-full max-w-[280px] pt-7.5 px-4 overflow-hidden">
       <div className="flex items-center justify-between gap-3 px-2 py-2 mb-2  rounded cursor-pointer group relative w-full">
-        {user ? (
-          <div className="flex items-center justify-center gap-2">
-            <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
-              <p className="text-sm font-medium">
-                {user.name
-                  .split(' ')
-                  .map((n) => n[0])
-                  .slice(0, 2)
-                  .join('')
-                  .toUpperCase()}
-              </p>
-            </div>
-            <div
-              className="flex items-center justify-center gap-3"
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            >
-              <div className="flex items-center justify-between gap-1">
-                <div>
-                  <p className="text-sm font-medium">{user.name}</p>
-                  <p className="text-xs text-gray-400 flex items-center">
-                    {user.email}
-                    <span className="flex flex-col -space-y-1">
-                      <IoIosArrowDown
-                        className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
-                      />
-                    </span>
-                  </p>
-                </div>
+        <div className="flex items-center justify-center gap-2">
+          <div className="w-12 h-12 rounded-full bg-[#535353] flex items-center justify-center">
+            <p className="text-sm font-medium">
+              {user.name
+                .split(' ')
+                .map((n) => n[0])
+                .slice(0, 2)
+                .join('')
+                .toUpperCase()}
+            </p>
+          </div>
+          <div
+            className="flex items-center justify-center gap-3"
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          >
+            <div className="flex items-center justify-between gap-1">
+              <div>
+                <p className="text-sm font-medium">{user.name}</p>
+                <p className="text-xs text-gray-400 flex items-center">
+                  {user.email}
+                  <span className="flex flex-col -space-y-1">
+                    <IoIosArrowDown
+                      className={` transition-opacity duration-200 ${!isDropdownOpen ? 'opacity-100' : 'opacity-50'}`}
+                    />
+                  </span>
+                </p>
               </div>
             </div>
           </div>
-        ) : (
-          'no user exists'
-        )}
+        </div>
+
         {isDropdownOpen && (
           <div
             className="absolute top-full left-0 w-full bg-[#2B2B2B] rounded-xl shadow-xl z-10 "
